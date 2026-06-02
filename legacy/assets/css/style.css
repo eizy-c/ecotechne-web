@@ -1,0 +1,51 @@
+body { 
+    background-color: #4E413B; 
+    color: #E2DED3; 
+}
+
+.glass-nav {
+    background: rgba(78, 65, 59, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(226, 222, 211, 0.1);
+}
+
+.glass-card {
+    background: rgba(133, 118, 113, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(226, 222, 211, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #FF6D24 0%, #E2DED3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.btn-glow {
+    position: relative;
+}
+
+.btn-glow::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    background: linear-gradient(45deg, #FF6D24, #E2DED3, #FF6D24);
+    z-index: -1;
+    border-radius: 9999px;
+    filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-glow:hover::before { opacity: 0.8; }
+
+path { transition: all 0.3s ease; }
+
+/* Ocultar barra de desplazamiento manteniendo funcionalidad */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #4E413B; }
+::-webkit-scrollbar-thumb { background: #857671; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #FF6D24; }

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecotechne | Precisión en Metalmecánica y Robustez 4x4</title>
+    <meta name="description" content="Especialistas en diseño y fabricación de accesorios premium para vehículos 4x4, pickup y off-road. Ingeniería de precisión y robustez para la aventura.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuración y Estilos Externos -->
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="antialiased font-sans selection:bg-brand-accent selection:text-white">
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#inicio" class="flex items-center">
+                        <img src="assets/img/logo-long.png" alt="Ecotechne Logo" class="h-10 md:h-12 w-auto">
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#inicio" class="text-sm font-medium text-brand-light/80 hover:text-brand-accent transition-colors">Inicio</a>
+                    <a href="#nosotros" class="text-sm font-medium text-brand-light/80 hover:text-brand-accent transition-colors">Nosotros</a>
+                    <a href="#servicios" class="text-sm font-medium text-brand-light/80 hover:text-brand-accent transition-colors">Servicios</a>
+                    <a href="#portafolio" class="text-sm font-medium text-brand-light/80 hover:text-brand-accent transition-colors">Portafolio</a>
+                    <a href="#contacto" class="px-6 py-2.5 rounded-full bg-brand-accent hover:bg-brand-accent/90 text-brand-dark text-sm font-bold transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(255,109,36,0.3)] btn-glow">Cotizar Proyecto</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-brand-light hover:text-brand-accent focus:outline-none">
+                        <i class="fa-solid fa-bars-staggered text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden glass-nav border-t border-white/5">
+            <div class="px-2 pt-2 pb-5 space-y-1 sm:px-3 flex flex-col">
+                <a href="#inicio" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-brand-light/80 hover:text-brand-accent">Inicio</a>
+                <a href="#nosotros" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-brand-light/80 hover:text-brand-accent">Nosotros</a>
+                <a href="#servicios" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-brand-light/80 hover:text-brand-accent">Servicios</a>
+                <a href="#portafolio" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-brand-light/80 hover:text-brand-accent">Portafolio</a>
+                <a href="#contacto" class="mobile-link block px-3 py-2 rounded-md text-base font-bold text-brand-accent">Cotizar</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO Section -->
+    <section id="inicio" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <!-- Fondo preparado para imagen (Maquinaria o Vehículo) -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-black via-brand-black/80 to-transparent z-10"></div>
+            <!-- IMAGEN DE FONDO: Reemplazar URL con maquinaria CNC o vehículos off-road -->
+            <div class="w-full h-full bg-[url('https://images.unsplash.com/photo-1544256651-69fd13e8436b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-40"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-accent/10 border border-brand-accent/20 text-brand-accent text-xs font-bold uppercase tracking-widest mb-6 animate-fade-in-up">
+                    <span class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
+                    Ingeniería de Alto Desempeño
+                </div>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none mb-6 animate-fade-in-up">
+                    Precisión <span class="text-brand-accent">Ingeniería</span><br>
+                    Innovacion <span class="text-gradient">4x4</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-brand-light/70 mb-10 animate-fade-in-up" style="animation-delay: 0.2s;">
+                    Fabricación premium de accesorios off-road donde la ingeniería de vanguardia se une a la máxima resistencia extrema.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center gap-4 animate-fade-in-up" style="animation-delay: 0.4s;">
+                    <a href="#contacto" class="px-8 py-4 w-full sm:w-auto rounded-full bg-brand-accent text-brand-dark font-bold hover:scale-105 transition-all shadow-[0_0_25px_rgba(255,109,36,0.4)] btn-glow text-center">
+                        Cotizar Proyecto
+                    </a>
+                    <a href="#portafolio" class="px-8 py-4 w-full sm:w-auto rounded-full border border-white/20 text-brand-light font-bold hover:bg-white/5 transition-all text-center">
+                        Ver Trabajos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE NOSOTROS Section -->
+    <section id="nosotros" class="py-24 bg-brand-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <div class="inline-block px-3 py-1 rounded bg-brand-accent/10 text-brand-accent text-xs font-bold uppercase tracking-tighter">Sobre Nosotros</div>
+                    <h2 class="text-4xl md:text-5xl font-black text-brand-light leading-tight">
+                        Especialistas en la <br><span class="text-brand-accent">Aventura y el Trabajo</span>
+                    </h2>
+                    <p class="text-lg text-brand-light/70 leading-relaxed">
+                        Somos <span class="text-brand-accent">Ecotechne</span>, una empresa especializada en el diseño, fabricación y comercialización de accesorios premium para vehículos 4x4, pickup y off-road. 
+                        <br><br>
+                        Nos dedicamos a desarrollar soluciones robustas, funcionales y de alta calidad que permiten a nuestros clientes equipar sus vehículos para la aventura, el trabajo y la exploración, combinando ingeniería de precisión con el diseño más resistente del mercado.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-brand-accent/10 flex items-center justify-center text-brand-accent">
+                                <i class="fa-solid fa-microchip text-xl"></i>
+                            </div>
+                            <span class="text-brand-light/80 font-medium text-sm">Tecnología CNC</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-brand-accent/10 flex items-center justify-center text-brand-accent">
+                                <i class="fa-solid fa-truck-pickup text-xl"></i>
+                            </div>
+                            <span class="text-brand-light/80 font-medium text-sm">Especialistas Off-Road</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mini Galería Lateral -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="h-64 bg-brand-dark/20 rounded-2xl border border-white/5 flex items-center justify-center">
+                        <i class="fa-solid fa-gear text-brand-accent/20 text-6xl"></i>
+                    </div>
+                    <div class="h-64 bg-brand-accent/10 rounded-2xl border border-white/5 mt-8 flex items-center justify-center">
+                        <i class="fa-solid fa-screwdriver-wrench text-brand-accent/20 text-6xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS Section -->
+    <section id="servicios" class="py-24 bg-brand-dark/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-brand-accent font-bold uppercase text-sm tracking-widest mb-4">Capacidades Técnicas</h2>
+                <h3 class="text-4xl md:text-5xl font-black text-brand-light mb-6">Nuestros Servicios</h3>
+                <div class="h-1 w-20 bg-brand-accent mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Tarjeta 1 -->
+                <div class="glass-card p-8 rounded-3xl group hover:-translate-y-2 transition-all duration-500">
+                    <div class="w-14 h-14 bg-brand-accent/10 rounded-2xl flex items-center justify-center text-brand-accent mb-6 group-hover:bg-brand-accent group-hover:text-brand-dark transition-all">
+                        <i class="fa-solid fa-bolt-lightning text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-brand-light">Corte y Mecanizado CNC</h4>
+                    <p class="text-sm text-brand-light/60">Cortes de alta precisión mediante Plasma, Router, Láser CO2 y Fibra para acabados industriales.</p>
+                </div>
+
+                <!-- Tarjeta 2 -->
+                <div class="glass-card p-8 rounded-3xl group hover:-translate-y-2 transition-all duration-500">
+                    <div class="w-14 h-14 bg-brand-accent/10 rounded-2xl flex items-center justify-center text-brand-accent mb-6 group-hover:bg-brand-accent group-hover:text-brand-dark transition-all">
+                        <i class="fa-solid fa-cube text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-brand-light">Diseño y Modelado 3D</h4>
+                    <p class="text-sm text-brand-light/60">Ingeniería estructural y desarrollo de planos técnicos para prototipado y fabricación masiva.</p>
+                </div>
+
+                <!-- Tarjeta 3 -->
+                <div class="glass-card p-8 rounded-3xl group hover:-translate-y-2 transition-all duration-500">
+                    <div class="w-14 h-14 bg-brand-accent/10 rounded-2xl flex items-center justify-center text-brand-accent mb-6 group-hover:bg-brand-accent group-hover:text-brand-dark transition-all">
+                        <i class="fa-solid fa-compass text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-brand-light">Accesorios 4x4</h4>
+                    <p class="text-sm text-brand-light/60">Equipamiento Off-Road premium: parachoques, estribos, portaequipajes y soluciones personalizadas.</p>
+                </div>
+
+                <!-- Tarjeta 4 -->
+                <div class="glass-card p-8 rounded-3xl group hover:-translate-y-2 transition-all duration-500">
+                    <div class="w-14 h-14 bg-brand-accent/10 rounded-2xl flex items-center justify-center text-brand-accent mb-6 group-hover:bg-brand-accent group-hover:text-brand-dark transition-all">
+                        <i class="fa-solid fa-shapes text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-brand-light">Doblado y Calandrado</h4>
+                    <p class="text-sm text-brand-light/60">Conformado de láminas y tubos con radios precisos para estructuras complejas y chasis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTAFOLIO Section -->
+    <section id="portafolio" class="py-24 bg-brand-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div class="max-w-2xl">
+                    <h3 class="text-4xl md:text-5xl font-black text-brand-light">Trabajos <span class="text-brand-accent">Terminados</span></h3>
+                    <p class="mt-4 text-brand-light/60">Una muestra visual de nuestra precisión en cortes y la robustez de nuestras instalaciones en accesorios off-road.</p>
+                </div>
+                <div class="hidden md:block h-1 flex-grow bg-white/5 mx-8 mb-4"></div>
+            </div>
+
+            <!-- Mosaic Grid Mosaico -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px]">
+                <div class="md:col-span-2 md:row-span-2 glass-card rounded-3xl flex items-center justify-center border-white/5 group relative overflow-hidden">
+                    <div class="absolute inset-0 bg-brand-accent/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <i class="fa-solid fa-camera text-brand-light/10 text-6xl"></i>
+                    <span class="absolute bottom-6 left-6 text-brand-light font-bold opacity-0 group-hover:opacity-100 transition-all transform translate-y-4 group-hover:translate-y-0">Accesorios Instalados</span>
+                </div>
+                <div class="glass-card rounded-3xl flex items-center justify-center border-white/5 group relative overflow-hidden">
+                    <i class="fa-solid fa-camera text-brand-light/5 text-4xl"></i>
+                </div>
+                <div class="glass-card rounded-3xl flex items-center justify-center border-white/5 group relative overflow-hidden">
+                    <i class="fa-solid fa-camera text-brand-light/5 text-4xl"></i>
+                </div>
+                <div class="md:col-span-2 glass-card rounded-3xl flex items-center justify-center border-white/5 group relative overflow-hidden">
+                    <i class="fa-solid fa-camera text-brand-light/5 text-4xl"></i>
+                    <span class="absolute bottom-6 left-6 text-xs text-brand-light/40 uppercase font-bold tracking-widest">Corte Láser Metal</span>
+                </div>
+                <div class="glass-card rounded-3xl flex items-center justify-center border-white/5 group relative overflow-hidden">
+                    <i class="fa-solid fa-camera text-brand-light/5 text-4xl"></i>
+                </div>
+                <div class="glass-card rounded-3xl flex items-center justify-center border-white/5 group relative overflow-hidden">
+                    <i class="fa-solid fa-camera text-brand-light/5 text-4xl"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER / CONTACTO Section -->
+    <footer id="contacto" class="bg-brand-black border-t border-white/5 pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+                <!-- Formulario -->
+                <div>
+                    <h4 class="text-3xl font-black text-brand-light mb-8 italic">Inicia tu <span class="text-brand-accent">Proyecto</span></h4>
+                    <form onsubmit="event.preventDefault(); alert('Solicitud enviada. Nos pondremos en contacto contigo pronto.')" class="space-y-6">
+                        <div class="space-y-4">
+                            <input type="text" placeholder="Nombre completo" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-brand-light focus:outline-none focus:border-brand-accent" required>
+                            <input type="tel" placeholder="Teléfono de contacto" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-brand-light focus:outline-none focus:border-brand-accent" required>
+                            <textarea placeholder="Cuéntanos sobre tu necesidad..." rows="4" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-brand-light focus:outline-none focus:border-brand-accent resize-none" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-brand-accent text-brand-dark font-black py-5 rounded-2xl hover:scale-[1.02] transition-transform shadow-2xl">
+                            ENVIAR SOLICITUD
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Info Social -->
+                <div class="flex flex-col justify-between">
+                    <div>
+                        <img src="assets/img/logo-long.png" alt="Ecotechne Logo" class="h-10 mb-10">
+                        <div class="space-y-8">
+                            <div class="flex items-center gap-6">
+                                <div class="w-12 h-12 rounded-full border border-brand-accent/30 flex items-center justify-center text-brand-accent">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-brand-light/40 uppercase font-black">Atención Directa</p>
+                                    <a href="mailto:admiecotechne@gmail.com" class="text-xl font-bold text-brand-light hover:text-brand-accent">admiecotechne@gmail.com</a>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="w-12 h-12 rounded-full border border-brand-accent/30 flex items-center justify-center text-brand-accent">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-brand-light/40 uppercase font-black">Llámanos</p>
+                                    <p class="text-xl font-bold text-brand-light">+58 426-5549941</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="w-12 h-12 rounded-full border border-brand-accent/30 flex items-center justify-center text-brand-accent">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-brand-light/40 uppercase font-black">Siguenos</p>
+                                    <a href="https://www.instagram.com/ecotechne/" target="_blank" class="text-xl font-bold text-brand-light hover:text-brand-accent">@ecotechne</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+                        <p class="text-xs text-brand-light/30 uppercase tracking-widest">&copy; 2026 Ecotechne. Fabricación de Élite.</p>
+                        <div class="flex gap-6">
+                            <a href="#" class="text-xs text-brand-light/30 hover:text-brand-accent">Términos</a>
+                            <a href="#" class="text-xs text-brand-light/30 hover:text-brand-accent">Privacidad</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lógica Principal -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
