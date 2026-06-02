@@ -1,7 +1,7 @@
 import Hero from "@/components/sections/Hero";
 import Services from "@/components/sections/Services";
 import About from "@/components/sections/About";
-import Portfolio from "@/components/sections/Portfolio";
+import Galeria from "@/components/sections/Galeria";
 import Contact from "@/components/sections/Contact";
 
 export default function Home() {
@@ -10,11 +10,12 @@ export default function Home() {
       <Hero />
       <About />
       <Services />
-      <Portfolio />
+      <Galeria />
       <Contact />
     </main>
   );
 }
+
 
 
 
