@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSessionStore } from '@/store/useSessionStore';
 import { 
   LayoutDashboard, 
   Users, 
@@ -28,8 +29,9 @@ const menuItems = [
   { name: 'Mensajes', path: '/dashboard/messages', icon: MessageSquare, isMessages: true, permission: 'read:messages' },
 ];
 
-export function Sidebar({ unreadCount = 0, permissions = [] }: { unreadCount?: number, permissions?: string[] }) {
+export function Sidebar({ unreadCount = 0 }: { unreadCount?: number }) {
   const pathname = usePathname();
+  const hasPermission = useSessionStore((state) => state.hasPermission);
 
   return (
     <aside className="w-64 h-screen fixed left-0 top-0 border-r border-card-border bg-card shadow-lg z-40 hidden md:flex flex-col">
@@ -42,7 +44,7 @@ export function Sidebar({ unreadCount = 0, permissions = [] }: { unreadCount?: n
 
       <nav className="flex-1 overflow-y-auto py-4">
         <ul className="space-y-1 px-3">
-          {menuItems.filter(item => permissions.includes('manage:all') || permissions.includes(item.permission)).map((item) => {
+          {menuItems.filter(item => hasPermission('manage:all') || hasPermission(item.permission)).map((item) => {
             const isActive = pathname === item.path || (pathname.startsWith(item.path) && item.path !== '/dashboard');
             const Icon = item.icon;
             

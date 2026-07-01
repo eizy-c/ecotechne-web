@@ -3,8 +3,10 @@
 import { Menu, LogOut, User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useSessionStore } from '@/store/useSessionStore';
 
-export default function Header({ user }: { user?: any }) {
+export default function Header() {
+  const user = useSessionStore((state) => state.user);
   const router = useRouter();
 
   const handleLogout = async () => {

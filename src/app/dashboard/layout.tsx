@@ -1,5 +1,7 @@
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import Header from '@/components/dashboard/Header';
+import MessageAlerter from '@/components/dashboard/MessageAlerter';
+import SessionProvider from '@/components/SessionProvider';
 import { ContactMessage } from '@/Models/ContactMessage';
 import { redirect } from 'next/navigation';
 import { Toaster } from 'react-hot-toast';
@@ -29,16 +31,17 @@ export default async function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-background flex">
-      <Toaster position="top-right" />
-      <Sidebar unreadCount={unreadCount} permissions={user?.permissions as string[]} />
-      <div className="flex-1 md:ml-64 flex flex-col min-h-screen transition-all duration-300">
-        <Header user={user} />
-        <main className="flex-1 p-6 md:p-8 overflow-y-auto">
-          <div className="max-w-7xl mx-auto animate-fade-in-up">
+      <SessionProvider user={user}>
+        <Toaster position="top-right" />
+        <MessageAlerter initialCount={unreadCount} />
+        <Sidebar unreadCount={unreadCount} />
+        <div className="flex-1 md:ml-64 flex flex-col min-h-screen transition-all duration-300">
+          <Header />
+          <main className="flex-1 p-4 md:p-8 overflow-x-hidden animate-fade-in-up">
             {children}
-          </div>
-        </main>
-      </div>
+          </main>
+        </div>
+      </SessionProvider>
     </div>
   );
 }

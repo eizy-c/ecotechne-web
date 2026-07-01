@@ -20,7 +20,21 @@ function SubmitButton() {
   );
 }
 
+import { Suspense } from 'react';
+
 export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8 relative">
+        <div className="text-brand-accent animate-pulse font-bold">Cargando...</div>
+      </div>
+    }>
+      <LoginContent />
+    </Suspense>
+  );
+}
+
+function LoginContent() {
   const [state, formAction] = useActionState(loginAction, null);
   const router = useRouter();
   const searchParams = useSearchParams();

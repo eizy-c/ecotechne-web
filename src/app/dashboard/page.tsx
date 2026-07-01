@@ -6,6 +6,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import Link from 'next/link';
+import prisma from '@/lib/prisma';
 
 // Componente para tarjeta de métrica
 function StatCard({ title, value, icon: Icon, trend }: { title: string, value: string, icon: any, trend: string }) {
@@ -30,7 +31,24 @@ function StatCard({ title, value, icon: Icon, trend }: { title: string, value: s
   );
 }
 
-export default function DashboardIndex() {
+export default async function DashboardIndex() {
+  const [userCount, productCount, serviceCount, recentProducts, recentVisits, totalVisits] = await Promise.all([
+    prisma.user.count({ where: { deleted_at: null } }),
+    prisma.product.count({ where: { deleted_at: null } }),
+    prisma.service.count({ where: { deleted_at: null } }),
+    prisma.product.findMany({
+      take: 5,
+      where: { deleted_at: null },
+      orderBy: { product_id: 'desc' },
+      include: { categories: true }
+    }),
+    prisma.visit.findMany({
+      take: 5,
+      orderBy: { visit_id: 'desc' }
+    }),
+    prisma.visit.count()
+  ]);
+
   return (
     <div className="space-y-8">
       <div>
@@ -38,10 +56,11 @@ export default function DashboardIndex() {
         <p className="text-foreground/60 mt-1">Bienvenido al panel de control de Ecotechne.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <StatCard title="Total Usuarios" value="124" icon={Users} trend="+12%" />
-        <StatCard title="Productos Activos" value="45" icon={Package} trend="+5%" />
-        <StatCard title="Servicios Agendados" value="18" icon={Wrench} trend="+2%" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StatCard title="Total Usuarios" value={userCount.toString()} icon={Users} trend="Total" />
+        <StatCard title="Visitas Totales" value={totalVisits.toString()} icon={TrendingUp} trend="Global" />
+        <StatCard title="Productos Activos" value={productCount.toString()} icon={Package} trend="Total" />
+        <StatCard title="Servicios Activos" value={serviceCount.toString()} icon={Wrench} trend="Total" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -65,50 +84,42 @@ export default function DashboardIndex() {
                 </tr>
               </thead>
               <tbody className="text-sm">
-                <tr className="border-b border-card-border/50 hover:bg-foreground/5 transition-colors">
-                  <td className="py-4 font-medium">Parachoques 4Runner</td>
-                  <td className="py-4 text-foreground/70">$850.00</td>
-                  <td className="py-4">12</td>
-                  <td className="py-4"><span className="px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded-full text-xs font-medium">Activo</span></td>
-                </tr>
-                <tr className="border-b border-card-border/50 hover:bg-foreground/5 transition-colors">
-                  <td className="py-4 font-medium">Snorkel Hilux</td>
-                  <td className="py-4 text-foreground/70">$320.00</td>
-                  <td className="py-4 text-red-500 font-medium">0</td>
-                  <td className="py-4"><span className="px-2 py-1 bg-red-500/10 text-red-500 rounded-full text-xs font-medium">Agotado</span></td>
-                </tr>
-                <tr className="hover:bg-foreground/5 transition-colors">
-                  <td className="py-4 font-medium">Luces LED Barra</td>
-                  <td className="py-4 text-foreground/70">$150.00</td>
-                  <td className="py-4">45</td>
-                  <td className="py-4"><span className="px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded-full text-xs font-medium">Activo</span></td>
-                </tr>
+                {recentProducts.map((prod) => (
+                  <tr key={prod.product_id} className="border-b border-card-border/50 hover:bg-foreground/5 transition-colors">
+                    <td className="py-4 font-medium">{prod.name}</td>
+                    <td className="py-4 text-foreground/70">${Number(prod.price).toFixed(2)}</td>
+                    <td className="py-4 text-brand-accent font-medium">{prod.stock}</td>
+                    <td className="py-4">
+                      {prod.stock > 0 ? (
+                        <span className="px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded-full text-xs font-medium">Activo</span>
+                      ) : (
+                        <span className="px-2 py-1 bg-red-500/10 text-red-500 rounded-full text-xs font-medium">Agotado</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
 
         <div className="glass-card rounded-2xl p-6">
-          <h2 className="text-xl font-semibold mb-6">Acciones Rápidas</h2>
-          <div className="space-y-3">
-            <Link href="/dashboard/products/create" className="flex items-center p-3 rounded-xl border border-card-border hover:bg-card-border/50 transition-colors group">
-              <div className="p-2 bg-brand-accent/10 rounded-lg text-brand-accent group-hover:scale-110 transition-transform">
-                <Package size={20} />
+          <h2 className="text-xl font-semibold mb-6">Últimas Visitas</h2>
+          <div className="space-y-4">
+            {recentVisits.map((visit) => (
+              <div key={visit.visit_id} className="flex justify-between items-center p-3 rounded-xl border border-card-border hover:bg-card-border/50 transition-colors">
+                <div>
+                  <p className="font-medium text-sm text-foreground">{visit.country}</p>
+                  <p className="text-xs text-foreground/50">{new Date(visit.created_at).toLocaleString()}</p>
+                </div>
+                <div className="text-xs text-brand-accent font-mono bg-brand-accent/10 px-2 py-1 rounded">
+                  {visit.path}
+                </div>
               </div>
-              <span className="ml-3 font-medium text-sm">Nuevo Producto</span>
-            </Link>
-            <Link href="/dashboard/services/create" className="flex items-center p-3 rounded-xl border border-card-border hover:bg-card-border/50 transition-colors group">
-              <div className="p-2 bg-brand-neutral/10 rounded-lg text-brand-neutral group-hover:scale-110 transition-transform">
-                <Wrench size={20} />
-              </div>
-              <span className="ml-3 font-medium text-sm">Nuevo Servicio</span>
-            </Link>
-            <Link href="/dashboard/users/create" className="flex items-center p-3 rounded-xl border border-card-border hover:bg-card-border/50 transition-colors group">
-              <div className="p-2 bg-blue-500/10 rounded-lg text-blue-500 group-hover:scale-110 transition-transform">
-                <Users size={20} />
-              </div>
-              <span className="ml-3 font-medium text-sm">Crear Usuario</span>
-            </Link>
+            ))}
+            {recentVisits.length === 0 && (
+              <div className="text-center text-foreground/50 py-4 text-sm">No hay visitas registradas aún.</div>
+            )}
           </div>
         </div>
       </div>

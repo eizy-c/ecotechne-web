@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import prisma from '@/lib/prisma';
 import { requirePermission } from '@/lib/auth';
+import { logAudit } from './audit';
 
 export async function createProduct(formData: FormData) {
   await requirePermission('create:products');
@@ -19,7 +20,7 @@ export async function createProduct(formData: FormData) {
     throw new Error('Por favor completa todos los campos requeridos correctamente');
   }
 
-  await Product.create({ 
+  const product = await Product.create({ 
     name, 
     price, 
     stock: isNaN(stock) ? 0 : stock,
@@ -27,6 +28,8 @@ export async function createProduct(formData: FormData) {
     categories: { connect: categories },
     vehicles: { connect: vehicles },
   });
+
+  await logAudit('CREATE', 'Product', product.product_id, { name, price });
   
   revalidatePath('/dashboard/products');
   redirect('/dashboard/products');
@@ -60,6 +63,8 @@ export async function updateProduct(id: number, formData: FormData) {
 
   await Product.update(id, updateData);
   
+  await logAudit('UPDATE', 'Product', id, { name, price });
+
   revalidatePath('/dashboard/products');
   redirect('/dashboard/products');
 }
@@ -67,5 +72,6 @@ export async function updateProduct(id: number, formData: FormData) {
 export async function deleteProduct(id: number) {
   await requirePermission('delete:products');
   await Product.delete(id);
+  await logAudit('DELETE', 'Product', id, null);
   revalidatePath('/dashboard/products');
 }

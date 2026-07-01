@@ -3,41 +3,141 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-export default function StoreClient({ products, categories }: { products: any[], categories: any[] }) {
-  const [activeCategory, setActiveCategory] = useState<number | null>(null);
+import { logProductLead } from '@/actions/analytics';
+import toast from 'react-hot-toast';
 
-  const filteredProducts = activeCategory 
-    ? products.filter(p => p.categories?.some((c: any) => c.category_id === activeCategory))
-    : products;
+export default function StoreClient({ 
+  products, 
+  categories,
+  brands,
+  models
+}: { 
+  products: any[], 
+  categories: any[],
+  brands: any[],
+  models: any[]
+}) {
+  const [activeCategory, setActiveCategory] = useState<number | null>(null);
+  const [activeBrand, setActiveBrand] = useState<number | null>(null);
+  const [activeModel, setActiveModel] = useState<number | null>(null);
+  const [activeYear, setActiveYear] = useState<string | null>(null);
+
+  // Generar lista de años únicos desde los vehículos
+  const allYears = Array.from(new Set(products.flatMap(p => p.vehicles?.map((v: any) => v.year) || []))).filter(Boolean).sort().reverse();
+
+  const filteredProducts = products.filter(p => {
+    if (activeCategory && !p.categories?.some((c: any) => c.category_id === activeCategory)) return false;
+    
+    // Si hay filtros de vehículo, verificamos que el producto sea compatible
+    if (activeBrand || activeModel || activeYear) {
+      if (!p.vehicles || p.vehicles.length === 0) return false;
+      
+      const isCompatible = p.vehicles.some((v: any) => {
+        const matchBrand = !activeBrand || v.brand_id === activeBrand;
+        const matchModel = !activeModel || v.vehicle_model_id === activeModel;
+        const matchYear = !activeYear || v.year === activeYear;
+        return matchBrand && matchModel && matchYear;
+      });
+      
+      if (!isCompatible) return false;
+    }
+    
+    return true;
+  });
+
+  const handleWhatsAppClick = async (product: any) => {
+    // Registrar el lead
+    try {
+      await logProductLead(product.product_id);
+    } catch (e) {
+      console.error(e);
+    }
+    
+    // Redirigir a WhatsApp
+    const phoneNumber = '584265549941'; 
+    const message = `Hola Ecotechne, estoy interesado en el producto: ${product.name} (Ref: #${product.product_id}). ¿Me pueden dar más información?`;
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+  };
 
   return (
     <div>
-      {/* Category Filters */}
-      <div className="flex flex-wrap justify-center gap-3 mb-12">
-        <button 
-          onClick={() => setActiveCategory(null)}
-          className={`px-6 py-2.5 rounded-full font-semibold transition-all ${
-            activeCategory === null 
-              ? 'bg-brand-accent text-brand-dark shadow-[0_0_15px_rgba(255,109,36,0.3)]' 
-              : 'bg-foreground/5 text-foreground hover:bg-foreground/10 hover:text-brand-accent'
-          }`}
-        >
-          Todos
-        </button>
-        {categories.map(cat => (
-          <button 
-            key={cat.category_id}
-            onClick={() => setActiveCategory(cat.category_id)}
-            className={`px-6 py-2.5 rounded-full font-semibold transition-all ${
-              activeCategory === cat.category_id 
-                ? 'bg-brand-accent text-brand-dark shadow-[0_0_15px_rgba(255,109,36,0.3)]' 
-                : 'bg-foreground/5 text-foreground hover:bg-foreground/10 hover:text-brand-accent'
-            }`}
+      {/* Advanced Filters */}
+      <div className="glass-card p-6 rounded-2xl mb-12 flex flex-col md:flex-row flex-wrap gap-4 items-end">
+        <div className="flex-1 min-w-[200px]">
+          <label className="block text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">Tipo de producto</label>
+          <select 
+            className="w-full bg-background/50 border border-card-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-brand-accent transition-colors appearance-none"
+            value={activeCategory || ''}
+            onChange={(e) => setActiveCategory(e.target.value ? Number(e.target.value) : null)}
           >
-            {cat.name}
-          </button>
-        ))}
+            <option value="">Todas las categorías</option>
+            {categories.map(cat => (
+              <option key={cat.category_id} value={cat.category_id}>{cat.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex-1 min-w-[200px]">
+          <label className="block text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">Marcas vehículos</label>
+          <select 
+            className="w-full bg-background/50 border border-card-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-brand-accent transition-colors appearance-none"
+            value={activeBrand || ''}
+            onChange={(e) => {
+              setActiveBrand(e.target.value ? Number(e.target.value) : null);
+              setActiveModel(null); // Reset model when brand changes
+            }}
+          >
+            <option value="">Todas las marcas</option>
+            {brands.map(brand => (
+              <option key={brand.brand_id} value={brand.brand_id}>{brand.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex-1 min-w-[200px]">
+          <label className="block text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">Modelos</label>
+          <select 
+            className="w-full bg-background/50 border border-card-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-brand-accent transition-colors appearance-none"
+            value={activeModel || ''}
+            onChange={(e) => setActiveModel(e.target.value ? Number(e.target.value) : null)}
+            disabled={!activeBrand}
+          >
+            <option value="">Todos los modelos</option>
+            {models
+              .filter(m => !activeBrand || m.brand_id === activeBrand)
+              .map(model => (
+                <option key={model.vehicle_model_id} value={model.vehicle_model_id}>{model.name}</option>
+              ))}
+          </select>
+        </div>
+
+        <div className="flex-1 min-w-[150px]">
+          <label className="block text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">Año</label>
+          <select 
+            className="w-full bg-background/50 border border-card-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-brand-accent transition-colors appearance-none"
+            value={activeYear || ''}
+            onChange={(e) => setActiveYear(e.target.value || null)}
+          >
+            <option value="">Todos</option>
+            {allYears.map(year => (
+              <option key={year} value={year as string}>{year}</option>
+            ))}
+          </select>
+        </div>
+
+        <button 
+          onClick={() => {
+            setActiveCategory(null);
+            setActiveBrand(null);
+            setActiveModel(null);
+            setActiveYear(null);
+          }}
+          className="px-6 py-3 bg-brand-accent text-brand-dark rounded-xl font-bold hover:scale-105 transition-transform flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(255,109,36,0.3)] h-[50px]"
+        >
+          Limpiar
+        </button>
       </div>
+
 
       {/* Products Grid */}
       {filteredProducts.length === 0 ? (
@@ -91,8 +191,11 @@ export default function StoreClient({ products, categories }: { products: any[],
                   </div>
                 )}
                 
-                <button className="w-full mt-6 py-3 border border-brand-accent text-brand-accent font-bold rounded-xl hover:bg-brand-accent hover:text-brand-dark transition-colors flex items-center justify-center gap-2">
-                  <i className="fa-brands fa-whatsapp text-lg"></i> Consultar
+                <button 
+                  onClick={() => handleWhatsAppClick(product)}
+                  className="w-full mt-6 py-3 border border-brand-accent text-brand-accent font-bold rounded-xl hover:bg-brand-accent hover:text-brand-dark transition-colors flex items-center justify-center gap-2"
+                >
+                  <i className="fa-brands fa-whatsapp text-lg"></i> Me interesa
                 </button>
               </div>
             </div>

@@ -1,8 +1,4 @@
-import { updateService } from '@/actions/services';
 import { Service } from '@/Models/Service';
-import Link from 'next/link';
-import { ArrowLeft, Save } from 'lucide-react';
-import { notFound } from 'next/navigation';
 import { notFound } from 'next/navigation';
 import EditServiceForm from './EditServiceForm';
 
@@ -16,6 +12,12 @@ export default async function EditServicePage({ params }: { params: { id: string
     notFound();
   }
 
+  return (
+    <div className="max-w-4xl mx-auto space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">Editar Servicio</h1>
+        <p className="text-foreground/60 mt-1">Modifica los detalles del servicio.</p>
+      </div>
       <EditServiceForm service={service} />
     </div>
   );
