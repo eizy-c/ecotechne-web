@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ecotechne 4x4 - Panel de Control y Catálogo Web
 
-## Getting Started
+Este proyecto es una aplicación web completa desarrollada con Next.js 15 (App Router), React, y Prisma ORM para Ecotechne 4x4.
 
-First, run the development server:
+## Requisitos Previos
 
+Antes de comenzar, asegúrate de tener instalado en tu sistema:
+- **Node.js** (versión 18 o superior)
+- **MySQL** o MariaDB (o acceso a una base de datos compatible)
+- **Git** (opcional, para clonar el repositorio)
+
+## Paso a Paso para Desplegar Localmente
+
+Sigue estos pasos cuidadosamente para ejecutar el proyecto en tu entorno local:
+
+### 1. Descargar el código
+Si descargaste un archivo ZIP desde GitHub, extráelo en una carpeta de tu elección.
+Si prefieres usar Git, clona el repositorio:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <URL_DEL_REPOSITORIO>
+cd ecotechne
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Instalar las dependencias
+Abre una terminal o consola de comandos en la raíz de la carpeta del proyecto y ejecuta:
+```bash
+npm install
+```
+*(Esto descargará todas las librerías necesarias para que el proyecto funcione).*
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Configurar las Variables de Entorno
+En la raíz del proyecto encontrarás un archivo llamado `.env.example` o similar (o simplemente crea uno llamado `.env`).
+Abre/Crea el archivo `.env` en un editor de texto e incluye lo siguiente:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+# Configuración de tu Base de Datos MySQL
+# Reemplaza 'usuario', 'contraseña', 'localhost', '3306' y 'ecotechne_db' con tus datos reales.
+DATABASE_URL="mysql://root:@localhost:3306/ecotechne"
 
-## Learn More
+# Clave secreta para las sesiones y tokens de seguridad (Pon cualquier texto largo y seguro)
+JWT_SECRET="mi_clave_secreta_super_segura_12345"
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Preparar la Base de Datos
+Primero, asegúrate de que tu servidor MySQL esté ejecutándose (por ejemplo, XAMPP). Crea una base de datos vacía llamada `ecotechne` (o el nombre que hayas puesto en la URL de arriba).
+Luego, en tu terminal, ejecuta el comando para aplicar la estructura (tablas) a tu base de datos:
+```bash
+npx prisma db push
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**(Opcional)** Si la base de datos es nueva y quieres generar un usuario administrador inicial, puedes correr el script de seed si existe:
+```bash
+npm run seed
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 5. Iniciar el Servidor de Desarrollo
+Finalmente, inicia la aplicación web con el siguiente comando:
+```bash
+npm run dev
+```
 
-## Deploy on Vercel
+La consola te indicará que el servidor está corriendo.
+Abre tu navegador y entra a: [http://localhost:3000](http://localhost:3000)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Estructura del Proyecto
+- `src/app`: Contiene todas las páginas (Frontend de la web pública y el Dashboard).
+- `src/components`: Componentes reutilizables (Botones, Modales, Barras laterales).
+- `src/actions`: Funciones que se ejecutan directamente en el servidor (Server Actions) para conectarse a la Base de datos.
+- `src/lib/prisma.ts`: Conexión directa a la Base de Datos.
+- `prisma/schema.prisma`: El esquema y modelo de la base de datos completa.
+
+¡Disfruta del proyecto!

@@ -1,11 +1,19 @@
 @import "tailwindcss";
 
+/* Tailwind v4 dark mode class support */
+@variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-brand-light: #FAF3E0;
   --color-brand-neutral: #EAB308;
   --color-brand-dark: #2C1810;
   --color-brand-accent: #FF6D24;
   --color-brand-black: #120A07;
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
   
   --font-sans: 'Inter', var(--font-geist-sans);
   
@@ -24,8 +32,17 @@
 }
 
 :root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-border: #e2e8f0;
+}
+
+.dark {
   --background: var(--color-brand-black);
   --foreground: var(--color-brand-light);
+  --card: rgba(255, 255, 255, 0.02);
+  --card-border: rgba(255, 255, 255, 0.015);
 }
 
 body {
@@ -35,23 +52,26 @@ body {
 }
 
 .glass-nav {
-  background: rgba(18, 10, 7, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(18, 10, 7, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.015);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 109, 36, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 109, 36, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(255, 109, 36, 0.1);
 }
 
 .text-gradient {
