@@ -41,7 +41,6 @@ export default async function DashboardIndex() {
       take: 5,
       where: { deleted_at: null },
       orderBy: { product_id: 'desc' },
-      include: { categories: true }
     }),
     prisma.visit.findMany({
       take: 5,
