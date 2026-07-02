@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function ServiceDetailsPage({ params }: { params: { slug: string } }) {
-  const service = await Service.findBySlug(params.slug);
+  const service = await Service.findBySlug(params.slug) as any;
   
   if (!service || !service.active) {
     notFound();

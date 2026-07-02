@@ -2,6 +2,7 @@ import { Product } from '@/Models/Product';
 import { notFound } from 'next/navigation';
 import ProductGallery from '@/components/ui/ProductGallery';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronRight, Calendar, CarFront, Palette, Type, CheckCircle2 } from 'lucide-react';
 import { Metadata } from 'next';
 
