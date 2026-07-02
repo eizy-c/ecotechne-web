@@ -1,6 +1,7 @@
 'use client';
 
 import { logServiceLead } from '@/actions/analytics';
+import Link from 'next/link';
 
 export default function ServicesClient({ services }: { services: any[] }) {
   const handleWhatsAppClick = async (service: any) => {
@@ -43,13 +44,19 @@ export default function ServicesClient({ services }: { services: any[] }) {
           <h4 className="text-xl font-bold mb-4 text-foreground">{service.name}</h4>
           <p className="text-sm text-foreground/60 mb-6 flex-1">{service.description}</p>
           
-          <div className="mt-auto">
-
+          <div className="mt-auto flex gap-2">
+            <Link 
+              href={`/servicios/${service.slug}`}
+              className="flex-1 py-3 bg-brand-accent text-brand-dark font-bold rounded-xl hover:scale-105 transition-transform flex items-center justify-center shadow-lg"
+            >
+              Detalles
+            </Link>
             <button 
               onClick={() => handleWhatsAppClick(service)}
-              className="w-full py-3 border border-brand-accent text-brand-accent font-bold rounded-xl hover:bg-brand-accent hover:text-brand-dark transition-colors flex items-center justify-center gap-2"
+              className="flex-[0.5] py-3 border border-brand-accent text-brand-accent font-bold rounded-xl hover:bg-brand-accent hover:text-brand-dark transition-colors flex items-center justify-center"
+              title="Consultar por WhatsApp"
             >
-              <i className="fa-brands fa-whatsapp text-lg"></i> Solicitar
+              <i className="fa-brands fa-whatsapp text-xl"></i>
             </button>
           </div>
         </div>

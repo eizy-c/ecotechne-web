@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { logProductLead } from '@/actions/analytics';
 import toast from 'react-hot-toast';
@@ -205,12 +206,21 @@ export default function StoreClient({
                   </div>
                 )}
                 
-                <button 
-                  onClick={() => handleWhatsAppClick(product)}
-                  className="w-full mt-6 py-3 border border-brand-accent text-brand-accent font-bold rounded-xl hover:bg-brand-accent hover:text-brand-dark transition-colors flex items-center justify-center gap-2"
-                >
-                  <i className="fa-brands fa-whatsapp text-lg"></i> Me interesa
-                </button>
+                <div className="w-full mt-6 flex gap-2">
+                  <Link 
+                    href={`/productos/${product.slug}`}
+                    className="flex-1 py-3 bg-brand-accent text-brand-dark font-bold rounded-xl hover:scale-105 transition-transform flex items-center justify-center gap-2 shadow-lg"
+                  >
+                    Detalles
+                  </Link>
+                  <button 
+                    onClick={() => handleWhatsAppClick(product)}
+                    className="flex-[0.5] py-3 border border-brand-accent text-brand-accent font-bold rounded-xl hover:bg-brand-accent hover:text-brand-dark transition-colors flex items-center justify-center"
+                    title="Pedir por WhatsApp"
+                  >
+                    <i className="fa-brands fa-whatsapp text-xl"></i>
+                  </button>
+                </div>
               </div>
             </div>
           ))}
