@@ -1,10 +1,14 @@
 import type { NextConfig } from "next";
 
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
+  : ['localhost:3000'];
+
 const nextConfig: NextConfig = {
   /* config options here */
   experimental: {
     serverActions: {
-      allowedOrigins: ['localhost:3000', '192.168.5.48:3000'],
+      allowedOrigins: allowedOrigins,
       bodySizeLimit: '20mb',
     },
   },

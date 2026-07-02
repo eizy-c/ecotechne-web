@@ -10,11 +10,13 @@ import {
   Package, 
   Wrench, 
   Image as ImageIcon,
-  MessageSquare,
   Car,
   Box,
   Tag,
-  BarChart3
+  BarChart3,
+  Shield,
+  Palette,
+  ClipboardList
 } from 'lucide-react';
 const menuItems = [
   { name: 'Inicio', path: '/dashboard', icon: LayoutDashboard, permission: 'read:dashboard' },
@@ -27,8 +29,9 @@ const menuItems = [
   { name: 'Servicios', path: '/dashboard/services', icon: Wrench, permission: 'read:services' },
   { name: 'Galería', path: '/dashboard/galleries', icon: ImageIcon, permission: 'read:gallery' },
   { name: 'Usuarios', path: '/dashboard/users', icon: Users, permission: 'read:users' },
-  { name: 'Roles', path: '/dashboard/roles', icon: ShieldCheck, permission: 'read:roles' },
-  { name: 'Mensajes', path: '/dashboard/messages', icon: MessageSquare, isMessages: true, permission: 'read:messages' },
+  { name: 'Roles', path: '/dashboard/roles', icon: Shield, permission: 'read:roles' },
+  { name: 'Auditoría', path: '/dashboard/logs', icon: ClipboardList, permission: 'read:logs' },
+  { name: 'Apariencia', path: '/dashboard/appearance', icon: Palette, permission: 'manage:all' },
 ];
 
 export function Sidebar() {
@@ -64,11 +67,6 @@ export function Sidebar() {
                 >
                   <Icon size={20} className={isActive ? 'text-brand-accent' : ''} />
                   <span className="flex-1">{item.name}</span>
-                  {item.isMessages && unreadCount > 0 && (
-                    <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full animate-pulse">
-                      {unreadCount}
-                    </span>
-                  )}
                 </Link>
               </li>
             );

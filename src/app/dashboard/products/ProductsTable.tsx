@@ -109,6 +109,8 @@ export default function ProductsTable({ products }: { products: any[] }) {
       searchPlaceholder="Buscar producto por nombre o slug..."
       searchKeys={['name', 'slug']}
       itemsPerPage={10}
+      enableExport={true}
+      exportFilename="Reporte_Productos_Ecotechne"
     />
   );
 }

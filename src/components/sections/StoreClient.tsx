@@ -51,10 +51,10 @@ export default function StoreClient({
       let country = typeof window !== 'undefined' ? sessionStorage.getItem('user_country') : null;
       if (!country) {
         try {
-          const response = await fetch('http://ip-api.com/json/');
+          const response = await fetch('https://ipapi.co/json/');
           const data = await response.json();
-          if (data.status === 'success') {
-            country = data.country;
+          if (data.country_name) {
+            country = data.country_name;
             sessionStorage.setItem('user_country', country!);
           } else {
             country = 'Local/Desconocido';

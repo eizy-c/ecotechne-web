@@ -100,6 +100,8 @@ export default function UsersList({ initialUsers, roles }: { initialUsers: any[]
         searchPlaceholder="Buscar usuario por nombre o correo..."
         searchKeys={['name', 'email', 'role.name']}
         itemsPerPage={10}
+        enableExport={true}
+        exportFilename="Reporte_Usuarios_Ecotechne"
       />
 
       <UserModal 

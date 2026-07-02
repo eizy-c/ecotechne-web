@@ -4,6 +4,7 @@ import { User } from '@/Models/User';
 import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
 import { requirePermission } from '@/lib/auth';
+import { logAction } from '@/lib/audit';
 
 export async function createUser(formData: FormData) {
   await requirePermission('create:users');
@@ -18,12 +19,14 @@ export async function createUser(formData: FormData) {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  await User.create({
+  const user = await User.create({
     name,
     email,
     password: hashedPassword,
     role_id
   });
+  
+  await logAction('CREATE', 'User', user.user_id, { name, email, role_id });
   
   revalidatePath('/dashboard/users');
 }
@@ -50,6 +53,7 @@ export async function updateUser(id: number, formData: FormData) {
   }
 
   await User.update(id, updateData);
+  await logAction('UPDATE', 'User', id, { name, email, role_id });
   
   revalidatePath('/dashboard/users');
 }
@@ -79,5 +83,6 @@ export async function updateProfile(id: number, formData: FormData) {
 export async function deleteUser(id: number) {
   await requirePermission('delete:users');
   await User.delete(id);
+  await logAction('DELETE', 'User', id, null);
   revalidatePath('/dashboard/users');
 }

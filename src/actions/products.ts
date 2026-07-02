@@ -5,7 +5,7 @@ import { uploadImage } from '@/actions/upload';
 import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/prisma';
 import { requirePermission } from '@/lib/auth';
-import { logAudit } from './audit';
+import { logAction } from '@/lib/audit';
 
 export async function createProduct(formData: FormData) {
   await requirePermission('create:products');
@@ -28,7 +28,7 @@ export async function createProduct(formData: FormData) {
     vehicles: { connect: vehicles },
   });
 
-  await logAudit('CREATE', 'Product', product.product_id, { name });
+  await logAction('CREATE', 'Product', product.product_id, { name });
   
   revalidatePath('/dashboard/products');
   return { success: true };
@@ -62,7 +62,7 @@ export async function updateProduct(id: number, formData: FormData) {
 
   await Product.update(id, updateData);
   
-  await logAudit('UPDATE', 'Product', id, { name });
+  await logAction('UPDATE', 'Product', id, { name });
 
   revalidatePath('/dashboard/products');
   return { success: true };
@@ -71,6 +71,6 @@ export async function updateProduct(id: number, formData: FormData) {
 export async function deleteProduct(id: number) {
   await requirePermission('delete:products');
   await Product.delete(id);
-  await logAudit('DELETE', 'Product', id, null);
+  await logAction('DELETE', 'Product', id, null);
   revalidatePath('/dashboard/products');
 }

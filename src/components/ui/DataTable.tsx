@@ -6,11 +6,17 @@ import {
   ChevronRight, 
   ChevronsLeft, 
   ChevronsRight, 
-  Search, 
+  Search,
   ArrowUpDown,
   ArrowUp,
-  ArrowDown
+  ArrowDown,
+  Download,
+  FileSpreadsheet,
+  FileText
 } from 'lucide-react';
+import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 export type ColumnDef<T> = {
   header: string;
@@ -25,6 +31,8 @@ interface DataTableProps<T> {
   searchPlaceholder?: string;
   searchKeys?: (keyof T | string)[]; // Claves sobre las que buscar
   itemsPerPage?: number;
+  enableExport?: boolean;
+  exportFilename?: string;
 }
 
 // Función auxiliar para obtener valores anidados (ej. "role.name")
@@ -37,7 +45,9 @@ export default function DataTable<T>({
   columns, 
   searchPlaceholder = "Buscar...",
   searchKeys = [],
-  itemsPerPage = 10
+  itemsPerPage = 10,
+  enableExport = false,
+  exportFilename = "exportacion"
 }: DataTableProps<T>) {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -116,6 +126,43 @@ export default function DataTable<T>({
     setCurrentPage(validPage);
   };
 
+  const exportToExcel = () => {
+    // Solo exportar las columnas que tienen un header
+    const exportData = sortedData.map(item => {
+      const row: any = {};
+      columns.forEach(col => {
+        if (col.header && col.accessorKey) {
+          row[col.header] = getNestedValue(item, col.accessorKey as string);
+        }
+      });
+      return row;
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    XLSX.writeFile(workbook, `${exportFilename}.xlsx`);
+  };
+
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    const tableColumn = columns.filter(c => c.header && c.accessorKey).map(c => c.header);
+    const tableRows = sortedData.map(item => {
+      return columns.filter(c => c.header && c.accessorKey).map(c => {
+        return getNestedValue(item, c.accessorKey as string) || '';
+      });
+    });
+
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+      styles: { fontSize: 8 },
+      headStyles: { fillColor: [249, 115, 22] } // brand-accent
+    });
+    
+    doc.save(`${exportFilename}.pdf`);
+  };
+
   return (
     <div className="glass-card rounded-2xl border border-card-border overflow-hidden animate-fade-in-up">
       {/* Barra superior de Búsqueda */}
@@ -133,8 +180,29 @@ export default function DataTable<T>({
             className="w-full bg-background/50 border border-card-border rounded-xl pl-10 pr-4 py-2 text-sm text-foreground focus:outline-none focus:border-brand-accent transition-colors"
           />
         </div>
-        <div className="text-sm text-foreground/50 whitespace-nowrap">
-          {sortedData.length} registro(s) encontrado(s)
+        <div className="flex items-center gap-4">
+          <div className="text-sm text-foreground/50 whitespace-nowrap">
+            {sortedData.length} registro(s) encontrado(s)
+          </div>
+          
+          {enableExport && (
+            <div className="flex items-center gap-2 border-l border-card-border pl-4">
+              <button 
+                onClick={exportToExcel}
+                className="p-2 rounded-lg bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 transition-colors"
+                title="Exportar a Excel"
+              >
+                <FileSpreadsheet size={18} />
+              </button>
+              <button 
+                onClick={exportToPDF}
+                className="p-2 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors"
+                title="Exportar a PDF"
+              >
+                <FileText size={18} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

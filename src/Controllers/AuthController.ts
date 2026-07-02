@@ -3,8 +3,9 @@
 import { User } from '@/Models/User';
 import bcrypt from 'bcryptjs';
 import { SignJWT } from 'jose';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { z } from 'zod';
+import { logAction } from '@/lib/audit';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-default-key-change-it-in-env';
 const ALGORITHM = 'HS256';
@@ -61,6 +62,16 @@ export async function loginAction(prevState: any, formData: FormData) {
       path: '/',
       maxAge: 60 * 60 * 2, // 2 horas
     });
+
+    // Obtener el dispositivo (User-Agent)
+    const headersList = await headers();
+    const userAgent = headersList.get('user-agent') || 'Dispositivo desconocido';
+
+    // Registrar en auditoría
+    await logAction('LOGIN', 'User', user.user_id, { 
+      email: user.email, 
+      device: userAgent 
+    }, user.user_id);
 
   } catch (error: any) {
     if (error.message === 'NEXT_REDIRECT') {

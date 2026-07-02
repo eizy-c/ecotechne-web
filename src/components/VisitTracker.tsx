@@ -18,12 +18,12 @@ export default function VisitTracker() {
 
     const trackVisit = async () => {
       try {
-        const response = await fetch('http://ip-api.com/json/');
+        const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
         
         let country = 'Desconocido';
-        if (data.status === 'success') {
-          country = data.country;
+        if (data.country_name) {
+          country = data.country_name;
           sessionStorage.setItem('user_country', country);
         }
 
