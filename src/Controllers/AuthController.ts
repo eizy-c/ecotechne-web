@@ -86,6 +86,23 @@ export async function loginAction(prevState: any, formData: FormData) {
 
 export async function logoutAction() {
   const cookieStore = await cookies();
+  const token = cookieStore.get('auth_token')?.value;
+  
+  if (token) {
+    try {
+      const { jwtVerify } = await import('jose');
+      const secret = new TextEncoder().encode(JWT_SECRET);
+      const { payload } = await jwtVerify(token, secret);
+      
+      const headersList = await headers();
+      const userAgent = headersList.get('user-agent') || 'Dispositivo desconocido';
+      
+      await logAction('LOGOUT', 'User', payload.id as number, { device: userAgent }, payload.id as number);
+    } catch(e) {
+      console.error('Error auditing logout', e);
+    }
+  }
+
   cookieStore.delete('auth_token');
   return { success: true };
 }

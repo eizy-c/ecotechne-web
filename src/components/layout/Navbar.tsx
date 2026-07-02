@@ -28,7 +28,7 @@ export default function Navbar({
   const navItems = [
     { name: 'Inicio', id: 'inicio', show: true },
     { name: 'Nosotros', id: 'nosotros', show: true },
-    { name: 'Tienda', id: 'tienda', show: hasStore },
+    { name: 'Productos', id: 'tienda', show: hasStore },
     { name: 'Servicios', id: 'servicios', show: hasServices },
     { name: 'Portafolio', id: 'portafolio', show: hasGallery },
   ].filter(item => item.show);

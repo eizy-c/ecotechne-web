@@ -8,6 +8,11 @@ import { requirePermission } from '@/lib/auth';
 import { logAction } from '@/lib/audit';
 
 export async function createProduct(formData: FormData) {
+  function generateSlug(name: string) {
+    const base = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    return `${base}-${Math.floor(1000 + Math.random() * 9000)}`;
+  }
+
   await requirePermission('create:products');
   const name = formData.get('name') as string;
   const description = formData.get('description') as string | null;
@@ -27,6 +32,7 @@ export async function createProduct(formData: FormData) {
     stock: isNaN(stock) ? 0 : stock,
     image_url: formData.get('image_url') as string || null,
     is_featured,
+    slug: generateSlug(name),
     categoryProducts: { create: categories },
     vehicleProducts: { create: vehicles },
     images: { create: additionalImages },
@@ -39,6 +45,11 @@ export async function createProduct(formData: FormData) {
 }
 
 export async function updateProduct(id: number, formData: FormData) {
+  function generateSlug(name: string) {
+    const base = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    return `${base}-${Math.floor(1000 + Math.random() * 9000)}`;
+  }
+
   await requirePermission('update:products');
   const name = formData.get('name') as string;
   const description = formData.get('description') as string | null;
@@ -57,6 +68,7 @@ export async function updateProduct(id: number, formData: FormData) {
     description,
     stock: isNaN(stock) ? 0 : stock,
     is_featured,
+    slug: generateSlug(name),
     categoryProducts: { deleteMany: {}, create: categories },
     vehicleProducts: { deleteMany: {}, create: vehicles },
   };

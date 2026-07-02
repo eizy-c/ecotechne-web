@@ -7,6 +7,11 @@ import { redirect } from 'next/navigation';
 import { logAction } from '@/lib/audit';
 
 export async function createService(formData: FormData) {
+  function generateSlug(name: string) {
+    const base = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    return `${base}-${Math.floor(1000 + Math.random() * 9000)}`;
+  }
+
   await requirePermission('create:services');
   const name = formData.get('name') as string;
   const description = formData.get('description') as string;
@@ -19,7 +24,7 @@ export async function createService(formData: FormData) {
     throw new Error('El nombre es obligatorio');
   }
 
-  const service = await Service.create({ name, description, icon, image_url, active, images: { create: additionalImages } });
+  const service = await Service.create({ name, description, slug: generateSlug(name), icon, image_url, active, images: { create: additionalImages } });
   await logAction('CREATE', 'Service', service.service_id, { name });
   
   revalidatePath('/dashboard/services');
@@ -27,6 +32,11 @@ export async function createService(formData: FormData) {
 }
 
 export async function updateService(id: number, formData: FormData) {
+  function generateSlug(name: string) {
+    const base = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    return `${base}-${Math.floor(1000 + Math.random() * 9000)}`;
+  }
+
   await requirePermission('update:services');
   const name = formData.get('name') as string;
   const description = formData.get('description') as string;
@@ -39,7 +49,7 @@ export async function updateService(id: number, formData: FormData) {
     throw new Error('El nombre es obligatorio');
   }
 
-  const updateData: any = { name, description, icon, image_url, active };
+  const updateData: any = { name, description, slug: generateSlug(name), icon, image_url, active };
   if (additionalImages.length > 0) {
     updateData.images = { deleteMany: {}, create: additionalImages };
   }
