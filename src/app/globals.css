@@ -86,3 +86,20 @@ body {
   box-shadow: 0 0 20px rgba(255, 109, 36, 0.4);
 }
 
+/* Ensure all interactive elements show the pointer cursor */
+button, 
+a, 
+input[type="submit"], 
+input[type="button"], 
+input[type="reset"], 
+[role="button"],
+[tabindex="0"] {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+.disabled {
+  cursor: not-allowed;
+}
+
