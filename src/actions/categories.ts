@@ -16,7 +16,6 @@ export async function createCategory(formData: FormData) {
   await Category.create({ name });
 
   revalidatePath('/dashboard/categories');
-  redirect('/dashboard/categories');
 }
 
 export async function updateCategory(id: number, formData: FormData) {
@@ -30,7 +29,6 @@ export async function updateCategory(id: number, formData: FormData) {
   await Category.update(id, { name });
 
   revalidatePath('/dashboard/categories');
-  redirect('/dashboard/categories');
 }
 
 export async function deleteCategory(id: number) {

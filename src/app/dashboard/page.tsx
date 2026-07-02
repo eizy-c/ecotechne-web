@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
+import { formatRelativeDate } from '@/lib/formatDate';
 
 // Componente para tarjeta de métrica
 function StatCard({ title, value, icon: Icon, trend }: { title: string, value: string, icon: any, trend: string }) {
@@ -78,7 +79,6 @@ export default async function DashboardIndex() {
               <thead>
                 <tr className="border-b border-card-border text-foreground/60 text-sm">
                   <th className="pb-3 font-medium">Nombre</th>
-                  <th className="pb-3 font-medium">Precio</th>
                   <th className="pb-3 font-medium">Stock</th>
                   <th className="pb-3 font-medium">Estado</th>
                 </tr>
@@ -87,7 +87,6 @@ export default async function DashboardIndex() {
                 {recentProducts.map((prod) => (
                   <tr key={prod.product_id} className="border-b border-card-border/50 hover:bg-foreground/5 transition-colors">
                     <td className="py-4 font-medium">{prod.name}</td>
-                    <td className="py-4 text-foreground/70">${Number(prod.price).toFixed(2)}</td>
                     <td className="py-4 text-brand-accent font-medium">{prod.stock}</td>
                     <td className="py-4">
                       {prod.stock > 0 ? (
@@ -110,7 +109,7 @@ export default async function DashboardIndex() {
               <div key={visit.visit_id} className="flex justify-between items-center p-3 rounded-xl border border-card-border hover:bg-card-border/50 transition-colors">
                 <div>
                   <p className="font-medium text-sm text-foreground">{visit.country}</p>
-                  <p className="text-xs text-foreground/50">{new Date(visit.created_at).toLocaleString()}</p>
+                  <p className="text-xs text-foreground/50" title={new Date(visit.created_at).toLocaleString()}>{formatRelativeDate(visit.created_at)}</p>
                 </div>
                 <div className="text-xs text-brand-accent font-mono bg-brand-accent/10 px-2 py-1 rounded">
                   {visit.path}

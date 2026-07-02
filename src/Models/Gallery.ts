@@ -20,13 +20,13 @@ export class Gallery {
     });
   }
 
-  static async create(data: { title: string; description?: string; image_url: string }) {
+  static async create(data: { title: string; description?: string; image_url: string; is_featured?: boolean }) {
     return prisma.gallery.create({
       data,
     });
   }
 
-  static async update(id: number, data: { title: string; description?: string; image_url?: string }) {
+  static async update(id: number, data: { title: string; description?: string; image_url?: string; is_featured?: boolean }) {
     return prisma.gallery.update({
       where: { gallery_id: id },
       data,

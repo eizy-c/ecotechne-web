@@ -46,21 +46,6 @@ export default function EditServiceForm({ service }: { service: any }) {
         </div>
         
         <div>
-          <label htmlFor="price" className="block text-sm font-semibold text-foreground mb-2">Precio Base ($) *</label>
-          <input 
-            type="number" 
-            step="0.01"
-            min="0"
-            id="price"
-            name="price"
-            required
-            defaultValue={Number(service.price).toFixed(2)}
-            placeholder="Ej: 150.00"
-            className="w-full bg-background/50 border border-card-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-brand-accent transition-colors"
-          />
-        </div>
-
-        <div>
           <label htmlFor="description" className="block text-sm font-semibold text-foreground mb-2">Descripción</label>
           <textarea 
             id="description"

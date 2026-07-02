@@ -3,9 +3,10 @@
 import { useState } from 'react';
 import { Plus, Edit, Tag } from 'lucide-react';
 import DeleteButton from '@/components/ui/DeleteButton';
-import { deleteBrand } from '@/actions/brands';
 import BrandModal from './BrandModal';
 import toast from 'react-hot-toast';
+import DataTable from '@/components/ui/DataTable';
+import { deleteBrand } from '@/actions/brands';
 
 interface Brand {
   brand_id: number;
@@ -42,55 +43,47 @@ export default function BrandsList({ initialBrands }: { initialBrands: Brand[] }
         </button>
       </div>
 
-      <div className="glass-card rounded-2xl border border-card-border overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-card-border/50 bg-foreground/5">
-                <th className="p-4 font-semibold text-foreground/80">Nombre</th>
-                <th className="p-4 font-semibold text-foreground/80 text-right">Acciones</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-card-border/50">
-              {initialBrands.map((brand) => (
-                <tr key={brand.brand_id} className="hover:bg-foreground/5 transition-colors group">
-                  <td className="p-4 font-medium text-foreground flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-brand-accent/10 flex items-center justify-center text-brand-accent">
-                      <Tag size={20} />
-                    </div>
-                    {brand.name}
-                  </td>
-                  <td className="p-4 text-right">
-                    <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button 
-                        onClick={() => handleEdit(brand)}
-                        className="p-2 text-foreground/50 hover:text-brand-accent hover:bg-brand-accent/10 rounded-lg transition-colors"
-                        title="Editar"
-                      >
-                        <Edit size={18} />
-                      </button>
-                      <DeleteButton 
-                        onDelete={async () => {
-                          await deleteBrand(brand.brand_id);
-                          toast.success('Marca eliminada correctamente');
-                        }}
-                        itemName={`la marca ${brand.name}`}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {initialBrands.length === 0 && (
-                <tr>
-                  <td colSpan={2} className="p-8 text-center text-foreground/50 italic">
-                    No hay marcas registradas.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DataTable 
+        data={initialBrands}
+        columns={[
+          {
+            header: 'Nombre',
+            accessorKey: 'name',
+            cell: (brand) => (
+              <div className="font-medium text-foreground flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-brand-accent/10 flex items-center justify-center text-brand-accent">
+                  <Tag size={20} />
+                </div>
+                {brand.name}
+              </div>
+            )
+          },
+          {
+            header: 'Acciones',
+            sortable: false,
+            cell: (brand) => (
+              <div className="flex items-center justify-end gap-2">
+                <button 
+                  onClick={() => handleEdit(brand)}
+                  className="p-2 text-foreground/50 hover:text-brand-accent hover:bg-brand-accent/10 rounded-lg transition-colors"
+                  title="Editar"
+                >
+                  <Edit size={18} />
+                </button>
+                <DeleteButton 
+                  onDelete={async () => {
+                    await deleteBrand(brand.brand_id);
+                  }}
+                  itemName={`la marca ${brand.name}`}
+                />
+              </div>
+            )
+          }
+        ]}
+        searchPlaceholder="Buscar marca..."
+        searchKeys={['name']}
+        itemsPerPage={10}
+      />
 
       <BrandModal 
         isOpen={isModalOpen}

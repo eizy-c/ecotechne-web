@@ -64,6 +64,17 @@ Abre tu navegador y entra a: [http://localhost:3000](http://localhost:3000)
 
 ---
 
+## Despliegue y Certificado SSL (HTTPS)
+Para publicar este proyecto en producción (ej. un VPS, cPanel, o Vercel), es OBLIGATORIO contar con un certificado SSL.
+Si no cuentas con uno, los navegadores bloquearán tu web o penalizarán el SEO.
+
+**¿Cómo activarlo gratis?**
+Si usas **cPanel**, busca la sección "SSL/TLS Status" o "Let's Encrypt SSL" y haz clic en *Run AutoSSL* o *Issue*.
+Si usas un VPS con Nginx/Apache, puedes instalar [Certbot](https://certbot.eff.org/) para auto-instalar tu certificado en segundos.
+Asegúrate de que la variable `NEXT_PUBLIC_SITE_URL` en tu `.env.production` inicie siempre con `https://`.
+
+---
+
 ## Estructura del Proyecto
 - `src/app`: Contiene todas las páginas (Frontend de la web pública y el Dashboard).
 - `src/components`: Componentes reutilizables (Botones, Modales, Barras laterales).

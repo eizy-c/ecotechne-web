@@ -1,12 +1,22 @@
 import { Gallery } from "@/Models/Gallery";
 import Image from 'next/image';
+import prisma from '@/lib/prisma';
 
 /**
  * Componente Galeria - Renderizado en el Servidor (Next.js 15)
  * Este componente lee dinámicamente los proyectos desde Google Sheets vía Service Account.
  */
 export default async function Galeria() {
-  const proyectos = await Gallery.findAll();
+  const proyectos = await prisma.gallery.findMany({
+    where: {
+      deleted_at: null,
+      is_featured: true
+    },
+    orderBy: {
+      created_at: 'desc'
+    },
+    take: 6
+  });
   const error = !proyectos;
 
   if (error || proyectos.length === 0) {

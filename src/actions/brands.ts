@@ -16,7 +16,6 @@ export async function createBrand(formData: FormData) {
   await Brand.create({ name });
 
   revalidatePath('/dashboard/brands');
-  redirect('/dashboard/brands');
 }
 
 export async function updateBrand(id: number, formData: FormData) {
@@ -30,7 +29,6 @@ export async function updateBrand(id: number, formData: FormData) {
   await Brand.update(id, { name });
 
   revalidatePath('/dashboard/brands');
-  redirect('/dashboard/brands');
 }
 
 export async function deleteBrand(id: number) {

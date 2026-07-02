@@ -4,10 +4,12 @@ import { createProduct } from '@/actions/products';
 import Link from 'next/link';
 import { Save } from 'lucide-react';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import MediaPickerModal from '@/components/ui/MediaPickerModal';
 import toast from 'react-hot-toast';
 
 export default function CreateProductForm({ categories, vehicles }: { categories: any[], vehicles: any[] }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isUniversal, setIsUniversal] = useState(false);
@@ -21,11 +23,9 @@ export default function CreateProductForm({ categories, vehicles }: { categories
         setError(null);
         try {
           await createProduct(formData);
+          toast.success('Producto creado exitosamente');
+          router.push('/dashboard/products');
         } catch (e: any) {
-          if (e.message === 'NEXT_REDIRECT') {
-            toast.success('Producto creado exitosamente');
-            throw e;
-          }
           setError(e.message);
         } finally {
           setLoading(false);
@@ -51,18 +51,6 @@ export default function CreateProductForm({ categories, vehicles }: { categories
           
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="price" className="block text-sm font-semibold text-foreground mb-2">Precio ($) *</label>
-              <input 
-                type="number" 
-                step="0.01"
-                id="price"
-                name="price"
-                required
-                placeholder="0.00"
-                className="w-full bg-background/50 border border-card-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-brand-accent transition-colors"
-              />
-            </div>
-            <div>
               <label htmlFor="stock" className="block text-sm font-semibold text-foreground mb-2">Stock Inicial *</label>
               <input 
                 type="number" 
@@ -72,6 +60,13 @@ export default function CreateProductForm({ categories, vehicles }: { categories
                 defaultValue="0"
                 className="w-full bg-background/50 border border-card-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-brand-accent transition-colors"
               />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-foreground mb-2">Destacado en Inicio</label>
+              <label className="flex items-center gap-3 cursor-pointer mt-3">
+                <input type="checkbox" name="is_featured" value="true" className="w-5 h-5 text-brand-accent rounded focus:ring-brand-accent" />
+                <span className="text-sm">Mostrar en portada</span>
+              </label>
             </div>
           </div>
 

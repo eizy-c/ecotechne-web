@@ -18,7 +18,6 @@ export async function createVehicle(formData: FormData) {
   await Vehicle.create({ brand_id, vehicle_model_id, year });
   
   revalidatePath('/dashboard/vehicles');
-  redirect('/dashboard/vehicles');
 }
 
 export async function updateVehicle(id: number, formData: FormData) {
@@ -34,7 +33,6 @@ export async function updateVehicle(id: number, formData: FormData) {
   await Vehicle.update(id, { brand_id, vehicle_model_id, year });
   
   revalidatePath('/dashboard/vehicles');
-  redirect('/dashboard/vehicles');
 }
 
 export async function deleteVehicle(id: number) {

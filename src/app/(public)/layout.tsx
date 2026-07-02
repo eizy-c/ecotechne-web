@@ -2,6 +2,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import VisitTracker from "@/components/VisitTracker";
+import CookieBanner from "@/components/ui/CookieBanner";
 import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
@@ -29,6 +30,7 @@ export default async function PublicLayout({
       />
       {children}
       <WhatsAppButton />
+      <CookieBanner />
       <Footer />
     </>
   );

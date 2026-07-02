@@ -34,6 +34,23 @@ export async function logProductLead(productId: number, country?: string) {
   }
 }
 
+export async function logServiceLead(serviceId: number, country?: string) {
+  try {
+    const headersList = await headers();
+    const ip = headersList.get('x-forwarded-for') || '127.0.0.1';
+    
+    await prisma.serviceLead.create({
+      data: {
+        service_id: serviceId,
+        ip_address: ip,
+        country: country || 'Unknown',
+      }
+    });
+  } catch (e) {
+    console.error('Error logging service lead:', e);
+  }
+}
+
 export async function logVisitClient(path: string, country: string) {
   try {
     const headersList = await headers();

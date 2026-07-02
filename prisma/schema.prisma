@@ -120,10 +120,10 @@ model Product {
   product_id Int       @id @default(autoincrement())
   name       String    @db.VarChar(255)
   slug       String    @unique @default(uuid()) @db.VarChar(255)
-  price      Decimal   @db.Decimal(10, 2)
   stock      Int       @default(0)
-  image_url  String?   @db.VarChar(512)
-  deleted_at DateTime?
+  image_url   String?   @db.VarChar(512)
+  is_featured Boolean   @default(false)
+  deleted_at  DateTime?
 
   categories   Category[] // Implicit many-to-many
   vehicles     Vehicle[] // Implicit many-to-many
@@ -137,11 +137,12 @@ model Service {
   name        String    @db.VarChar(255)
   slug        String    @unique @default(uuid()) @db.VarChar(255)
   description String?   @db.Text
-  price       Decimal   @db.Decimal(10, 2)
   icon        String?   @default("gear") @db.VarChar(50)
   image_url   String?   @db.VarChar(512)
   active      Boolean   @default(true)
   deleted_at  DateTime?
+
+  serviceLeads ServiceLead[]
 
   @@map("service")
 }
@@ -152,6 +153,7 @@ model Gallery {
   slug        String    @unique @default(uuid()) @db.VarChar(255)
   description String?   @db.Text
   image_url   String    @db.VarChar(512)
+  is_featured Boolean   @default(false)
   created_at  DateTime  @default(now()) @db.Timestamp(0)
   deleted_at  DateTime?
 
@@ -161,7 +163,9 @@ model Gallery {
 model ContactMessage {
   message_id Int      @id @default(autoincrement())
   name       String   @db.VarChar(255)
+  email      String?  @db.VarChar(255)
   phone      String   @db.VarChar(50)
+  country    String?  @db.VarChar(100)
   message    String   @db.Text
   is_read    Boolean  @default(false)
   created_at DateTime @default(now()) @db.Timestamp(0)
@@ -205,4 +209,16 @@ model ProductLead {
   product Product @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
 
   @@map("product_lead")
+}
+
+model ServiceLead {
+  lead_id    Int      @id @default(autoincrement())
+  service_id Int
+  ip_address String?  @db.VarChar(45)
+  country    String?  @db.VarChar(100)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+
+  service Service @relation(fields: [service_id], references: [service_id], onDelete: Cascade)
+
+  @@map("service_lead")
 }

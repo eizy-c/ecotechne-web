@@ -17,7 +17,6 @@ export async function createVehicleModel(formData: FormData) {
   await VehicleModel.create({ name, brand_id });
 
   revalidatePath('/dashboard/vehicle-models');
-  redirect('/dashboard/vehicle-models');
 }
 
 export async function updateVehicleModel(id: number, formData: FormData) {
@@ -32,7 +31,6 @@ export async function updateVehicleModel(id: number, formData: FormData) {
   await VehicleModel.update(id, { name, brand_id });
 
   revalidatePath('/dashboard/vehicle-models');
-  redirect('/dashboard/vehicle-models');
 }
 
 export async function deleteVehicleModel(id: number) {

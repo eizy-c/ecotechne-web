@@ -90,6 +90,14 @@ export default function GalleryModal({ isOpen, onClose, gallery }: GalleryModalP
         </div>
 
         <div>
+          <label className="block text-sm font-semibold text-foreground mb-2">Destacado en Portada</label>
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" name="is_featured" value="true" defaultChecked={gallery?.is_featured} className="w-5 h-5 text-brand-accent rounded focus:ring-brand-accent" />
+            <span className="text-sm">Mostrar como proyecto destacado en inicio</span>
+          </label>
+        </div>
+
+        <div>
           <label className="block text-sm font-semibold text-foreground mb-2">Imagen {gallery ? '(Opcional cambiar)' : '*'}</label>
           <div className="relative border-2 border-dashed border-card-border rounded-2xl hover:border-brand-accent transition-colors bg-background/30 group overflow-hidden">
             <input 

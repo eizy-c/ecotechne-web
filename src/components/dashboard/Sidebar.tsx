@@ -13,10 +13,12 @@ import {
   MessageSquare,
   Car,
   Box,
-  Tag
+  Tag,
+  BarChart3
 } from 'lucide-react';
 const menuItems = [
   { name: 'Inicio', path: '/dashboard', icon: LayoutDashboard, permission: 'read:dashboard' },
+  { name: 'Analíticas', path: '/dashboard/analytics', icon: BarChart3, permission: 'read:dashboard' },
   { name: 'Productos', path: '/dashboard/products', icon: Package, permission: 'read:products' },
   { name: 'Categorías', path: '/dashboard/categories', icon: Tag, permission: 'read:categories' },
   { name: 'Marcas', path: '/dashboard/brands', icon: Box, permission: 'read:brands' },
@@ -29,9 +31,11 @@ const menuItems = [
   { name: 'Mensajes', path: '/dashboard/messages', icon: MessageSquare, isMessages: true, permission: 'read:messages' },
 ];
 
-export function Sidebar({ unreadCount = 0 }: { unreadCount?: number }) {
+export function Sidebar() {
   const pathname = usePathname();
   const hasPermission = useSessionStore((state) => state.hasPermission);
+  const user = useSessionStore((state) => state.user); // Suscribirse a los cambios de usuario
+  const unreadCount = useSessionStore((state) => state.unreadCount);
 
   return (
     <aside className="w-64 h-screen fixed left-0 top-0 border-r border-card-border bg-card shadow-lg z-40 hidden md:flex flex-col">

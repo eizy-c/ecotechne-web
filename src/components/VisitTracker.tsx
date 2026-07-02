@@ -12,6 +12,10 @@ export default function VisitTracker() {
     const hasTracked = sessionStorage.getItem('visit_tracked');
     if (hasTracked) return;
 
+    // Solo trackear si el usuario ha aceptado las cookies
+    const cookieConsent = localStorage.getItem('cookie_consent');
+    if (cookieConsent !== 'accepted') return;
+
     const trackVisit = async () => {
       try {
         const response = await fetch('http://ip-api.com/json/');
@@ -20,6 +24,7 @@ export default function VisitTracker() {
         let country = 'Desconocido';
         if (data.status === 'success') {
           country = data.country;
+          sessionStorage.setItem('user_country', country);
         }
 
         await logVisitClient(pathname || '/', country);

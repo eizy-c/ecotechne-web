@@ -6,14 +6,16 @@ import { redirect } from 'next/navigation';
 
 export async function createMessage(formData: FormData) {
   const name = formData.get('name') as string;
+  const email = formData.get('email') as string | null;
   const phone = formData.get('phone') as string;
+  const country = formData.get('country') as string | null;
   const message = formData.get('message') as string;
 
   if (!name || !phone || !message) {
     throw new Error('Todos los campos son obligatorios');
   }
 
-  await ContactMessage.create({ name, phone, message });
+  await ContactMessage.create({ name, email, phone, country, message });
   
   revalidatePath('/dashboard/messages');
   

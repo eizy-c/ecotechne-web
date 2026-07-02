@@ -4,10 +4,12 @@ import { updateProduct } from '@/actions/products';
 import Link from 'next/link';
 import { Save } from 'lucide-react';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import MediaPickerModal from '@/components/ui/MediaPickerModal';
 import toast from 'react-hot-toast';
 
 export default function EditProductForm({ product, categories, vehicles }: { product: any, categories: any[], vehicles: any[] }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isUniversal, setIsUniversal] = useState(product.vehicles?.length === 0);
@@ -21,11 +23,9 @@ export default function EditProductForm({ product, categories, vehicles }: { pro
         setError(null);
         try {
           await updateProduct(product.product_id, formData);
+          toast.success('Producto editado exitosamente');
+          router.push('/dashboard/products');
         } catch (e: any) {
-          if (e.message === 'NEXT_REDIRECT') {
-            toast.success('Producto editado exitosamente');
-            throw e;
-          }
           setError(e.message);
         } finally {
           setLoading(false);
@@ -52,18 +52,6 @@ export default function EditProductForm({ product, categories, vehicles }: { pro
           
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="price" className="block text-sm font-semibold text-foreground mb-2">Precio ($) *</label>
-              <input 
-                type="number" 
-                step="0.01"
-                id="price"
-                name="price"
-                required
-                defaultValue={Number(product.price)}
-                className="w-full bg-background/50 border border-card-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-brand-accent transition-colors"
-              />
-            </div>
-            <div>
               <label htmlFor="stock" className="block text-sm font-semibold text-foreground mb-2">Stock Inicial *</label>
               <input 
                 type="number" 
@@ -73,6 +61,13 @@ export default function EditProductForm({ product, categories, vehicles }: { pro
                 defaultValue={product.stock}
                 className="w-full bg-background/50 border border-card-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-brand-accent transition-colors"
               />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-foreground mb-2">Destacado en Inicio</label>
+              <label className="flex items-center gap-3 cursor-pointer mt-3">
+                <input type="checkbox" name="is_featured" value="true" defaultChecked={product.is_featured} className="w-5 h-5 text-brand-accent rounded focus:ring-brand-accent" />
+                <span className="text-sm">Mostrar en portada</span>
+              </label>
             </div>
           </div>
 

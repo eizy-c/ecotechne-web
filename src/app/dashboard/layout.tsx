@@ -31,10 +31,20 @@ export default async function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-background flex">
-      <SessionProvider user={user}>
-        <Toaster position="top-right" />
+      <SessionProvider user={user} unreadCount={unreadCount}>
+        <Toaster 
+          position="top-right" 
+          toastOptions={{
+            style: {
+              background: '#1A1A1A',
+              color: '#FFFFFF',
+              border: '1px solid #FF6D24',
+              borderRadius: '12px'
+            }
+          }} 
+        />
         <MessageAlerter initialCount={unreadCount} />
-        <Sidebar unreadCount={unreadCount} />
+        <Sidebar />
         <div className="flex-1 md:ml-64 flex flex-col min-h-screen transition-all duration-300">
           <Header />
           <main className="flex-1 p-4 md:p-8 overflow-x-hidden animate-fade-in-up">

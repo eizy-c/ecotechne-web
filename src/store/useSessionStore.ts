@@ -9,13 +9,17 @@ type UserSession = {
 
 interface SessionState {
   user: UserSession;
+  unreadCount: number;
   setUser: (user: UserSession) => void;
+  setUnreadCount: (count: number) => void;
   hasPermission: (permission: string) => boolean;
 }
 
 export const useSessionStore = create<SessionState>((set, get) => ({
   user: null,
+  unreadCount: 0,
   setUser: (user) => set({ user }),
+  setUnreadCount: (count) => set({ unreadCount: count }),
   hasPermission: (permission) => {
     const user = get().user;
     if (!user) return false;

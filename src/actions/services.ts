@@ -12,15 +12,14 @@ export async function createService(formData: FormData) {
   const description = formData.get('description') as string;
   const icon = formData.get('icon') as string;
   const image_url = formData.get('image_url') as string;
-  const price = Number(formData.get('price')) || 0;
   const active = formData.get('active') === 'on';
 
   if (!name) {
     throw new Error('El nombre es obligatorio');
   }
 
-  const service = await Service.create({ name, description, icon, image_url, price, active });
-  await logAudit('CREATE', 'Service', service.service_id, { name, price });
+  const service = await Service.create({ name, description, icon, image_url, active });
+  await logAudit('CREATE', 'Service', service.service_id, { name });
   
   revalidatePath('/dashboard/services');
   redirect('/dashboard/services');
@@ -32,15 +31,14 @@ export async function updateService(id: number, formData: FormData) {
   const description = formData.get('description') as string;
   const icon = formData.get('icon') as string;
   const image_url = formData.get('image_url') as string;
-  const price = Number(formData.get('price')) || 0;
   const active = formData.get('active') === 'on';
 
   if (!name) {
     throw new Error('El nombre es obligatorio');
   }
 
-  await Service.update(id, { name, description, icon, image_url, price, active });
-  await logAudit('UPDATE', 'Service', id, { name, price, active });
+  await Service.update(id, { name, description, icon, image_url, active });
+  await logAudit('UPDATE', 'Service', id, { name, active });
   
   revalidatePath('/dashboard/services');
   redirect('/dashboard/services');

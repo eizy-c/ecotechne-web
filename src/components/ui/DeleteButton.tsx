@@ -1,7 +1,8 @@
 'use client';
 
 import { Trash2, AlertTriangle } from 'lucide-react';
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { toast } from 'react-hot-toast';
 
 export default function DeleteButton({ 
@@ -13,6 +14,11 @@ export default function DeleteButton({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleConfirm = () => {
     startTransition(async () => {
@@ -37,8 +43,8 @@ export default function DeleteButton({
         <Trash2 size={18} />
       </button>
 
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
+      {isOpen && mounted && createPortal(
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
           <div className="bg-card border border-card-border rounded-2xl p-6 w-full max-w-sm shadow-2xl animate-fade-in-up">
             <div className="flex items-center gap-4 mb-4 text-red-500">
               <div className="p-3 bg-red-500/10 rounded-full">
@@ -71,7 +77,8 @@ export default function DeleteButton({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

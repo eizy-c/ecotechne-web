@@ -48,7 +48,23 @@ export default function StoreClient({
   const handleWhatsAppClick = async (product: any) => {
     // Registrar el lead
     try {
-      await logProductLead(product.product_id);
+      let country = typeof window !== 'undefined' ? sessionStorage.getItem('user_country') : null;
+      if (!country) {
+        try {
+          const response = await fetch('http://ip-api.com/json/');
+          const data = await response.json();
+          if (data.status === 'success') {
+            country = data.country;
+            sessionStorage.setItem('user_country', country!);
+          } else {
+            country = 'Local/Desconocido';
+          }
+        } catch (e) {
+          country = 'Desconocido';
+        }
+      }
+      
+      await logProductLead(product.product_id, country || 'Desconocido');
     } catch (e) {
       console.error(e);
     }
@@ -162,9 +178,7 @@ export default function StoreClient({
                     <i className="fa-solid fa-box text-6xl"></i>
                   </div>
                 )}
-                <div className="absolute top-4 right-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-                  ${Number(product.price).toFixed(2)}
-                </div>
+
               </div>
               
               <div className="p-6 flex-1 flex flex-col">

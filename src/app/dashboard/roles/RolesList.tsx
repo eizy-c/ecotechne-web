@@ -7,6 +7,7 @@ import { deleteRole } from '@/actions/roles';
 import DeleteButton from '@/components/ui/DeleteButton';
 import RoleModal from './RoleModal';
 import toast from 'react-hot-toast';
+import DataTable, { ColumnDef } from '@/components/ui/DataTable';
 
 export default function RolesList({ initialRoles, allPermissions }: { initialRoles: any[], allPermissions: any[] }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,68 +47,50 @@ export default function RolesList({ initialRoles, allPermissions }: { initialRol
         </button>
       </div>
 
-      <div className="glass-card rounded-2xl border border-card-border overflow-hidden">
-        <div className="p-4 border-b border-card-border flex justify-between items-center bg-card/50">
-          <div className="relative w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/40" size={18} />
-            <input 
-              type="text" 
-              placeholder="Buscar rol..." 
-              className="w-full bg-background/50 border border-card-border rounded-lg pl-10 pr-4 py-2 text-sm text-foreground focus:outline-none focus:border-brand-accent transition-colors"
-            />
-          </div>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-foreground/5 text-foreground/70 uppercase font-semibold text-xs tracking-wider">
-              <tr>
-                <th className="px-6 py-4">ID</th>
-                <th className="px-6 py-4">Nombre</th>
-                <th className="px-6 py-4">Descripción</th>
-                <th className="px-6 py-4 text-right">Acciones</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-card-border">
-              {initialRoles.map((role) => (
-                <tr key={role.role_id} className="hover:bg-foreground/5 transition-colors group">
-                  <td className="px-6 py-4 text-foreground/60">#{role.role_id}</td>
-                  <td className="px-6 py-4 font-semibold text-foreground group-hover:text-brand-accent transition-colors">
-                    {role.name}
-                  </td>
-                  <td className="px-6 py-4 text-foreground/70">{role.description || '-'}</td>
-                  <td className="px-6 py-4 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button 
-                        onClick={() => handleEdit(role)}
-                        className="p-2 text-foreground/50 hover:text-brand-accent hover:bg-brand-accent/10 rounded-lg transition-colors"
-                        title="Editar"
-                      >
-                        <Edit size={18} />
-                      </button>
-                      <DeleteButton 
-                        onDelete={async () => {
-                          await deleteRole(role.role_id);
-                          toast.success('Rol eliminado correctamente');
-                        }}
-                        itemName={`Rol: ${role.name}`}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              
-              {initialRoles.length === 0 && (
-                <tr>
-                  <td colSpan={4} className="px-6 py-12 text-center text-foreground/50">
-                    No hay roles registrados en el sistema.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DataTable 
+        data={initialRoles}
+        columns={[
+          {
+            header: 'ID',
+            accessorKey: 'role_id',
+            cell: (role) => <span className="text-foreground/60">#{role.role_id}</span>
+          },
+          {
+            header: 'Nombre',
+            accessorKey: 'name',
+            cell: (role) => <span className="font-semibold text-foreground">{role.name}</span>
+          },
+          {
+            header: 'Descripción',
+            accessorKey: 'description',
+            cell: (role) => <span className="text-foreground/70">{role.description || '-'}</span>
+          },
+          {
+            header: 'Acciones',
+            sortable: false,
+            cell: (role) => (
+              <div className="flex items-center justify-end gap-2">
+                <button 
+                  onClick={() => handleEdit(role)}
+                  className="p-2 text-foreground/50 hover:text-brand-accent hover:bg-brand-accent/10 rounded-lg transition-colors"
+                  title="Editar"
+                >
+                  <Edit size={18} />
+                </button>
+                <DeleteButton 
+                  onDelete={async () => {
+                    await deleteRole(role.role_id);
+                  }}
+                  itemName={`Rol: ${role.name}`}
+                />
+              </div>
+            )
+          }
+        ]}
+        searchPlaceholder="Buscar rol..."
+        searchKeys={['name', 'description']}
+        itemsPerPage={10}
+      />
 
       <RoleModal 
         isOpen={isModalOpen}

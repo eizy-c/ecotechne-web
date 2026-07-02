@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { createMessage } from '@/actions/messages';
 import { toast } from 'sonner';
 
@@ -10,7 +10,21 @@ import { toast } from 'sonner';
  */
 export default function Contact() {
   const [loading, setLoading] = useState(false);
+  const [country, setCountry] = useState<string>('');
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    fetch('https://ipapi.co/json/')
+      .then(res => res.json())
+      .then(data => {
+        if (data.country_name) {
+          setCountry(data.country_name);
+        }
+      })
+      .catch(() => {
+        // Ignorar silenciosamente si falla
+      });
+  }, []);
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
@@ -67,6 +81,14 @@ export default function Contact() {
                   className="w-full bg-background/50 border border-card-border rounded-2xl px-6 py-4 text-foreground placeholder:text-foreground/40 focus:outline-none focus:border-brand-accent transition-colors" 
                   required 
                 />
+                <input 
+                  type="email" 
+                  name="email"
+                  placeholder="Correo electrónico" 
+                  className="w-full bg-background/50 border border-card-border rounded-2xl px-6 py-4 text-foreground placeholder:text-foreground/40 focus:outline-none focus:border-brand-accent transition-colors" 
+                  required 
+                />
+                <input type="hidden" name="country" value={country} />
                 <input 
                   type="tel" 
                   name="phone"

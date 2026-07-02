@@ -21,10 +21,12 @@ export async function createGallery(formData: FormData) {
     throw new Error('El título y la imagen son obligatorios');
   }
 
+  const is_featured = formData.get('is_featured') === 'true';
+
   // Subir la imagen
   const image_url = await uploadImage(formData, 'gallery');
 
-  await Gallery.create({ title, description, image_url });
+  await Gallery.create({ title, description, image_url, is_featured });
   
   revalidatePath('/dashboard/galleries');
 }
@@ -35,11 +37,13 @@ export async function updateGallery(id: number, formData: FormData) {
   const description = formData.get('description') as string;
   const image = formData.get('image') as File;
 
+  const is_featured = formData.get('is_featured') === 'true';
+
   if (!title) {
     throw new Error('El título es obligatorio');
   }
 
-  const updateData: any = { title, description };
+  const updateData: any = { title, description, is_featured };
 
   // Si se subió una nueva imagen, procesarla y actualizarla
   if (image && image.size > 0) {

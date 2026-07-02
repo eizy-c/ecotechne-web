@@ -3,9 +3,10 @@
 import { useState } from 'react';
 import { Plus, Edit, CarFront } from 'lucide-react';
 import DeleteButton from '@/components/ui/DeleteButton';
-import { deleteVehicle } from '@/actions/vehicles';
 import VehicleModal from './VehicleModal';
 import toast from 'react-hot-toast';
+import DataTable, { ColumnDef } from '@/components/ui/DataTable';
+import { deleteVehicle } from '@/actions/vehicles';
 
 export default function VehiclesList({ 
   initialVehicles, 
@@ -45,62 +46,54 @@ export default function VehiclesList({
         </button>
       </div>
 
-      <div className="glass-card rounded-2xl border border-card-border overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-card-border/50 bg-foreground/5">
-                <th className="p-4 font-semibold text-foreground/80">Vehículo</th>
-                <th className="p-4 font-semibold text-foreground/80 text-right">Acciones</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-card-border/50">
-              {initialVehicles.map((vehicle) => (
-                <tr key={vehicle.vehicle_id} className="hover:bg-foreground/5 transition-colors group">
-                  <td className="p-4 font-medium text-foreground flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0">
-                      <CarFront size={24} />
-                    </div>
-                    <div>
-                      <div className="font-bold text-lg">
-                        {vehicle.brand?.name} {vehicle.model?.name}
-                      </div>
-                      <div className="text-sm text-foreground/50 font-mono">
-                        Año: {vehicle.year}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="p-4 text-right">
-                    <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button 
-                        onClick={() => handleEdit(vehicle)}
-                        className="p-2 text-foreground/50 hover:text-brand-accent hover:bg-brand-accent/10 rounded-lg transition-colors"
-                        title="Editar"
-                      >
-                        <Edit size={18} />
-                      </button>
-                      <DeleteButton 
-                        onDelete={async () => {
-                          await deleteVehicle(vehicle.vehicle_id);
-                          toast.success('Vehículo eliminado correctamente');
-                        }}
-                        itemName={`el vehículo ${vehicle.brand?.name} ${vehicle.model?.name}`}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {initialVehicles.length === 0 && (
-                <tr>
-                  <td colSpan={2} className="p-8 text-center text-foreground/50 italic">
-                    No hay vehículos registrados.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DataTable 
+        data={initialVehicles}
+        columns={[
+          {
+            header: 'Vehículo',
+            accessorKey: 'brand.name', // Sirve para el sort (usa el nombre de la marca)
+            cell: (vehicle) => (
+              <div className="font-medium text-foreground flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0">
+                  <CarFront size={24} />
+                </div>
+                <div>
+                  <div className="font-bold text-lg">
+                    {vehicle.brand?.name} {vehicle.model?.name}
+                  </div>
+                  <div className="text-sm text-foreground/50 font-mono">
+                    Año: {vehicle.year}
+                  </div>
+                </div>
+              </div>
+            )
+          },
+          {
+            header: 'Acciones',
+            sortable: false,
+            cell: (vehicle) => (
+              <div className="flex items-center justify-end gap-2">
+                <button 
+                  onClick={() => handleEdit(vehicle)}
+                  className="p-2 text-foreground/50 hover:text-brand-accent hover:bg-brand-accent/10 rounded-lg transition-colors"
+                  title="Editar"
+                >
+                  <Edit size={18} />
+                </button>
+                <DeleteButton 
+                  onDelete={async () => {
+                    await deleteVehicle(vehicle.vehicle_id);
+                  }}
+                  itemName={`el vehículo ${vehicle.brand?.name} ${vehicle.model?.name}`}
+                />
+              </div>
+            )
+          }
+        ]}
+        searchPlaceholder="Buscar vehículo..."
+        searchKeys={['brand.name', 'model.name', 'year']}
+        itemsPerPage={10}
+      />
 
       <VehicleModal 
         isOpen={isModalOpen}

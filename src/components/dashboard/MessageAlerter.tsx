@@ -4,10 +4,11 @@ import { useEffect, useState, useRef } from 'react';
 import toast from 'react-hot-toast';
 import { getUnreadCountClient } from '@/actions/messagesClient';
 import { Mail } from 'lucide-react';
+import { useSessionStore } from '@/store/useSessionStore';
 
 export default function MessageAlerter({ initialCount }: { initialCount: number }) {
   const [count, setCount] = useState(initialCount);
-  const lastToastCountRef = useRef(initialCount);
+  const setUnreadCount = useSessionStore((state) => state.setUnreadCount);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -26,17 +27,28 @@ export default function MessageAlerter({ initialCount }: { initialCount: number 
                 <p className="text-sm text-foreground/70">Tienes {diff} {diff === 1 ? 'mensaje nuevo' : 'mensajes nuevos'} en la bandeja.</p>
               </div>
             </div>
-          ), { duration: 5000, position: 'top-right' });
+          ), { 
+            duration: 5000, 
+            position: 'top-right',
+            style: {
+              background: '#1A1A1A',
+              color: '#FFFFFF',
+              border: '1px solid #FF6D24',
+              borderRadius: '12px'
+            }
+          });
         }
         
+        
         setCount(newCount);
+        setUnreadCount(newCount);
       } catch (error) {
         console.error('Error polling messages:', error);
       }
-    }, 30000); // Check every 30 seconds
+    }, 10000); // Check every 10 seconds
 
     return () => clearInterval(interval);
-  }, [count]);
+  }, [count, setUnreadCount]);
 
   return null;
 }
