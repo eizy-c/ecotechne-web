@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { ChevronRight, Wrench, CheckCircle2 } from 'lucide-react';
 import { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const params = await props.params;
   const service = await Service.findBySlug(params.slug);
   if (!service) return { title: 'Servicio no encontrado' };
   
@@ -15,8 +16,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function ServiceDetailsPage({ params }: { params: { slug: string } }) {
+export default async function ServiceDetailsPage(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
+  console.log('Fetching service with slug:', params.slug);
   const service = await Service.findBySlug(params.slug) as any;
+  console.log('Service found:', service?.service_id, 'Active:', service?.active);
   
   if (!service || !service.active) {
     notFound();
@@ -83,10 +87,10 @@ export default async function ServiceDetailsPage({ params }: { params: { slug: s
           </div>
 
           {/* Right Column: Sticky Action Card & Similar Services */}
-          <div className="lg:col-span-4 space-y-8">
-            
-            {/* Action Card */}
-            <div className="glass-card rounded-3xl p-6 md:p-8 border border-card-border sticky top-28 shadow-2xl">
+          <div className="lg:col-span-4 relative">
+            <div className="sticky top-28 space-y-8">
+              {/* Action Card */}
+              <div className="glass-card rounded-3xl p-6 md:p-8 border border-card-border shadow-2xl">
               {/* Header (Desktop) */}
               <div className="hidden lg:block space-y-2 mb-6">
                 <h3 className="text-brand-accent font-bold tracking-widest text-sm uppercase">Servicio Especializado</h3>
@@ -143,6 +147,7 @@ export default async function ServiceDetailsPage({ params }: { params: { slug: s
               </div>
             )}
 
+            </div>
           </div>
         </div>
       </div>

@@ -6,7 +6,8 @@ import Image from 'next/image';
 import { ChevronRight, Calendar, CarFront, Palette, Type, CheckCircle2 } from 'lucide-react';
 import { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const params = await props.params;
   const product = await Product.findBySlug(params.slug);
   if (!product) return { title: 'Producto no encontrado' };
   
@@ -16,7 +17,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function ProductDetailsPage({ params }: { params: { slug: string } }) {
+export default async function ProductDetailsPage(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const product = await Product.findBySlug(params.slug);
   
   if (!product) {
@@ -122,10 +124,10 @@ export default async function ProductDetailsPage({ params }: { params: { slug: s
           </div>
 
           {/* Right Column: Sticky Action Card & Similar Products */}
-          <div className="lg:col-span-4 space-y-8">
-            
-            {/* Action Card */}
-            <div className="glass-card rounded-3xl p-6 md:p-8 border border-card-border sticky top-28 shadow-2xl">
+          <div className="lg:col-span-4 relative">
+            <div className="sticky top-28 space-y-8">
+              {/* Action Card */}
+              <div className="glass-card rounded-3xl p-6 md:p-8 border border-card-border shadow-2xl">
               {/* Header (Desktop) */}
               <div className="hidden lg:block space-y-2 mb-6">
                 <h3 className="text-brand-accent font-bold tracking-widest text-sm uppercase">{brandName} {modelName}</h3>
@@ -187,6 +189,7 @@ export default async function ProductDetailsPage({ params }: { params: { slug: s
               </div>
             )}
 
+            </div>
           </div>
         </div>
       </div>

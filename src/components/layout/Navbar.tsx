@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar({ 
   isLoggedIn = false,
@@ -16,6 +17,8 @@ export default function Navbar({
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,18 +28,22 @@ export default function Navbar({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
-    { name: 'Inicio', id: 'inicio', show: true },
-    { name: 'Nosotros', id: 'nosotros', show: true },
-    { name: 'Productos', id: 'tienda', show: hasStore },
-    { name: 'Servicios', id: 'servicios', show: hasServices },
-    { name: 'Portafolio', id: 'portafolio', show: hasGallery },
-  ].filter(item => item.show);
+  const navItems = isHomePage 
+    ? [
+        { name: 'Inicio', id: 'inicio', show: true, href: '#inicio' },
+        { name: 'Nosotros', id: 'nosotros', show: true, href: '#nosotros' },
+        { name: 'Productos', id: 'tienda', show: hasStore, href: '#tienda' },
+        { name: 'Servicios', id: 'servicios', show: hasServices, href: '#servicios' },
+        { name: 'Portafolio', id: 'portafolio', show: hasGallery, href: '#portafolio' },
+      ].filter(item => item.show)
+    : [
+        { name: 'Volver al Inicio', id: 'inicio', show: true, href: '/' },
+      ];
 
   return (
     <nav 
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled 
+        !isHomePage || isScrolled 
           ? 'glass-nav py-4' 
           : 'bg-transparent py-6'
       }`}
@@ -54,8 +61,8 @@ export default function Navbar({
             {navItems.map((item) => (
               <Link
                 key={item.id}
-                href={`#${item.id}`}
-                className={`text-sm font-medium transition-colors ${isScrolled ? 'text-foreground/80 hover:text-brand-accent' : 'text-white/80 hover:text-white'}`}
+                href={item.href}
+                className={`text-sm font-medium transition-colors ${!isHomePage || isScrolled ? 'text-foreground/80 hover:text-brand-accent' : 'text-white/80 hover:text-white'}`}
               >
                 {item.name}
               </Link>
@@ -64,7 +71,7 @@ export default function Navbar({
               <Link
                 href="/dashboard"
                 className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(0,0,0,0.1)] ${
-                  isScrolled 
+                  !isHomePage || isScrolled 
                     ? 'bg-foreground/10 text-foreground hover:bg-foreground/20' 
                     : 'bg-white text-brand-dark hover:bg-white/90'
                 }`}
@@ -72,17 +79,19 @@ export default function Navbar({
                 Panel de Control
               </Link>
             ) : null}
-            <Link
-              href="#contacto"
-              className="px-6 py-2.5 rounded-full bg-brand-accent hover:bg-brand-accent/90 text-brand-dark text-sm font-bold transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(255,109,36,0.3)] btn-glow"
-            >
-              Cotizar Proyecto
-            </Link>
+            {isHomePage && (
+              <Link
+                href="#contacto"
+                className="px-6 py-2.5 rounded-full bg-brand-accent hover:bg-brand-accent/90 text-brand-dark text-sm font-bold transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(255,109,36,0.3)] btn-glow"
+              >
+                Cotizar Proyecto
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
           <button 
-            className={`md:hidden p-2 transition-colors ${isScrolled ? 'text-foreground' : 'text-white'}`}
+            className={`md:hidden p-2 transition-colors ${!isHomePage || isScrolled ? 'text-foreground' : 'text-white'}`}
             onClick={() => setIsOpen(!isOpen)}
           >
             <i className={`fa-solid ${isOpen ? 'fa-xmark' : 'fa-bars'} text-2xl`}></i>
@@ -97,20 +106,22 @@ export default function Navbar({
             {navItems.map((item) => (
               <Link
                 key={item.id}
-                href={`#${item.id}`}
+                href={item.href}
                 onClick={() => setIsOpen(false)}
                 className="block px-3 py-3 rounded-md text-base font-medium text-foreground/80 hover:bg-foreground/5 hover:text-brand-accent transition-colors"
               >
                 {item.name}
               </Link>
             ))}
-            <Link
-              href="#contacto"
-              onClick={() => setIsOpen(false)}
-              className="block px-3 py-3 rounded-md text-base font-medium text-foreground/80 hover:bg-foreground/5 hover:text-brand-accent transition-colors"
-            >
-              Contacto
-            </Link>
+            {isHomePage && (
+              <Link
+                href="#contacto"
+                onClick={() => setIsOpen(false)}
+                className="block px-3 py-3 rounded-md text-base font-medium text-foreground/80 hover:bg-foreground/5 hover:text-brand-accent transition-colors"
+              >
+                Contacto
+              </Link>
+            )}
             {isLoggedIn && (
               <Link
                 href="/dashboard"

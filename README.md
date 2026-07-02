@@ -43,14 +43,19 @@ JWT_SECRET="mi_clave_secreta_super_segura_12345"
 
 ### 4. Preparar la Base de Datos
 Primero, asegúrate de que tu servidor MySQL esté ejecutándose (por ejemplo, XAMPP). Crea una base de datos vacía llamada `ecotechne` (o el nombre que hayas puesto en la URL de arriba).
-Luego, en tu terminal, ejecuta el comando para aplicar la estructura (tablas) a tu base de datos:
+Luego, en tu terminal, ejecuta estos comandos en orden para aplicar la estructura (tablas) a tu base de datos y generar el cliente de Prisma:
+
 ```bash
+# 1. Crear las tablas
 npx prisma db push
+
+# 2. Generar el Cliente de Prisma
+npx prisma generate
 ```
 
-**(Opcional)** Si la base de datos es nueva y quieres generar un usuario administrador inicial, puedes correr el script de seed si existe:
+**(Obligatorio la primera vez)** Para poblar la base de datos con los roles, usuarios (admin/design) y las 52 marcas de autos por defecto, debes ejecutar el script de seed compilándolo manualmente así:
 ```bash
-npm run seed
+npx tsc prisma/seed.ts --skipLibCheck --esModuleInterop && node prisma/seed.js
 ```
 
 ### 5. Iniciar el Servidor de Desarrollo

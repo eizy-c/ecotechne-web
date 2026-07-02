@@ -1,6 +1,17 @@
 import prisma from '../src/lib/prisma';
 import bcrypt from 'bcryptjs';
 
+const CAR_BRANDS = [
+  'Audi', 'BMW', 'BYD', 'Cadillac', 'Changan', 'Chery', 'Chevrolet', 
+  'Chrysler', 'Citroën', 'Dodge', 'Dongfeng', 'Exeed', 'Faw', 'Fiat', 
+  'Ford', 'Foton', 'Geely', 'GAC Motor', 'Great Wall', 'Honda', 'Hummer', 
+  'Hyundai', 'Isuzu', 'JAC Motors', 'JMC', 'Jaguar', 'Jeep', 'Jetour', 
+  'Kia', 'Lada', 'Land Rover', 'Lexus', 'Lifan', 'Mazda', 'Mercedes-Benz', 
+  'Mercury', 'MG (Morris Garages)', 'Mini', 'Mitsubishi', 'Nissan', 'Peugeot', 
+  'Porsche', 'Ram', 'Renault', 'Seat', 'Skoda', 'SsangYong', 'Subaru', 
+  'Suzuki', 'Toyota', 'Volkswagen', 'Volvo'
+];
+
 const PERMISSIONS = [
   // Dashboard
   { name: 'read:dashboard', description: 'Ver el inicio del panel de control' },
@@ -139,6 +150,19 @@ async function main() {
   console.log('Seeder completado con éxito:');
   console.log(`✅ Roles creados: ${roleAdmin.name}, ${roleDesign.name}`);
   console.log(`✅ Usuarios creados: ${adminUser.email}, ${designUser.email}`);
+
+  // 5. Crear marcas de vehículos
+  console.log('Creando marcas de autos...');
+  const createdBrands = await Promise.all(
+    CAR_BRANDS.map(brandName => 
+      prisma.brand.upsert({
+        where: { name: brandName },
+        update: {}, // Si existe no hace nada
+        create: { name: brandName },
+      })
+    )
+  );
+  console.log(`✅ Creadas/Verificadas ${createdBrands.length} marcas de autos.`);
 }
 
 main()
