@@ -57,10 +57,17 @@ model User {
 }
 
 model Client {
-  client_id Int     @id @default(autoincrement())
-  name      String  @db.VarChar(255)
-  contact   String? @db.VarChar(255)
-  email     String  @unique @db.VarChar(255)
+  client_id Int       @id @default(autoincrement())
+  name      String    @db.VarChar(255)
+  contact   String?   @db.VarChar(255)
+  email     String?   @unique @db.VarChar(255)
+  phone     String?   @db.VarChar(50)
+  country   String?   @db.VarChar(100)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+
+  messages     ContactMessage[]
+  productLeads ProductLead[]
+  serviceLeads ServiceLead[]
 
   @@map("client")
 }
@@ -81,7 +88,7 @@ model Category {
   name        String    @unique @db.VarChar(255)
   deleted_at  DateTime?
 
-  products Product[] // Implicit many-to-many
+  categoryProducts CategoryProduct[]
 
   @@map("category")
 }
@@ -111,7 +118,7 @@ model Vehicle {
   vehicle_model_id Int
   model            VehicleModel @relation(fields: [vehicle_model_id], references: [vehicle_model_id])
 
-  products Product[] // Implicit many-to-many
+  vehicleProducts VehicleProduct[]
 
   @@map("vehicle")
 }
@@ -125,11 +132,46 @@ model Product {
   is_featured Boolean   @default(false)
   deleted_at  DateTime?
 
-  categories   Category[] // Implicit many-to-many
-  vehicles     Vehicle[] // Implicit many-to-many
-  productLeads ProductLead[]
+  description String?   @db.Text
+
+  images           ImageProduct[]
+  categoryProducts CategoryProduct[]
+  vehicleProducts  VehicleProduct[]
+  productLeads     ProductLead[]
 
   @@map("product")
+}
+
+model ImageProduct {
+  image_id   Int    @id @default(autoincrement())
+  product_id Int
+  image_url  String @db.VarChar(512)
+  
+  product    Product @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
+  
+  @@map("image_product")
+}
+
+model CategoryProduct {
+  category_id Int
+  product_id  Int
+
+  category    Category @relation(fields: [category_id], references: [category_id], onDelete: Cascade)
+  product     Product  @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
+
+  @@id([category_id, product_id])
+  @@map("category_product")
+}
+
+model VehicleProduct {
+  vehicle_id Int
+  product_id Int
+
+  vehicle    Vehicle @relation(fields: [vehicle_id], references: [vehicle_id], onDelete: Cascade)
+  product    Product @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
+
+  @@id([vehicle_id, product_id])
+  @@map("vehicle_product")
 }
 
 model Service {
@@ -142,9 +184,20 @@ model Service {
   active      Boolean   @default(true)
   deleted_at  DateTime?
 
+  images       ImageService[]
   serviceLeads ServiceLead[]
 
   @@map("service")
+}
+
+model ImageService {
+  image_id   Int    @id @default(autoincrement())
+  service_id Int
+  image_url  String @db.VarChar(512)
+  
+  service    Service @relation(fields: [service_id], references: [service_id], onDelete: Cascade)
+  
+  @@map("image_service")
 }
 
 model Gallery {
@@ -169,6 +222,9 @@ model ContactMessage {
   message    String   @db.Text
   is_read    Boolean  @default(false)
   created_at DateTime @default(now()) @db.Timestamp(0)
+
+  client_id  Int?
+  client     Client?  @relation(fields: [client_id], references: [client_id], onDelete: SetNull)
 
   @@map("contact_message")
 }
@@ -206,6 +262,9 @@ model ProductLead {
   country    String?  @db.VarChar(100)
   created_at DateTime @default(now()) @db.Timestamp(0)
 
+  client_id  Int?
+  client     Client?  @relation(fields: [client_id], references: [client_id], onDelete: SetNull)
+
   product Product @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
 
   @@map("product_lead")
@@ -217,6 +276,9 @@ model ServiceLead {
   ip_address String?  @db.VarChar(45)
   country    String?  @db.VarChar(100)
   created_at DateTime @default(now()) @db.Timestamp(0)
+
+  client_id  Int?
+  client     Client?  @relation(fields: [client_id], references: [client_id], onDelete: SetNull)
 
   service Service @relation(fields: [service_id], references: [service_id], onDelete: Cascade)
 

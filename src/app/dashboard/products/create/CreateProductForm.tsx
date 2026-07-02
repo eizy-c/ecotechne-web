@@ -6,6 +6,7 @@ import { Save } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import MediaPickerModal from '@/components/ui/MediaPickerModal';
+import MultiMediaPickerModal from '@/components/ui/MultiMediaPickerModal';
 import toast from 'react-hot-toast';
 
 export default function CreateProductForm({ categories, vehicles }: { categories: any[], vehicles: any[] }) {
@@ -118,11 +119,28 @@ export default function CreateProductForm({ categories, vehicles }: { categories
               </select>
             </div>
           )}
+
+          <div>
+            <label htmlFor="description" className="block text-sm font-semibold text-foreground mb-2">Descripción Detallada</label>
+            <textarea 
+              id="description"
+              name="description"
+              rows={5}
+              placeholder="Escribe todas las especificaciones, características y detalles importantes..."
+              className="w-full bg-background/50 border border-card-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-brand-accent transition-colors resize-y"
+            />
+          </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-semibold text-foreground mb-2">Imagen Principal (Opcional)</label>
-          <MediaPickerModal name="image_url" />
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-semibold text-foreground mb-2">Imagen Principal (Opcional)</label>
+            <MediaPickerModal name="image_url" />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-foreground mb-2">Galería de Imágenes Adicionales</label>
+            <MultiMediaPickerModal name="additional_images" />
+          </div>
         </div>
       </div>
 

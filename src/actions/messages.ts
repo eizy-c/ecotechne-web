@@ -1,6 +1,7 @@
 'use server';
 
 import { ContactMessage } from '@/Models/ContactMessage';
+import { Client } from '@/Models/Client';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
@@ -15,7 +16,12 @@ export async function createMessage(formData: FormData) {
     throw new Error('Todos los campos son obligatorios');
   }
 
-  await ContactMessage.create({ name, email, phone, country, message });
+  // Find or Create Client
+  const client = await Client.findOrCreate({ name, email, phone, country });
+
+  // Pass client_id to the message creation
+  // We need to make sure ContactMessage.create supports client_id
+  await ContactMessage.create({ name, email, phone, country, message, client_id: client.client_id });
   
   revalidatePath('/dashboard/messages');
   

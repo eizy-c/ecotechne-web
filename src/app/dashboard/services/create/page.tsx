@@ -4,6 +4,7 @@ import { createService } from '@/actions/services';
 import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
 import MediaPickerModal from '@/components/ui/MediaPickerModal';
+import MultiMediaPickerModal from '@/components/ui/MultiMediaPickerModal';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -84,6 +85,11 @@ export default function CreateServicePage() {
           <div>
             <label className="block text-sm font-semibold text-foreground mb-2">Imagen de Portada (Opcional)</label>
             <MediaPickerModal name="image_url" />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-foreground mb-2">Galería de Imágenes Adicionales</label>
+            <MultiMediaPickerModal name="additional_images" />
           </div>
 
           <label className="flex items-center gap-3 p-3 rounded-xl hover:bg-foreground/5 cursor-pointer transition-colors border border-transparent hover:border-card-border">

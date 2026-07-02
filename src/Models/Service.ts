@@ -4,6 +4,7 @@ export class Service {
   static async findAllActives() {
     return prisma.service.findMany({
       where: { active: true, deleted_at: null },
+      include: { images: true },
       orderBy: { name: 'asc' },
     });
   }
@@ -11,12 +12,14 @@ export class Service {
   static async findBySlug(slug: string) {
     return prisma.service.findUnique({
       where: { slug },
+      include: { images: true },
     });
   }
 
   static async findAll() {
     return prisma.service.findMany({
       where: { deleted_at: null },
+      include: { images: true },
       orderBy: { name: 'asc' },
     });
   }
@@ -24,6 +27,7 @@ export class Service {
   static async findById(id: number) {
     return prisma.service.findUnique({
       where: { service_id: id },
+      include: { images: true },
     });
   }
 

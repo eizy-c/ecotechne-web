@@ -2,40 +2,60 @@ import prisma from '@/lib/prisma';
 
 export class Product {
   static async findAll() {
-    return prisma.product.findMany({
+    const products = await prisma.product.findMany({
       where: { deleted_at: null },
       include: {
-        categories: true,
-        vehicles: {
-          include: { brand: true, model: true }
+        images: true,
+        categoryProducts: { include: { category: true } },
+        vehicleProducts: {
+          include: {
+            vehicle: { include: { brand: true, model: true } }
+          }
         },
       },
       orderBy: { name: 'asc' },
     });
+    return products.map(Product.mapRelations);
   }
 
   static async findBySlug(slug: string) {
-    return prisma.product.findUnique({
+    const product = await prisma.product.findUnique({
       where: { slug },
       include: {
-        categories: true,
-        vehicles: {
-          include: { brand: true, model: true }
+        images: true,
+        categoryProducts: { include: { category: true } },
+        vehicleProducts: {
+          include: {
+            vehicle: { include: { brand: true, model: true } }
+          }
         },
       },
     });
+    return product ? Product.mapRelations(product) : null;
   }
 
   static async findById(id: number) {
-    return prisma.product.findUnique({
+    const product = await prisma.product.findUnique({
       where: { product_id: id },
       include: {
-        categories: true,
-        vehicles: {
-          include: { brand: true, model: true }
+        images: true,
+        categoryProducts: { include: { category: true } },
+        vehicleProducts: {
+          include: {
+            vehicle: { include: { brand: true, model: true } }
+          }
         },
       },
     });
+    return product ? Product.mapRelations(product) : null;
+  }
+
+  static mapRelations(p: any) {
+    return {
+      ...p,
+      categories: p.categoryProducts?.map((cp: any) => cp.category) || [],
+      vehicles: p.vehicleProducts?.map((vp: any) => vp.vehicle) || [],
+    };
   }
 
   static async create(data: any) {
