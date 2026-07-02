@@ -19,7 +19,7 @@ export class ContactMessage {
     });
   }
 
-  static async create(data: { name: string; email?: string | null; phone: string; country?: string | null; message: string }) {
+  static async create(data: { name: string; email?: string | null; phone: string; country?: string | null; message: string; client_id?: number | null }) {
     return prisma.contactMessage.create({
       data,
     });
