@@ -33,6 +33,7 @@ interface DataTableProps<T> {
   itemsPerPage?: number;
   enableExport?: boolean;
   exportFilename?: string;
+  rowClassName?: (item: T) => string;
 }
 
 // Función auxiliar para obtener valores anidados (ej. "role.name")
@@ -47,7 +48,8 @@ export default function DataTable<T>({
   searchKeys = [],
   itemsPerPage = 10,
   enableExport = false,
-  exportFilename = "exportacion"
+  exportFilename = "exportacion",
+  rowClassName
 }: DataTableProps<T>) {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -236,7 +238,10 @@ export default function DataTable<T>({
           <tbody className="divide-y divide-card-border">
             {currentData.length > 0 ? (
               currentData.map((item, rowIdx) => (
-                <tr key={rowIdx} className="hover:bg-foreground/5 transition-colors">
+                <tr 
+                  key={rowIdx} 
+                  className={`hover:bg-foreground/5 transition-colors ${rowClassName ? rowClassName(item) : ''}`}
+                >
                   {columns.map((col, colIdx) => (
                     <td key={colIdx} className="px-6 py-4">
                       {col.cell 

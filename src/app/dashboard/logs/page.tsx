@@ -27,9 +27,7 @@ export default async function LogsPage() {
         </div>
       </div>
 
-      <div className="glass-card rounded-2xl overflow-hidden p-6">
-        <LogsTable logs={logs} />
-      </div>
+      <LogsTable logs={logs} />
     </div>
   );
 }

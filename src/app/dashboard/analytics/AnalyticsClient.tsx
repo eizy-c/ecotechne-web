@@ -134,8 +134,8 @@ export default function AnalyticsClient({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Product Leads Table */}
-        <div className="glass-card rounded-2xl overflow-hidden p-6">
-          <div className="flex justify-between items-center mb-6">
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
             <h2 className="text-xl font-semibold flex items-center gap-2">
               <MessageCircle size={20} className="text-green-500" />
               Interesados en Productos
@@ -154,8 +154,8 @@ export default function AnalyticsClient({
         </div>
 
         {/* Service Leads Table */}
-        <div className="glass-card rounded-2xl overflow-hidden p-6">
-          <div className="flex justify-between items-center mb-6">
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
             <h2 className="text-xl font-semibold flex items-center gap-2">
               <MessageCircle size={20} className="text-green-500" />
               Interesados en Servicios

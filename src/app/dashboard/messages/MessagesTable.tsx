@@ -102,6 +102,7 @@ export default function MessagesTable({ messages }: { messages: any[] }) {
       searchPlaceholder="Buscar por nombre, correo, teléfono o mensaje..."
       searchKeys={['name', 'email', 'phone', 'message', 'country']}
       itemsPerPage={10}
+      rowClassName={(msg) => !msg.is_read ? 'bg-brand-accent/5 border-l-4 border-l-brand-accent relative' : 'border-l-4 border-l-transparent'}
     />
   );
 }
