@@ -4,6 +4,7 @@ import { Menu, LogOut, User, MessageSquare } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useSessionStore } from '@/store/useSessionStore';
+import { logoutAction } from '@/Controllers/AuthController';
 
 export default function Header() {
   const user = useSessionStore((state) => state.user);
@@ -12,11 +13,13 @@ export default function Header() {
   const router = useRouter();
 
   const handleLogout = async () => {
-    // Aquí implementaremos la lógica real de logout después (limpiar cookie)
-    // Por ahora redirigimos al login
-    document.cookie = 'auth_token=; Max-Age=0; path=/;';
-    router.push('/login');
-    router.refresh();
+    try {
+      await logoutAction();
+      router.push('/login');
+      router.refresh();
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
