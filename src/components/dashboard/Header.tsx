@@ -15,8 +15,8 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       await logoutAction();
-      router.push('/login');
-      router.refresh();
+      useSessionStore.getState().setUser(null);
+      window.location.href = '/login';
     } catch (e) {
       console.error(e);
     }

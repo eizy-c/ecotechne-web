@@ -7,15 +7,25 @@ export class Product {
       include: {
         images: true,
         categoryProducts: { include: { category: true } },
-        vehicleProducts: {
-          include: {
-            vehicle: { include: { brand: true, model: true } }
-          }
-        },
+        vehicleProducts: true,
       },
       orderBy: { name: 'asc' },
     });
-    return products.map(Product.mapRelations);
+
+    // Fetch all vehicles for these products in one go
+    const vehicleIds = Array.from(new Set(products.flatMap(p => p.vehicleProducts.map((vp: any) => vp.vehicle_id))));
+    const vehicles = await prisma.vehicle.findMany({
+      where: { vehicle_id: { in: vehicleIds } },
+      include: { brand: true, model: true }
+    });
+
+    const vehicleMap = new Map(vehicles.map(v => [v.vehicle_id, v]));
+
+    return products.map((p: any) => ({
+      ...p,
+      categories: p.categoryProducts?.map((cp: any) => cp.category) || [],
+      vehicles: p.vehicleProducts?.map((vp: any) => vehicleMap.get(vp.vehicle_id)).filter(Boolean) || [],
+    }));
   }
 
   static async findBySlug(slug: string) {
@@ -24,14 +34,23 @@ export class Product {
       include: {
         images: true,
         categoryProducts: { include: { category: true } },
-        vehicleProducts: {
-          include: {
-            vehicle: { include: { brand: true, model: true } }
-          }
-        },
+        vehicleProducts: true,
       },
     });
-    return product ? Product.mapRelations(product) : null;
+    
+    if (!product) return null;
+
+    const vehicleIds = product.vehicleProducts.map((vp: any) => vp.vehicle_id);
+    const vehicles = await prisma.vehicle.findMany({
+      where: { vehicle_id: { in: vehicleIds } },
+      include: { brand: true, model: true }
+    });
+
+    return {
+      ...product,
+      categories: product.categoryProducts?.map((cp: any) => cp.category) || [],
+      vehicles: vehicles,
+    };
   }
 
   static async findById(id: number) {
@@ -40,16 +59,26 @@ export class Product {
       include: {
         images: true,
         categoryProducts: { include: { category: true } },
-        vehicleProducts: {
-          include: {
-            vehicle: { include: { brand: true, model: true } }
-          }
-        },
+        vehicleProducts: true,
       },
     });
-    return product ? Product.mapRelations(product) : null;
+
+    if (!product) return null;
+
+    const vehicleIds = product.vehicleProducts.map((vp: any) => vp.vehicle_id);
+    const vehicles = await prisma.vehicle.findMany({
+      where: { vehicle_id: { in: vehicleIds } },
+      include: { brand: true, model: true }
+    });
+
+    return {
+      ...product,
+      categories: product.categoryProducts?.map((cp: any) => cp.category) || [],
+      vehicles: vehicles,
+    };
   }
 
+  // mapRelations is no longer used but kept for backwards compatibility if any other code calls it
   static mapRelations(p: any) {
     return {
       ...p,
