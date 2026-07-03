@@ -9,7 +9,7 @@ export default async function CreateProductPage() {
   const vehicles = await Vehicle.findAll();
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="max-w-full mx-auto space-y-6">
       <div className="flex items-center gap-4">
         <Link 
           href="/dashboard/products"

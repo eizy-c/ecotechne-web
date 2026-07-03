@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
 import { notFound } from 'next/navigation';
 
-export default async function EditPermissionPage({ params }: { params: { id: string } }) {
-  const permissionId = Number(params.id);
+export default async function EditPermissionPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const permissionId = Number(id);
   if (isNaN(permissionId)) notFound();
 
   const permission = await Permission.findById(permissionId);

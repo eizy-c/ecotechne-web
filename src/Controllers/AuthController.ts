@@ -45,6 +45,7 @@ export async function loginAction(prevState: any, formData: FormData) {
     // 4. Generar Token JWT (jose)
     const token = await new SignJWT({ 
       id: user.user_id, 
+      name: user.name,
       email: user.email, 
       role: user.role.name,
       permissions: user.role.permissions?.map((p: any) => p.permission.name) || []

@@ -18,7 +18,7 @@ export async function createService(formData: FormData) {
   const icon = formData.get('icon') as string;
   const image_url = formData.get('image_url') as string;
   const active = formData.get('active') === 'on';
-  const additionalImages = formData.getAll('additional_images').filter(img => img).map(url => ({ image_url: url as string }));
+  const additionalImages = formData.getAll('additional_images').filter(id => id).map(id => ({ image_id: Number(id) }));
 
   if (!name) {
     throw new Error('El nombre es obligatorio');
@@ -43,15 +43,16 @@ export async function updateService(id: number, formData: FormData) {
   const icon = formData.get('icon') as string;
   const image_url = formData.get('image_url') as string;
   const active = formData.get('active') === 'on';
-  const additionalImages = formData.getAll('additional_images').filter(img => img).map(url => ({ image_url: url as string }));
+  const additionalImages = formData.getAll('additional_images').filter(id => id).map(id => ({ image_id: Number(id) }));
 
   if (!name) {
     throw new Error('El nombre es obligatorio');
   }
 
   const updateData: any = { name, description, slug: generateSlug(name), icon, image_url, active };
+  updateData.images = { deleteMany: {} };
   if (additionalImages.length > 0) {
-    updateData.images = { deleteMany: {}, create: additionalImages };
+    updateData.images.create = additionalImages;
   }
 
   await Service.update(id, updateData);

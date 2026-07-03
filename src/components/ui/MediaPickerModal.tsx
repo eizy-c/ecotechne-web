@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getGalleries } from '@/actions/gallery';
+import { getGalleryImages } from '@/actions/gallery';
 import Image from 'next/image';
 import { Image as ImageIcon, X, CheckCircle2 } from 'lucide-react';
 
@@ -14,13 +14,13 @@ export default function MediaPickerModal({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [images, setImages] = useState<any[]>([]);
-  const [selectedUrl, setSelectedUrl] = useState(defaultValue);
+  const [selectedUrl, setSelectedUrl] = useState<string>(defaultValue);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (isOpen && images.length === 0) {
       setLoading(true);
-      getGalleries().then((data) => {
+      getGalleryImages().then((data) => {
         setImages(data);
         setLoading(false);
       });
@@ -95,7 +95,7 @@ export default function MediaPickerModal({
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {images.map((img) => (
                     <div 
-                      key={img.gallery_id}
+                      key={img.image_id}
                       onClick={() => handleSelect(img.image_url)}
                       className={`relative aspect-square rounded-xl overflow-hidden cursor-pointer border-2 transition-all group ${
                         selectedUrl === img.image_url 
@@ -105,7 +105,7 @@ export default function MediaPickerModal({
                     >
                       <Image 
                         src={img.image_url} 
-                        alt={img.title} 
+                        alt={img.description || 'Imagen'} 
                         fill 
                         className="object-cover"
                       />

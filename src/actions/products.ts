@@ -20,7 +20,7 @@ export async function createProduct(formData: FormData) {
   const categories = formData.getAll('categories').map(id => ({ category_id: Number(id) }));
   const vehicles = formData.getAll('vehicles').map(id => ({ vehicle_id: Number(id) }));
   const is_featured = formData.get('is_featured') === 'true';
-  const additionalImages = formData.getAll('additional_images').filter(img => img).map(url => ({ image_url: url as string }));
+  const additionalImages = formData.getAll('additional_images').filter(id => id).map(id => ({ image_id: Number(id) }));
 
   if (!name) {
     throw new Error('Por favor completa todos los campos requeridos correctamente');
@@ -57,7 +57,7 @@ export async function updateProduct(id: number, formData: FormData) {
   const categories = formData.getAll('categories').map(id => ({ category_id: Number(id) }));
   const vehicles = formData.getAll('vehicles').map(id => ({ vehicle_id: Number(id) }));
   const is_featured = formData.get('is_featured') === 'true';
-  const additionalImages = formData.getAll('additional_images').filter(img => img).map(url => ({ image_url: url as string }));
+  const additionalImages = formData.getAll('additional_images').filter(id => id).map(id => ({ image_id: Number(id) }));
 
   if (!name) {
     throw new Error('Por favor completa todos los campos requeridos correctamente');
@@ -73,9 +73,10 @@ export async function updateProduct(id: number, formData: FormData) {
     vehicleProducts: { deleteMany: {}, create: vehicles },
   };
 
-  // Update additional images if new ones are provided (optional logic, for now we just append or replace)
+  // Always clear and replace additional images
+  updateData.images = { deleteMany: {} };
   if (additionalImages.length > 0) {
-    updateData.images = { deleteMany: {}, create: additionalImages };
+    updateData.images.create = additionalImages;
   }
 
   const image_url = formData.get('image_url') as string;

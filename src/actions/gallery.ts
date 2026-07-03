@@ -1,63 +1,88 @@
 'use server';
 
-import { Gallery } from '@/Models/Gallery';
+import { Album } from '@/Models/Album';
+import { GalleryImage } from '@/Models/GalleryImage';
 import { uploadImage } from '@/actions/upload';
 import { revalidatePath } from 'next/cache';
 import { requirePermission } from '@/lib/auth';
 
-export async function getGalleries() {
-  const galleries = await Gallery.findAll();
-  // We stringify and parse to avoid serialization issues with Dates from Prisma to Client Components
-  return JSON.parse(JSON.stringify(galleries));
+export async function getAlbums() {
+  const albums = await Album.findAll();
+  return JSON.parse(JSON.stringify(albums));
 }
 
-export async function createGallery(formData: FormData) {
+export async function getGalleryImages() {
+  const images = await GalleryImage.findAll();
+  return JSON.parse(JSON.stringify(images));
+}
+
+export async function createAlbum(formData: FormData) {
   await requirePermission('create:gallery');
-  const title = formData.get('title') as string;
+  const name = formData.get('name') as string;
   const description = formData.get('description') as string;
-  const image = formData.get('image') as File;
 
-  if (!title || !image || image.size === 0) {
-    throw new Error('El título y la imagen son obligatorios');
+  if (!name) {
+    throw new Error('El nombre del álbum es obligatorio');
   }
 
-  const is_featured = formData.get('is_featured') === 'true';
-
-  // Subir la imagen
-  const image_url = await uploadImage(formData, 'gallery');
-
-  await Gallery.create({ title, description, image_url, is_featured });
-  
+  await Album.create({ name, description });
   revalidatePath('/dashboard/galleries');
 }
 
-export async function updateGallery(id: number, formData: FormData) {
+export async function updateAlbum(id: number, formData: FormData) {
   await requirePermission('update:gallery');
-  const title = formData.get('title') as string;
+  const name = formData.get('name') as string;
   const description = formData.get('description') as string;
-  const image = formData.get('image') as File;
 
-  const is_featured = formData.get('is_featured') === 'true';
-
-  if (!title) {
-    throw new Error('El título es obligatorio');
+  if (!name) {
+    throw new Error('El nombre del álbum es obligatorio');
   }
 
-  const updateData: any = { title, description, is_featured };
-
-  // Si se subió una nueva imagen, procesarla y actualizarla
-  if (image && image.size > 0) {
-    updateData.image_url = await uploadImage(formData, 'gallery');
-  }
-
-  await Gallery.update(id, updateData);
-  
+  await Album.update(id, { name, description });
   revalidatePath('/dashboard/galleries');
 }
 
-export async function deleteGallery(id: number) {
+export async function deleteAlbum(id: number) {
   await requirePermission('delete:gallery');
-  // Opcional: Eliminar el archivo físico de 'public/uploads/gallery/'
-  await Gallery.delete(id);
+  await Album.delete(id);
+  revalidatePath('/dashboard/galleries');
+}
+
+export async function uploadGalleryImages(formData: FormData) {
+  await requirePermission('create:gallery');
+  const description = formData.get('description') as string;
+  const album_id_str = formData.get('album_id') as string;
+  const album_id = album_id_str ? parseInt(album_id_str) : undefined;
+  
+  // Extraer todos los archivos 'images' del formData
+  const files = formData.getAll('images') as File[];
+  
+  if (!files || files.length === 0) {
+    throw new Error('Debes subir al menos una imagen');
+  }
+
+  // Upload each image
+  for (const file of files) {
+    if (file.size === 0) continue;
+    
+    // Crear un nuevo formData para cada archivo para usar el helper uploadImage
+    const singleFormData = new FormData();
+    singleFormData.append('image', file);
+    
+    const image_url = await uploadImage(singleFormData, 'gallery');
+    
+    await GalleryImage.create({
+      image_url,
+      description: description || undefined,
+      album_id,
+    });
+  }
+
+  revalidatePath('/dashboard/galleries');
+}
+
+export async function deleteGalleryImage(id: number) {
+  await requirePermission('delete:gallery');
+  await GalleryImage.delete(id);
   revalidatePath('/dashboard/galleries');
 }

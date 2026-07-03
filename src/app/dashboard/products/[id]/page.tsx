@@ -7,8 +7,8 @@ import { notFound } from 'next/navigation';
 import EditProductForm from './EditProductForm';
 
 export default async function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = await params;
-  const productId = Number(resolvedParams.id);
+  const { id } = await params;
+  const productId = Number(id);
   if (isNaN(productId)) notFound();
 
   const product = await Product.findById(productId);
@@ -20,7 +20,7 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
   }
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="max-w-full mx-auto space-y-6">
       <div className="flex items-center gap-4">
         <Link 
           href="/dashboard/products"

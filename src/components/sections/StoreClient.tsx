@@ -167,16 +167,16 @@ export default function StoreClient({
           {filteredProducts.map(product => (
             <div key={product.product_id} className="glass-card rounded-3xl overflow-hidden group hover:-translate-y-2 transition-all duration-500 flex flex-col h-full">
               <div className="relative aspect-square bg-background/50 overflow-hidden">
-                {product.image_url ? (
+                {product.image_url || (product.images && product.images[0]?.image?.image_url) ? (
                   <Image 
-                    src={product.image_url} 
+                    src={product.image_url || product.images[0].image.image_url} 
                     alt={product.name}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center text-foreground/20">
-                    <i className="fa-solid fa-box text-6xl"></i>
+                    <i className="fa-solid fa-image text-5xl"></i>
                   </div>
                 )}
 

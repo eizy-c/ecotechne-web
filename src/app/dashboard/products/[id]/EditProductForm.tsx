@@ -14,6 +14,16 @@ export default function EditProductForm({ product, categories, vehicles }: { pro
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isUniversal, setIsUniversal] = useState(product.vehicles?.length === 0);
+  const [selectedCategories, setSelectedCategories] = useState<number[]>(product.categories?.map((c: any) => c.category_id) || []);
+  const [selectedVehicles, setSelectedVehicles] = useState<number[]>(product.vehicles?.map((v: any) => v.vehicle_id) || []);
+
+  const toggleCategory = (id: number) => {
+    setSelectedCategories(prev => prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]);
+  };
+
+  const toggleVehicle = (id: number) => {
+    setSelectedVehicles(prev => prev.includes(id) ? prev.filter(v => v !== id) : [...prev, id]);
+  };
 
 
 
@@ -64,10 +74,13 @@ export default function EditProductForm({ product, categories, vehicles }: { pro
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-foreground mb-2">Destacado en Inicio</label>
-              <label className="flex items-center gap-3 cursor-pointer mt-3">
-                <input type="checkbox" name="is_featured" value="true" defaultChecked={product.is_featured} className="w-5 h-5 text-brand-accent rounded focus:ring-brand-accent" />
-                <span className="text-sm">Mostrar en portada</span>
+              <label className="block text-sm font-semibold text-foreground mb-3">Destacado en Inicio</label>
+              <label className="flex items-center gap-3 p-3 rounded-xl border border-card-border bg-background/50 cursor-pointer transition-colors hover:border-brand-accent/50 group">
+                <div className="relative flex items-center justify-center">
+                  <input type="checkbox" name="is_featured" value="true" defaultChecked={product.is_featured} className="peer appearance-none w-5 h-5 rounded border border-card-border bg-background checked:bg-brand-accent checked:border-brand-accent transition-colors cursor-pointer" />
+                  <svg className="absolute w-3.5 h-3.5 text-brand-dark opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <span className="text-sm font-medium text-foreground/80 group-hover:text-brand-accent transition-colors">Mostrar en portada</span>
               </label>
             </div>
           </div>
@@ -75,51 +88,74 @@ export default function EditProductForm({ product, categories, vehicles }: { pro
 
 
           <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">Categorías * <span className="text-xs font-normal text-foreground/50">(Mantén presionado Ctrl/Cmd para seleccionar varias)</span></label>
-            <select 
-              multiple 
-              name="categories" 
-              required 
-              defaultValue={product.categories?.map((c: any) => c.category_id)}
-              className="w-full bg-background/50 border border-card-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-brand-accent transition-colors min-h-[120px]"
-            >
-              {categories.map(cat => (
-                <option key={cat.category_id} value={cat.category_id} className="py-1">
-                  {cat.name}
-                </option>
-              ))}
-            </select>
+            <label className="block text-sm font-semibold text-foreground mb-2">Categorías *</label>
+            <div className="bg-background/50 border border-card-border rounded-xl p-3 min-h-[120px] max-h-[160px] overflow-y-auto space-y-1">
+              {categories.map(cat => {
+                const isSelected = selectedCategories.includes(cat.category_id);
+                return (
+                  <div 
+                    key={cat.category_id}
+                    onClick={() => toggleCategory(cat.category_id)}
+                    className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-colors ${isSelected ? 'bg-brand-accent/10 text-brand-accent font-semibold' : 'hover:bg-foreground/5 text-foreground/80'}`}
+                  >
+                    <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${isSelected ? 'bg-brand-accent border-brand-accent' : 'border-card-border bg-background'}`}>
+                      {isSelected && <svg className="w-3.5 h-3.5 text-brand-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>}
+                    </div>
+                    <span>{cat.name}</span>
+                  </div>
+                );
+              })}
+            </div>
+            {/* Hidden inputs to send the data with FormData */}
+            {selectedCategories.map(id => (
+              <input key={id} type="hidden" name="categories" value={id} />
+            ))}
           </div>
           
           <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">Tipo de Accesorio *</label>
-            <div className="flex gap-4">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="isUniversal" value="true" checked={isUniversal} onChange={() => setIsUniversal(true)} className="w-4 h-4 text-brand-accent focus:ring-brand-accent" />
-                <span className="text-sm">Universal (No requiere vehículo)</span>
+            <label className="block text-sm font-semibold text-foreground mb-3">Tipo de Accesorio *</label>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <label className={`flex-1 flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${isUniversal ? 'border-brand-accent bg-brand-accent/5' : 'border-card-border bg-background/50 hover:border-foreground/20'}`}>
+                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${isUniversal ? 'border-brand-accent' : 'border-card-border'}`}>
+                  {isUniversal && <div className="w-2.5 h-2.5 bg-brand-accent rounded-full"></div>}
+                </div>
+                <input type="radio" name="isUniversal" value="true" checked={isUniversal} onChange={() => setIsUniversal(true)} className="hidden" />
+                <span className={`text-sm font-medium ${isUniversal ? 'text-brand-accent' : 'text-foreground/70'}`}>Universal</span>
               </label>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="isUniversal" value="false" checked={!isUniversal} onChange={() => setIsUniversal(false)} className="w-4 h-4 text-brand-accent focus:ring-brand-accent" />
-                <span className="text-sm">Para vehículo específico</span>
+              <label className={`flex-1 flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${!isUniversal ? 'border-brand-accent bg-brand-accent/5' : 'border-card-border bg-background/50 hover:border-foreground/20'}`}>
+                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${!isUniversal ? 'border-brand-accent' : 'border-card-border'}`}>
+                  {!isUniversal && <div className="w-2.5 h-2.5 bg-brand-accent rounded-full"></div>}
+                </div>
+                <input type="radio" name="isUniversal" value="false" checked={!isUniversal} onChange={() => setIsUniversal(false)} className="hidden" />
+                <span className={`text-sm font-medium ${!isUniversal ? 'text-brand-accent' : 'text-foreground/70'}`}>Específico</span>
               </label>
             </div>
           </div>
           
           {!isUniversal && (
-            <div>
-              <label className="block text-sm font-semibold text-foreground mb-2">Vehículos Compatibles <span className="text-xs font-normal text-foreground/50">(Mantén presionado Ctrl/Cmd para seleccionar varios)</span></label>
-              <select 
-                multiple 
-                name="vehicles" 
-                defaultValue={product.vehicles?.map((v: any) => v.vehicle_id)}
-                className="w-full bg-background/50 border border-card-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-brand-accent transition-colors min-h-[160px]"
-              >
-                {vehicles.map(veh => (
-                  <option key={veh.vehicle_id} value={veh.vehicle_id} className="py-1">
-                    {veh.brand?.name} {veh.model?.name} ({veh.year})
-                  </option>
-                ))}
-              </select>
+            <div className="animate-fade-in-up">
+              <label className="block text-sm font-semibold text-foreground mb-2">Vehículos Compatibles</label>
+              <div className="bg-background/50 border border-card-border rounded-xl p-3 min-h-[160px] max-h-[220px] overflow-y-auto space-y-1">
+                {vehicles.map(veh => {
+                  const isSelected = selectedVehicles.includes(veh.vehicle_id);
+                  return (
+                    <div 
+                      key={veh.vehicle_id}
+                      onClick={() => toggleVehicle(veh.vehicle_id)}
+                      className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-colors ${isSelected ? 'bg-brand-accent/10 text-brand-accent font-semibold' : 'hover:bg-foreground/5 text-foreground/80'}`}
+                    >
+                      <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${isSelected ? 'bg-brand-accent border-brand-accent' : 'border-card-border bg-background'}`}>
+                        {isSelected && <svg className="w-3.5 h-3.5 text-brand-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>}
+                      </div>
+                      <span>{veh.brand?.name} {veh.model?.name} ({veh.year})</span>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* Hidden inputs to send the data with FormData */}
+              {selectedVehicles.map(id => (
+                <input key={id} type="hidden" name="vehicles" value={id} />
+              ))}
             </div>
           )}
 
@@ -145,7 +181,7 @@ export default function EditProductForm({ product, categories, vehicles }: { pro
             <label className="block text-sm font-semibold text-foreground mb-2">Galería de Imágenes Adicionales</label>
             <MultiMediaPickerModal 
               name="additional_images" 
-              defaultValues={product.images?.map((img: any) => img.image_url) || []} 
+              defaultValues={product.images?.map((img: any) => img.image_id) || []} 
             />
           </div>
         </div>

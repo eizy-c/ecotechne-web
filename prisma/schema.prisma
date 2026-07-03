@@ -143,12 +143,13 @@ model Product {
 }
 
 model ImageProduct {
-  image_id   Int    @id @default(autoincrement())
+  image_id   Int
   product_id Int
-  image_url  String @db.VarChar(512)
   
-  product    Product @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
+  image      GalleryImage @relation(fields: [image_id], references: [image_id], onDelete: Cascade)
+  product    Product      @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
   
+  @@id([image_id, product_id])
   @@map("image_product")
 }
 
@@ -191,26 +192,41 @@ model Service {
 }
 
 model ImageService {
-  image_id   Int    @id @default(autoincrement())
+  image_id   Int
   service_id Int
-  image_url  String @db.VarChar(512)
   
-  service    Service @relation(fields: [service_id], references: [service_id], onDelete: Cascade)
+  image      GalleryImage @relation(fields: [image_id], references: [image_id], onDelete: Cascade)
+  service    Service      @relation(fields: [service_id], references: [service_id], onDelete: Cascade)
   
+  @@id([image_id, service_id])
   @@map("image_service")
 }
 
-model Gallery {
-  gallery_id  Int       @id @default(autoincrement())
-  title       String    @db.VarChar(255)
-  slug        String    @unique @default(uuid()) @db.VarChar(255)
+model Album {
+  album_id    Int       @id @default(autoincrement())
+  name        String    @db.VarChar(255)
   description String?   @db.Text
-  image_url   String    @db.VarChar(512)
-  is_featured Boolean   @default(false)
   created_at  DateTime  @default(now()) @db.Timestamp(0)
   deleted_at  DateTime?
 
-  @@map("gallery")
+  images      GalleryImage[]
+
+  @@map("album")
+}
+
+model GalleryImage {
+  image_id    Int       @id @default(autoincrement())
+  image_url   String    @db.VarChar(512)
+  description String?   @db.Text
+  created_at  DateTime  @default(now()) @db.Timestamp(0)
+  
+  album_id    Int?
+  album       Album?    @relation(fields: [album_id], references: [album_id], onDelete: Cascade)
+
+  products    ImageProduct[]
+  services    ImageService[]
+
+  @@map("gallery_image")
 }
 
 model ContactMessage {
@@ -283,4 +299,11 @@ model ServiceLead {
   service Service @relation(fields: [service_id], references: [service_id], onDelete: Cascade)
 
   @@map("service_lead")
+}
+
+model Setting {
+  key   String @id @db.VarChar(100)
+  value String @db.Text
+  
+  @@map("setting")
 }

@@ -2,8 +2,9 @@ import { Service } from '@/Models/Service';
 import { notFound } from 'next/navigation';
 import ProductGallery from '@/components/ui/ProductGallery';
 import Link from 'next/link';
-import { ChevronRight, Wrench, CheckCircle2 } from 'lucide-react';
+import { ChevronRight, CheckCircle2, Wrench } from 'lucide-react';
 import { Metadata } from 'next';
+import Image from 'next/image';
 
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const params = await props.params;
@@ -17,9 +18,9 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 }
 
 export default async function ServiceDetailsPage(props: { params: Promise<{ slug: string }> }) {
-  const params = await props.params;
-  console.log('Fetching service with slug:', params.slug);
-  const service = await Service.findBySlug(params.slug) as any;
+  const { slug } = await props.params;
+  const service = await Service.findBySlug(slug) as any;
+  console.log('Fetching service with slug:', slug);
   console.log('Service found:', service?.service_id, 'Active:', service?.active);
   
   if (!service || !service.active) {
@@ -31,8 +32,9 @@ export default async function ServiceDetailsPage(props: { params: Promise<{ slug
   if (service.image_url) allImages.push(service.image_url);
   if (service.images) {
     service.images.forEach((img: any) => {
-      if (img.image_url !== service.image_url) {
-        allImages.push(img.image_url);
+      const url = img.image?.image_url;
+      if (url && url !== service.image_url) {
+        allImages.push(url);
       }
     });
   }
@@ -126,14 +128,16 @@ export default async function ServiceDetailsPage(props: { params: Promise<{ slug
                   Otros Servicios
                 </h3>
                 <div className="space-y-4">
-                  {similarServices.map((s) => (
+                  {similarServices.map((s) => {
+                    const fallbackImg = s.images?.[0]?.image?.image_url;
+                    return (
                     <Link key={s.service_id} href={`/servicios/${s.slug}`} className="flex gap-4 group bg-background/30 p-3 rounded-xl hover:bg-foreground/5 transition-colors border border-transparent hover:border-card-border">
-                      <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-white flex-shrink-0 border border-card-border">
-                        {s.image_url ? (
-                          <img src={s.image_url} alt={s.name} className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" />
+                      <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-white/5 flex-shrink-0 border border-card-border">
+                        {s.image_url || fallbackImg ? (
+                          <Image src={s.image_url || fallbackImg} alt={s.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-foreground/20">
-                            <Wrench size={32} />
+                          <div className="absolute inset-0 flex items-center justify-center text-foreground/20">
+                            <i className="fa-solid fa-image text-3xl"></i>
                           </div>
                         )}
                       </div>
@@ -142,7 +146,7 @@ export default async function ServiceDetailsPage(props: { params: Promise<{ slug
                         <span className="text-sm text-brand-accent font-medium mt-1">Saber Más <ChevronRight size={14} className="inline" /></span>
                       </div>
                     </Link>
-                  ))}
+                  )})}
                 </div>
               </div>
             )}

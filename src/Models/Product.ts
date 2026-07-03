@@ -5,7 +5,7 @@ export class Product {
     const products = await prisma.product.findMany({
       where: { deleted_at: null },
       include: {
-        images: true,
+        images: { include: { image: true } },
         categoryProducts: { include: { category: true } },
         vehicleProducts: true,
       },
@@ -32,7 +32,7 @@ export class Product {
     const product = await prisma.product.findUnique({
       where: { slug },
       include: {
-        images: true,
+        images: { include: { image: true } },
         categoryProducts: { include: { category: true } },
         vehicleProducts: true,
       },
@@ -57,7 +57,7 @@ export class Product {
     const product = await prisma.product.findUnique({
       where: { product_id: id },
       include: {
-        images: true,
+        images: { include: { image: true } },
         categoryProducts: { include: { category: true } },
         vehicleProducts: true,
       },

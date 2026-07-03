@@ -8,8 +8,11 @@ export default function ProductGallery({ images }: { images: string[] }) {
 
   if (images.length === 0) {
     return (
-      <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-background/50 border border-card-border flex items-center justify-center">
-        <span className="text-foreground/50">Sin imagen</span>
+      <div className="relative aspect-[4/3] lg:aspect-[16/9] max-w-2xl mx-auto rounded-2xl overflow-hidden bg-white/5 border border-card-border flex items-center justify-center">
+        <div className="flex flex-col items-center gap-2 text-foreground/20">
+          <i className="fa-solid fa-image text-5xl"></i>
+          <span className="text-sm font-medium">Sin imagen</span>
+        </div>
       </div>
     );
   }
@@ -17,7 +20,7 @@ export default function ProductGallery({ images }: { images: string[] }) {
   return (
     <div className="space-y-4">
       {/* Main Image */}
-      <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-white border border-card-border shadow-lg">
+      <div className="relative aspect-[4/3] lg:aspect-[16/9] max-w-2xl mx-auto rounded-2xl overflow-hidden bg-white border border-card-border shadow-lg">
         <Image 
           src={mainImage} 
           alt="Product image" 

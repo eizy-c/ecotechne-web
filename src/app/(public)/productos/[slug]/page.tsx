@@ -17,9 +17,9 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   };
 }
 
-export default async function ProductDetailsPage(props: { params: Promise<{ slug: string }> }) {
-  const params = await props.params;
-  const product = await Product.findBySlug(params.slug);
+export default async function ProductDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const product = await Product.findBySlug(slug);
   
   if (!product) {
     notFound();
@@ -30,8 +30,9 @@ export default async function ProductDetailsPage(props: { params: Promise<{ slug
   if (product.image_url) allImages.push(product.image_url);
   if (product.images) {
     product.images.forEach((img: any) => {
-      if (img.image_url !== product.image_url) {
-        allImages.push(img.image_url);
+      const url = img.image?.image_url;
+      if (url && url !== product.image_url) {
+        allImages.push(url);
       }
     });
   }
@@ -174,17 +175,25 @@ export default async function ProductDetailsPage(props: { params: Promise<{ slug
                   Similares
                 </h3>
                 <div className="space-y-4">
-                  {similarProducts.map((p) => (
+                  {similarProducts.map((p) => {
+                    const fallbackImg = p.images?.[0]?.image?.image_url;
+                    return (
                     <Link key={p.product_id} href={`/productos/${p.slug}`} className="flex gap-4 group bg-background/30 p-3 rounded-xl hover:bg-foreground/5 transition-colors border border-transparent hover:border-card-border">
-                      <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-white flex-shrink-0 border border-card-border">
-                        <Image src={p.image_url || '/placeholder.png'} alt={p.name} fill className="object-contain group-hover:scale-110 transition-transform duration-500" />
+                      <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-white/5 flex-shrink-0 border border-card-border">
+                        {p.image_url || fallbackImg ? (
+                          <Image src={p.image_url || fallbackImg} alt={p.name} fill className="object-contain group-hover:scale-110 transition-transform duration-500" />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center text-foreground/20">
+                            <i className="fa-solid fa-image text-3xl"></i>
+                          </div>
+                        )}
                       </div>
                       <div className="flex flex-col justify-center">
                         <h4 className="font-bold text-foreground line-clamp-2 group-hover:text-brand-accent transition-colors">{p.name}</h4>
                         <span className="text-sm text-brand-accent font-medium mt-1">Ver Detalles <ChevronRight size={14} className="inline" /></span>
                       </div>
                     </Link>
-                  ))}
+                  )})}
                 </div>
               </div>
             )}

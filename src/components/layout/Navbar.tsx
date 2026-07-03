@@ -8,12 +8,10 @@ export default function Navbar({
   isLoggedIn = false,
   hasServices = true,
   hasStore = true,
-  hasGallery = true
 }: { 
   isLoggedIn?: boolean,
   hasServices?: boolean,
-  hasStore?: boolean,
-  hasGallery?: boolean
+  hasStore?: boolean
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +32,6 @@ export default function Navbar({
         { name: 'Nosotros', id: 'nosotros', show: true, href: '#nosotros' },
         { name: 'Productos', id: 'tienda', show: hasStore, href: '#tienda' },
         { name: 'Servicios', id: 'servicios', show: hasServices, href: '#servicios' },
-        { name: 'Portafolio', id: 'portafolio', show: hasGallery, href: '#portafolio' },
       ].filter(item => item.show)
     : [
         { name: 'Volver al Inicio', id: 'inicio', show: true, href: '/' },

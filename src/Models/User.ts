@@ -44,6 +44,17 @@ export class User {
   static async findById(user_id: number) {
     return prisma.user.findUnique({
       where: { user_id },
+      include: { 
+        role: {
+          include: {
+            permissions: {
+              include: {
+                permission: true
+              }
+            }
+          }
+        } 
+      },
     });
   }
 

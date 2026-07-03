@@ -6,7 +6,10 @@ export async function GET() {
     const perms = [
       { name: 'read:logs', description: 'Ver historial de auditoría' }, 
       { name: 'export:excel', description: 'Exportar datos a Excel' }, 
-      { name: 'export:pdf', description: 'Exportar datos a PDF' }
+      { name: 'export:pdf', description: 'Exportar datos a PDF' },
+      { name: 'manage:settings', description: 'Administrar configuración del sitio' },
+      { name: 'write:vehicles', description: 'Crear y editar vehículos' },
+      { name: 'manage:all', description: 'Acceso total al sistema' }
     ]; 
     for (const p of perms) { 
       await prisma.permission.upsert({ where: { name: p.name }, update: {}, create: p }); 

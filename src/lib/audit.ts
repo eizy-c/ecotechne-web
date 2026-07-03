@@ -9,7 +9,7 @@ import { getSession } from '@/lib/auth';
  * @param details Detalles en JSON (opcional)
  */
 export async function logAction(
-  action: 'CREATE' | 'UPDATE' | 'DELETE' | 'LOGIN',
+  action: 'CREATE' | 'UPDATE' | 'DELETE' | 'LOGIN' | 'LOGOUT',
   entity: string,
   entity_id?: number | null,
   details?: any,

@@ -37,9 +37,16 @@ Abre/Crea el archivo `.env` en un editor de texto e incluye lo siguiente:
 # Reemplaza 'usuario', 'contraseña', 'localhost', '3306' y 'ecotechne_db' con tus datos reales.
 DATABASE_URL="mysql://root:@localhost:3306/ecotechne"
 
-# Clave secreta para las sesiones y tokens de seguridad (Pon cualquier texto largo y seguro)
+# Clave secreta para las sesiones y tokens de seguridad (Para generar una segura, lee más abajo)
 JWT_SECRET="mi_clave_secreta_super_segura_12345"
 ```
+
+> **Generar una llave segura (Recomendado):**
+> Para generar una llave `JWT_SECRET` verdaderamente segura (especialmente al desplegar en producción), abre tu terminal y ejecuta el siguiente comando:
+> ```bash
+> node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+> ```
+> Copia el resultado y pégalo como el valor de tu `JWT_SECRET`.
 
 ### 4. Preparar la Base de Datos
 Primero, asegúrate de que tu servidor MySQL esté ejecutándose (por ejemplo, XAMPP). Crea una base de datos vacía llamada `ecotechne` (o el nombre que hayas puesto en la URL de arriba).

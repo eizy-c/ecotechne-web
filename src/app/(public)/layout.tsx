@@ -17,7 +17,6 @@ export default async function PublicLayout({
 
   const hasServices = await prisma.service.count({ where: { active: true, deleted_at: null } }) > 0;
   const hasStore = await prisma.product.count({ where: { stock: { gt: 0 }, deleted_at: null } }) > 0;
-  const hasGallery = await prisma.gallery.count({ where: { deleted_at: null } }) > 0;
 
   return (
     <>
@@ -26,7 +25,6 @@ export default async function PublicLayout({
         isLoggedIn={isLoggedIn} 
         hasServices={hasServices}
         hasStore={hasStore}
-        hasGallery={hasGallery}
       />
       {children}
       <WhatsAppButton />

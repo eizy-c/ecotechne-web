@@ -76,8 +76,34 @@ export async function updateProfile(id: number, formData: FormData) {
 
   await User.update(id, updateData);
   
+  // Re-generate JWT so the session updates immediately
+  const user = await User.findById(id);
+  if (user) {
+    const { SignJWT } = await import('jose');
+    const { cookies } = await import('next/headers');
+    const token = await new SignJWT({ 
+      id: user.user_id, 
+      name: user.name,
+      email: user.email, 
+      role: user.role.name,
+      permissions: user.role.permissions?.map((p: any) => p.permission.name) || []
+    })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setExpirationTime('2h')
+      .sign(new TextEncoder().encode(process.env.JWT_SECRET || 'super-secret-default-key-change-it-in-env'));
+
+    const cookieStore = await cookies();
+    cookieStore.set('auth_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 2,
+    });
+  }
+  
   revalidatePath('/dashboard/profile');
-  // Optional: revalidate token by setting a new cookie (we will skip for now to keep it simple, they'll just log in again if needed)
+  revalidatePath('/dashboard', 'layout');
 }
 
 export async function deleteUser(id: number) {

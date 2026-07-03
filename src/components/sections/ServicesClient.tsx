@@ -2,6 +2,7 @@
 
 import { logServiceLead } from '@/actions/analytics';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ServicesClient({ services }: { services: any[] }) {
   const handleWhatsAppClick = async (service: any) => {
@@ -38,9 +39,6 @@ export default function ServicesClient({ services }: { services: any[] }) {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {services.map((service, index) => (
         <div key={index} className="glass-card p-8 rounded-3xl group hover:-translate-y-2 transition-all duration-500 flex flex-col h-full">
-          <div className="w-14 h-14 bg-brand-accent/10 rounded-2xl flex items-center justify-center text-brand-accent mb-6 group-hover:bg-brand-accent group-hover:text-brand-dark transition-all">
-            <i className={`fa-solid fa-${service.icon} text-2xl`}></i>
-          </div>
           <h4 className="text-xl font-bold mb-4 text-foreground">{service.name}</h4>
           <p className="text-sm text-foreground/60 mb-6 flex-1">{service.description}</p>
           

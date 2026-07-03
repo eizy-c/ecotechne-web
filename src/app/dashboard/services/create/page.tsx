@@ -13,7 +13,7 @@ export default function CreateServicePage() {
   const [error, setError] = useState<string | null>(null);
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
+    <div className="max-w-full mx-auto space-y-6">
       <div className="flex items-center gap-4">
         <Link 
           href="/dashboard/services"
@@ -70,17 +70,7 @@ export default function CreateServicePage() {
             ></textarea>
           </div>
 
-          <div>
-            <label htmlFor="icon" className="block text-sm font-semibold text-foreground mb-2">Icono (Opcional)</label>
-            <input 
-              type="text" 
-              id="icon"
-              name="icon"
-              placeholder="Nombre del icono (Ej: Wrench, Car, Tool)"
-              className="w-full bg-background/50 border border-card-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-brand-accent transition-colors"
-            />
-            <p className="text-xs text-foreground/50 mt-1">Usa nombres de Lucide Icons (opcional).</p>
-          </div>
+
           
           <div>
             <label className="block text-sm font-semibold text-foreground mb-2">Imagen de Portada (Opcional)</label>
@@ -92,18 +82,24 @@ export default function CreateServicePage() {
             <MultiMediaPickerModal name="additional_images" />
           </div>
 
-          <label className="flex items-center gap-3 p-3 rounded-xl hover:bg-foreground/5 cursor-pointer transition-colors border border-transparent hover:border-card-border">
-            <input 
-              type="checkbox" 
-              name="active" 
-              defaultChecked
-              className="w-5 h-5 rounded border-card-border text-brand-accent focus:ring-brand-accent bg-background"
-            />
-            <div>
-              <div className="font-semibold text-sm text-foreground">Servicio Activo</div>
-              <div className="text-xs text-foreground/50">El servicio será visible para los clientes en la web principal.</div>
-            </div>
-          </label>
+          <div>
+            <label className="block text-sm font-semibold text-foreground mb-3">Visibilidad del Servicio</label>
+            <label className="flex items-center gap-3 p-3 rounded-xl border border-card-border bg-background/50 cursor-pointer transition-colors hover:border-brand-accent/50 group w-fit">
+              <div className="relative flex items-center justify-center">
+                <input 
+                  type="checkbox" 
+                  name="active" 
+                  defaultChecked
+                  className="peer appearance-none w-5 h-5 rounded border border-card-border bg-background checked:bg-brand-accent checked:border-brand-accent transition-colors cursor-pointer"
+                />
+                <svg className="absolute w-3.5 h-3.5 text-brand-dark opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+              </div>
+              <div>
+                <div className="font-semibold text-sm text-foreground group-hover:text-brand-accent transition-colors">Servicio Activo</div>
+                <div className="text-xs text-foreground/50">Visible para los clientes en la web principal.</div>
+              </div>
+            </label>
+          </div>
         </div>
 
         <div className="pt-4 border-t border-card-border flex justify-end gap-3">
