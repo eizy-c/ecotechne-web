@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Plus, Folder, Image as ImageIcon, Trash2, Edit } from 'lucide-react';
+import { Plus, Folder, Image as ImageIcon, Trash2, Edit, MoreVertical, X } from 'lucide-react';
 import Image from 'next/image';
 import DeleteButton from '@/components/ui/DeleteButton';
 import toast from 'react-hot-toast';
@@ -21,6 +21,7 @@ export default function MediaManager({ initialAlbums, initialImages }: { initial
   const [editingAlbum, setEditingAlbum] = useState<any | null>(null);
   const [expandedAlbums, setExpandedAlbums] = useState<number[]>([]);
   const [viewingImage, setViewingImage] = useState<string | null>(null);
+  const [openMenuId, setOpenMenuId] = useState<number | null>(null);
 
   const looseImages = images.filter((img: any) => img.album_id === null);
 
@@ -87,9 +88,9 @@ export default function MediaManager({ initialAlbums, initialImages }: { initial
             {albums.map((album: any) => {
               const isExpanded = expandedAlbums.includes(album.album_id);
               return (
-                <div key={album.album_id} className="bg-card border border-card-border rounded-xl overflow-hidden hover:border-brand-accent/50 transition-colors">
+                <div key={album.album_id} className="bg-card border border-card-border rounded-xl hover:border-brand-accent/50 transition-colors relative">
                   <div 
-                    className="p-4 flex items-center justify-between cursor-pointer hover:bg-foreground/5 transition-colors"
+                    className="p-4 flex items-center justify-between cursor-pointer hover:bg-foreground/5 transition-colors rounded-xl"
                     onClick={() => toggleAlbum(album.album_id)}
                   >
                     <div className="flex items-center gap-4">
@@ -102,32 +103,55 @@ export default function MediaManager({ initialAlbums, initialImages }: { initial
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-6">
-                      <span className="text-sm font-semibold bg-background px-3 py-1 rounded-full text-foreground/70 border border-card-border">
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm font-semibold bg-background px-3 py-1 rounded-full text-foreground/70 border border-card-border whitespace-nowrap hidden sm:inline-block">
                         {album.images?.length || 0} fotos
                       </span>
                       
-                      <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                      {/* Mobile 3-Dots Button */}
+                      <button 
+                        onClick={(e) => { e.stopPropagation(); setOpenMenuId(openMenuId === album.album_id ? null : album.album_id); }}
+                        className="md:hidden p-2 text-foreground/50 hover:text-brand-accent rounded-lg bg-background border border-card-border"
+                      >
+                        {openMenuId === album.album_id ? <X size={20} /> : <MoreVertical size={20} />}
+                      </button>
+
+                      {/* Desktop Inline Actions / Mobile Dropdown Actions */}
+                      <div 
+                        className={`
+                          absolute right-4 top-16 bg-card border border-card-border p-2 rounded-xl shadow-xl z-10 flex-col gap-2 
+                          ${openMenuId === album.album_id ? 'flex animate-fade-in-up' : 'hidden'} 
+                          md:static md:bg-transparent md:border-none md:p-0 md:shadow-none md:flex md:flex-row md:items-center md:gap-2
+                        `}
+                        onClick={(e) => e.stopPropagation()}
+                      >
                         <button 
-                          onClick={(e) => handleUploadImages(album.album_id, e)}
-                          className="text-xs font-bold text-brand-accent hover:underline px-2"
+                          onClick={(e) => { handleUploadImages(album.album_id, e); setOpenMenuId(null); }}
+                          className="flex items-center justify-center text-xs font-bold text-brand-accent hover:bg-brand-accent/10 px-4 py-2 md:px-2 rounded-lg transition-colors whitespace-nowrap border border-brand-accent/20 md:border-transparent"
                         >
                           + Añadir Fotos
                         </button>
-                        <button onClick={(e) => handleEditAlbum(album, e)} className="p-2 text-foreground/50 hover:text-brand-accent rounded-lg transition-colors">
-                          <Edit size={18} />
-                        </button>
-                        <DeleteButton 
-                          onDelete={async () => await deleteAlbum(album.album_id)}
-                          itemName={album.name}
-                        />
+                        <div className="flex items-center gap-2">
+                          <button 
+                            onClick={(e) => { handleEditAlbum(album, e); setOpenMenuId(null); }} 
+                            className="flex-1 p-2 bg-background md:bg-transparent border md:border-none border-card-border flex justify-center text-foreground/50 hover:text-brand-accent rounded-lg transition-colors"
+                          >
+                            <Edit size={18} />
+                          </button>
+                          <div className="flex-1 bg-background md:bg-transparent border md:border-none border-card-border rounded-lg flex justify-center" onClick={() => setOpenMenuId(null)}>
+                            <DeleteButton 
+                              onDelete={async () => await deleteAlbum(album.album_id)}
+                              itemName={album.name}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
 
                   {/* FOTOS DENTRO DEL ÁLBUM */}
                   {isExpanded && (
-                    <div className="p-4 border-t border-card-border bg-background/30">
+                    <div className="p-4 border-t border-card-border bg-background/30 rounded-b-xl">
                       {album.images && album.images.length > 0 ? (
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                           {album.images.map((img: any) => (

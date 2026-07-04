@@ -6,6 +6,7 @@ import CookieBanner from "@/components/ui/CookieBanner";
 import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
+import { Setting } from "@/Models/Setting";
 
 export default async function PublicLayout({
   children,
@@ -18,6 +19,14 @@ export default async function PublicLayout({
   const hasServices = await prisma.service.count({ where: { active: true, deleted_at: null } }) > 0;
   const hasStore = await prisma.product.count({ where: { stock: { gt: 0 }, deleted_at: null } }) > 0;
 
+  const defaultKeys = [
+    { key: 'company.name', defaultValue: 'Ecotechne' },
+    { key: 'company.email', defaultValue: 'admiecotechne@gmail.com' },
+    { key: 'company.phone', defaultValue: '584265549941' },
+    { key: 'company.logo', defaultValue: '/logo-long.png' },
+  ];
+  const settings = await Setting.getMultiple(defaultKeys);
+
   return (
     <>
       <VisitTracker />
@@ -25,11 +34,12 @@ export default async function PublicLayout({
         isLoggedIn={isLoggedIn} 
         hasServices={hasServices}
         hasStore={hasStore}
+        settings={settings}
       />
       {children}
-      <WhatsAppButton />
+      <WhatsAppButton settings={settings} />
       <CookieBanner />
-      <Footer />
+      <Footer settings={settings} />
     </>
   );
 }

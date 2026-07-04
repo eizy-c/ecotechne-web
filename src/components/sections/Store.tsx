@@ -3,6 +3,7 @@ import StoreClient from "./StoreClient";
 import { Category } from "@/Models/Category";
 import { Brand } from "@/Models/Brand";
 import { VehicleModel } from "@/Models/VehicleModel";
+import { Setting } from "@/Models/Setting";
 
 export default async function Store() {
   const products = await Product.findAll();
@@ -21,6 +22,11 @@ export default async function Store() {
   const serializedBrands = JSON.parse(JSON.stringify(brands));
   const serializedModels = JSON.parse(JSON.stringify(models));
 
+  const settings = await Setting.getMultiple([
+    { key: 'company.name', defaultValue: 'Ecotechne' },
+    { key: 'company.phone', defaultValue: '584265549941' }
+  ]);
+
   return (
     <section id="tienda" className="py-24 bg-background transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -35,6 +41,7 @@ export default async function Store() {
           categories={serializedCategories}
           brands={serializedBrands}
           models={serializedModels} 
+          settings={settings}
         />
       </div>
     </section>

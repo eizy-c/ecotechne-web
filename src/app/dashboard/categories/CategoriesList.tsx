@@ -86,6 +86,7 @@ export default function CategoriesList({ initialCategories }: { initialCategorie
       />
 
       <CategoryModal 
+        key={isModalOpen ? (editingCategory?.category_id || 'new') : 'closed'}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         category={editingCategory}

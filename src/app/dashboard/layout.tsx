@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation';
 import { Toaster } from 'react-hot-toast';
 import { cookies } from 'next/headers';
 import * as jose from 'jose';
+import { Setting } from '@/Models/Setting';
 
 export default async function DashboardLayout({
   children,
@@ -28,6 +29,13 @@ export default async function DashboardLayout({
   }
 
   const unreadCount = await ContactMessage.getUnreadCount();
+  
+  const settings = await Setting.getMultiple([
+    { key: 'company.name', defaultValue: 'Ecotechne' },
+    { key: 'company.logo', defaultValue: '/logo-long.png' }
+  ]);
+  const companyName = settings['company.name'] || 'Ecotechne';
+  const companyLogo = settings['company.logo'] || '/logo-long.png';
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -44,7 +52,7 @@ export default async function DashboardLayout({
           }} 
         />
         <MessageAlerter initialCount={unreadCount} />
-        <Sidebar />
+        <Sidebar companyName={companyName} companyLogo={companyLogo} />
         <div className="flex-1 md:ml-64 flex flex-col min-h-screen transition-all duration-300">
           <Header />
           <main className="flex-1 p-4 md:p-8 overflow-x-hidden animate-fade-in-up">

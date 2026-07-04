@@ -11,12 +11,14 @@ export default function StoreClient({
   products, 
   categories,
   brands,
-  models
+  models,
+  settings
 }: { 
   products: any[], 
   categories: any[],
   brands: any[],
-  models: any[]
+  models: any[],
+  settings?: Record<string, string>
 }) {
   const [activeCategory, setActiveCategory] = useState<number | null>(null);
   const [activeBrand, setActiveBrand] = useState<number | null>(null);
@@ -71,16 +73,17 @@ export default function StoreClient({
     }
     
     // Redirigir a WhatsApp
-    const phoneNumber = '584265549941'; 
-    const message = `Hola Ecotechne, estoy interesado en el producto: ${product.name} (Ref: #${product.product_id}). ¿Me pueden dar más información?`;
+    const phoneNumber = settings?.['company.phone'] || '584265549941'; 
+    const companyName = settings?.['company.name'] || 'Ecotechne';
+    const message = `Hola ${companyName}, estoy interesado en el producto: ${product.name} (Ref: #${product.product_id}). ¿Me pueden dar más información?`;
     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   return (
     <div>
       {/* Advanced Filters */}
-      <div className="glass-card p-6 rounded-2xl mb-12 flex flex-col md:flex-row flex-wrap gap-4 items-end">
-        <div className="flex-1 min-w-[200px]">
+      <div className="glass-card p-6 rounded-2xl mb-12 flex flex-col md:flex-row flex-wrap gap-4 items-stretch md:items-end">
+        <div className="flex-1 w-full md:w-auto min-w-[200px]">
           <label className="block text-xs font-bold text-foreground/50 uppercase tracking-wider mb-2">Tipo de producto</label>
           <select 
             className="w-full bg-background/50 border border-card-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-brand-accent transition-colors appearance-none"
@@ -149,7 +152,7 @@ export default function StoreClient({
             setActiveModel(null);
             setActiveYear(null);
           }}
-          className="px-6 py-3 bg-brand-accent text-brand-dark rounded-xl font-bold hover:scale-105 transition-transform flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(255,109,36,0.3)] h-[50px]"
+          className="w-full md:w-auto px-6 py-3 bg-brand-accent text-brand-dark rounded-xl font-bold hover:scale-105 transition-transform flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(255,109,36,0.3)] h-[50px]"
         >
           Limpiar
         </button>

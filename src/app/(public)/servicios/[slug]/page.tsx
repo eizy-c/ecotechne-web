@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ChevronRight, CheckCircle2, Wrench } from 'lucide-react';
 import { Metadata } from 'next';
 import Image from 'next/image';
+import { Setting } from '@/Models/Setting';
 
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const params = await props.params;
@@ -44,8 +45,13 @@ export default async function ServiceDetailsPage(props: { params: Promise<{ slug
   const similarServices = allServices.filter(s => s.service_id !== service.service_id).slice(0, 4);
 
   // Custom WhatsApp message
-  const whatsappNumber = "584121234567"; // Default placeholder
-  const message = `Hola! Estoy interesado en el servicio: ${service.name}. Me podrían dar más información?`;
+  const settings = await Setting.getMultiple([
+    { key: 'company.phone', defaultValue: '584265549941' },
+    { key: 'company.name', defaultValue: 'Ecotechne' }
+  ]);
+  const whatsappNumber = settings['company.phone'] || "584265549941";
+  const companyName = settings['company.name'] || 'Ecotechne';
+  const message = `Hola ${companyName}! Estoy interesado en su servicio de: ${service.name}. Me podrían dar más información?`;
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
   return (

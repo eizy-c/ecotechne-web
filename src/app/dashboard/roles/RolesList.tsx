@@ -93,6 +93,7 @@ export default function RolesList({ initialRoles, allPermissions }: { initialRol
       />
 
       <RoleModal 
+        key={isModalOpen ? (editingRole?.role_id || 'new') : 'closed'}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         role={editingRole}

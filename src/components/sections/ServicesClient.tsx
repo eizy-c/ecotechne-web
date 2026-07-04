@@ -4,7 +4,13 @@ import { logServiceLead } from '@/actions/analytics';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function ServicesClient({ services }: { services: any[] }) {
+export default function ServicesClient({ 
+  services,
+  settings 
+}: { 
+  services: any[],
+  settings?: Record<string, string>
+}) {
   const handleWhatsAppClick = async (service: any) => {
     // Registrar el lead
     try {
@@ -30,8 +36,9 @@ export default function ServicesClient({ services }: { services: any[] }) {
     }
     
     // Redirigir a WhatsApp
-    const phoneNumber = '584265549941'; 
-    const message = `Hola Ecotechne, me gustaría agendar o recibir más información sobre el servicio: ${service.name}.`;
+    const phoneNumber = settings?.['company.phone'] || '584265549941'; 
+    const companyName = settings?.['company.name'] || 'Ecotechne';
+    const message = `Hola ${companyName}, estoy interesado en el servicio: ${service.name} (Ref: #${service.service_id}). ¿Me pueden dar más información?`;
     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
   };
 

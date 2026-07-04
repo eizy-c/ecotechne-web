@@ -95,7 +95,7 @@ export async function updateProfile(id: number, formData: FormData) {
     const cookieStore = await cookies();
     cookieStore.set('auth_token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV === 'production' && process.env.REQUIRE_HTTPS === 'true',
       sameSite: 'lax',
       path: '/',
       maxAge: 60 * 60 * 2,

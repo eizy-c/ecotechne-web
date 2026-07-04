@@ -1,5 +1,6 @@
 import { Service } from "@/Models/Service";
 import ServicesClient from "./ServicesClient";
+import { Setting } from "@/Models/Setting";
 
 /**
  * Sección de Servicios (Server Component)
@@ -23,7 +24,10 @@ export default async function Services() {
           <div className="h-1 w-20 bg-brand-accent mx-auto rounded-full"></div>
         </div>
 
-        <ServicesClient services={displayServices} />
+        <ServicesClient services={displayServices} settings={await Setting.getMultiple([
+          { key: 'company.name', defaultValue: 'Ecotechne' },
+          { key: 'company.phone', defaultValue: '584265549941' }
+        ])} />
       </div>
     </section>
   );

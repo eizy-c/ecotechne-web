@@ -1,8 +1,8 @@
 'use client';
 
-export default function WhatsAppButton() {
-  const phoneNumber = '584265549941'; 
-  const message = 'Hola Ecotechne, me gustaría obtener más información sobre sus productos y servicios.';
+export default function WhatsAppButton({ settings }: { settings?: Record<string, string> }) {
+  const phoneNumber = settings?.['company.phone'] || '584265549941'; 
+  const message = `Hola ${settings?.['company.name'] || 'Ecotechne'}, me gustaría obtener más información sobre sus productos y servicios.`;
   
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 

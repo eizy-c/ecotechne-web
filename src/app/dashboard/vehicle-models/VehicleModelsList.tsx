@@ -108,6 +108,7 @@ export default function VehicleModelsList({
       />
 
       <VehicleModelModal 
+        key={isModalOpen ? (editingModel?.vehicle_model_id || 'new') : 'closed'}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         model={editingModel}

@@ -105,6 +105,7 @@ export default function UsersList({ initialUsers, roles }: { initialUsers: any[]
       />
 
       <UserModal 
+        key={isModalOpen ? (editingUser?.user_id || 'new') : 'closed'}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         user={editingUser}

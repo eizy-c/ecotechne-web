@@ -17,6 +17,10 @@ export default async function Home() {
   }
 
   const defaultKeys = [
+    { key: 'company.name', defaultValue: 'Ecotechne' },
+    { key: 'company.email', defaultValue: 'admiecotechne@gmail.com' },
+    { key: 'company.phone', defaultValue: '584265549941' },
+    { key: 'company.logo', defaultValue: '/logo-long.png' },
     { key: 'hero.badge', defaultValue: 'Ingeniería de Alto Desempeño' },
     { key: 'hero.title.line1', defaultValue: 'Precisión' },
     { key: 'hero.title.highlight1', defaultValue: 'Ingeniería' },
@@ -24,6 +28,8 @@ export default async function Home() {
     { key: 'hero.title.highlight2', defaultValue: '4x4' },
     { key: 'hero.subtitle', defaultValue: 'Fabricación premium de accesorios off-road donde la ingeniería de vanguardia se une a la máxima resistencia extrema.' },
     { key: 'hero.button_text', defaultValue: 'Cotizar Proyecto' },
+    { key: 'hero.background_enabled', defaultValue: 'true' },
+    { key: 'hero.background_image', defaultValue: 'https://images.unsplash.com/photo-1544256651-69fd13e8436b?q=80&w=2070&auto=format&fit=crop' },
     { key: 'about.badge', defaultValue: 'Sobre Nosotros' },
     { key: 'about.title.line1', defaultValue: 'Especialistas en la' },
     { key: 'about.title.highlight1', defaultValue: 'Aventura y el Trabajo' },

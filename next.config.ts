@@ -1,4 +1,16 @@
 import type { NextConfig } from "next";
+import withPWAInit from "@ducanh2912/next-pwa";
+
+const withPWA = withPWAInit({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+  cacheOnFrontEndNav: true,
+  aggressiveFrontEndNavCaching: true,
+  reloadOnOnline: true,
+  workboxOptions: {
+    disableDevLogs: true,
+  },
+});
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS 
   ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
@@ -8,7 +20,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   experimental: {
     serverActions: {
-      allowedOrigins: ['localhost:3000', '192.168.5.47:3000'],
+      allowedOrigins: ['localhost:3000', '192.168.5.47:3000', '192.168.5.45:3000'],
       bodySizeLimit: '20mb',
     },
   },
@@ -31,4 +43,4 @@ const nextConfig: NextConfig = {
 };
 
 
-export default nextConfig;
+export default withPWA(nextConfig);

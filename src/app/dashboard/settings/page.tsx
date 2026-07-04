@@ -18,6 +18,11 @@ export default async function SettingsPage() {
     { key: 'about.title.line1', defaultValue: 'Especialistas en la' },
     { key: 'about.title.highlight1', defaultValue: 'Aventura y el Trabajo' },
     { key: 'about.description', defaultValue: 'Somos Ecotechne, una empresa especializada en el diseño, fabricación y comercialización de accesorios premium para vehículos 4x4, pickup y off-road. Desarrollamos soluciones robustas, funcionales y de alta calidad combinando ingeniería de precisión con el diseño más resistente.' },
+    { key: 'company.name', defaultValue: 'Ecotechne' },
+    { key: 'company.email', defaultValue: 'admiecotechne@gmail.com' },
+    { key: 'company.phone', defaultValue: '584265549941' },
+    { key: 'company.logo', defaultValue: '/logo-long.png' },
+    { key: 'company.favicon', defaultValue: '/favicon.ico' },
   ];
 
   const settings = await Setting.getMultiple(defaultKeys);

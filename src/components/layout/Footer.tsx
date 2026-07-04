@@ -1,14 +1,14 @@
 import Link from 'next/link';
 
-export default function Footer() {
+export default function Footer({ settings }: { settings?: Record<string, string> }) {
   return (
     <footer className="bg-brand-black border-t border-white/5 pt-24 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           <div>
-            <img src="/logo-long.png" alt="Ecotechne Logo" className="h-8 md:h-10 mb-4" />
+            <img src={settings?.['company.logo'] || "/logo-long.png"} alt={`${settings?.['company.name'] || 'Ecotechne'} Logo`} className="h-8 md:h-10 mb-4" />
             <p className="text-xs text-brand-light/30 uppercase tracking-widest">
-              &copy; {new Date().getFullYear()} Ecotechne. Fabricación de Élite.
+              &copy; {new Date().getFullYear()} {settings?.['company.name'] || 'Ecotechne'}. Fabricación de Élite.
             </p>
           </div>
           
@@ -16,7 +16,7 @@ export default function Footer() {
             <a href="https://www.instagram.com/ecotechne/" target="_blank" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-brand-light/40 hover:text-brand-accent hover:border-brand-accent transition-all">
               <i className="fa-brands fa-instagram"></i>
             </a>
-            <a href="mailto:admiecotechne@gmail.com" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-brand-light/40 hover:text-brand-accent hover:border-brand-accent transition-all">
+            <a href={`mailto:${settings?.['company.email'] || 'admiecotechne@gmail.com'}`} className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-brand-light/40 hover:text-brand-accent hover:border-brand-accent transition-all">
               <i className="fa-solid fa-envelope"></i>
             </a>
           </div>

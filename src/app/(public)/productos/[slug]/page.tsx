@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronRight, Calendar, CarFront, Palette, Type, CheckCircle2 } from 'lucide-react';
 import { Metadata } from 'next';
+import { Setting } from '@/Models/Setting';
 
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const params = await props.params;
@@ -50,8 +51,13 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
   const year = isUniversal ? 'N/A' : vehicle?.year || 'N/A';
   
   // Custom WhatsApp message
-  const whatsappNumber = "584121234567"; // Default placeholder, ideally from an env var or settings
-  const message = `Hola! Estoy interesado en el producto: ${product.name}. Me podrían dar más información?`;
+  const settings = await Setting.getMultiple([
+    { key: 'company.phone', defaultValue: '584265549941' },
+    { key: 'company.name', defaultValue: 'Ecotechne' }
+  ]);
+  const whatsappNumber = settings['company.phone'] || "584265549941";
+  const companyName = settings['company.name'] || 'Ecotechne';
+  const message = `Hola ${companyName}! Estoy interesado en el producto: ${product.name}. Me podrían dar más información?`;
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
   return (

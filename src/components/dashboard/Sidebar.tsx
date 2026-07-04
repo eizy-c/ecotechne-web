@@ -59,7 +59,7 @@ const menuItems = [
   }
 ];
 
-export function Sidebar() {
+export function Sidebar({ companyName = 'Ecotechne', companyLogo = '/logo-long.png' }: { companyName?: string, companyLogo?: string }) {
   const pathname = usePathname();
   const [expandedMenus, setExpandedMenus] = useState<string[]>(['Directorio Automotriz']);
   const hasPermission = useSessionStore((state) => state.hasPermission);
@@ -73,15 +73,15 @@ export function Sidebar() {
       {/* Overlay para móvil */}
       {isSidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black/50 z-30 md:hidden backdrop-blur-sm"
+          className="fixed inset-0 bg-black/50 z-40 md:hidden backdrop-blur-sm"
           onClick={() => setSidebarOpen(false)}
         />
       )}
       
-      <aside className={`w-64 h-screen fixed left-0 top-0 border-r border-card-border bg-card shadow-lg z-40 flex flex-col transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
+      <aside className={`w-64 h-screen fixed left-0 top-0 border-r border-card-border bg-card shadow-lg z-50 flex flex-col transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
       <div className="p-6 border-b border-card-border">
         <Link href="/" className="inline-block hover:opacity-80 transition-opacity" title="Volver al inicio">
-          <img src="/logo-long.png" alt="Ecotechne Logo" className="h-8 w-auto" />
+          <img src={companyLogo} alt={`${companyName} Logo`} className="h-8 w-auto" />
         </Link>
         <p className="text-xs text-foreground/50 mt-2 uppercase tracking-wider font-semibold">Panel de Control</p>
       </div>
@@ -131,6 +131,7 @@ export function Sidebar() {
                 ) : (
                   <Link 
                     href={item.path!}
+                    onClick={() => setSidebarOpen(false)}
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
                       isActive 
                         ? 'bg-foreground/10 text-brand-accent font-medium shadow-sm' 
@@ -150,6 +151,7 @@ export function Sidebar() {
                         <li key={sub.path}>
                           <Link
                             href={sub.path}
+                            onClick={() => setSidebarOpen(false)}
                             className={`flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-all duration-200 ${
                               isSubActive
                                 ? 'text-brand-accent font-medium bg-foreground/5'
@@ -170,7 +172,7 @@ export function Sidebar() {
       </nav>
       
       <div className="p-4 border-t border-card-border text-xs text-center text-foreground/40">
-        &copy; {new Date().getFullYear()} Ecotechne 4x4
+        &copy; {new Date().getFullYear()} {companyName}
       </div>
     </aside>
     </>

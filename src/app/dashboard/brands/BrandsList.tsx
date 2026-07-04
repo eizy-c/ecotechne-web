@@ -86,6 +86,7 @@ export default function BrandsList({ initialBrands }: { initialBrands: Brand[] }
       />
 
       <BrandModal 
+        key={isModalOpen ? (editingBrand?.brand_id || 'new') : 'closed'}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         brand={editingBrand}

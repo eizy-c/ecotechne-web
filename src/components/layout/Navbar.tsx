@@ -8,10 +8,12 @@ export default function Navbar({
   isLoggedIn = false,
   hasServices = true,
   hasStore = true,
+  settings
 }: { 
   isLoggedIn?: boolean,
   hasServices?: boolean,
-  hasStore?: boolean
+  hasStore?: boolean,
+  settings?: Record<string, string>
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +51,7 @@ export default function Navbar({
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
-              <img src="/logo-long.png" alt="Ecotechne Logo" className="h-10 w-auto" />
+              <img src={settings?.['company.logo'] || "/logo-long.png"} alt={`${settings?.['company.name'] || 'Ecotechne'} Logo`} className="h-10 w-auto" />
             </Link>
           </div>
 
