@@ -70,15 +70,9 @@ export function Sidebar({ companyName = 'Ecotechne', companyLogo = '/logo-long.p
 
   return (
     <>
-      {/* Overlay para móvil */}
-      {isSidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-40 md:hidden backdrop-blur-sm"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+      {/* Overlay para móvil (deshabilitado porque la barra no se usa en móvil) */}
       
-      <aside className={`w-64 h-screen fixed left-0 top-0 border-r border-card-border bg-card shadow-lg z-50 flex flex-col transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
+      <aside className={`hidden md:flex w-64 h-screen fixed left-0 top-0 border-r border-card-border bg-card shadow-lg z-50 flex-col transition-transform duration-300 translate-x-0`}>
       <div className="p-6 border-b border-card-border">
         <Link href="/" className="inline-block hover:opacity-80 transition-opacity" title="Volver al inicio">
           <img src={companyLogo} alt={`${companyName} Logo`} className="h-8 w-auto" />

@@ -1,5 +1,6 @@
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import Header from '@/components/dashboard/Header';
+import MobileBottomNav from '@/components/dashboard/MobileBottomNav';
 import MessageAlerter from '@/components/dashboard/MessageAlerter';
 import SessionProvider from '@/components/SessionProvider';
 import { ContactMessage } from '@/Models/ContactMessage';
@@ -55,9 +56,10 @@ export default async function DashboardLayout({
         <Sidebar companyName={companyName} companyLogo={companyLogo} />
         <div className="flex-1 md:ml-64 flex flex-col min-h-screen transition-all duration-300">
           <Header />
-          <main className="flex-1 p-4 md:p-8 overflow-x-hidden animate-fade-in-up">
+          <main className="flex-1 p-4 pb-24 md:p-8 overflow-x-hidden animate-fade-in-up">
             {children}
           </main>
+          <MobileBottomNav />
         </div>
       </SessionProvider>
     </div>

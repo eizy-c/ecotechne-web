@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Menu, LogOut, User, MessageSquare, Settings, Palette, ChevronDown, Shield } from 'lucide-react';
+import { Menu, LogOut, User, MessageSquare, Settings, Palette, ChevronDown, Shield, ExternalLink } from 'lucide-react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useSessionStore } from '@/store/useSessionStore';
@@ -58,25 +58,34 @@ export default function Header() {
   };
 
   return (
-    <header className="h-16 border-b border-card-border bg-card/80 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-4 md:px-8">
+    <header className="h-20 md:h-16 border-b border-card-border bg-card/80 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-4 md:px-8">
       <div className="flex items-center gap-4">
-        {/* Mobile menu button */}
-        <button 
-          onClick={toggleSidebar}
-          className="md:hidden p-2 text-foreground/70 hover:text-brand-accent transition-colors"
-        >
-          <Menu size={24} />
-        </button>
-        <div className="flex flex-col">
+        {/* Mobile Left Header */}
+        <div className="flex flex-col md:hidden">
+          <p className="text-foreground/70 text-xs font-medium">Hola, {user?.name || 'Administrador'}</p>
+          <h1 className="text-xl font-bold text-foreground tracking-tight">Bienvenido de vuelta</h1>
+        </div>
+
+        {/* Desktop Left Header */}
+        <div className="hidden md:flex flex-col">
           <h1 className="text-xl font-bold text-foreground tracking-tight">{getPageTitle()}</h1>
-          <span className="text-xs text-foreground/50 hidden md:block font-medium">
+          <span className="text-xs text-foreground/50 font-medium">
             Dashboard <span className="mx-1 text-brand-accent/50">•</span> {getPageTitle()}
           </span>
         </div>
       </div>
 
-      <div className="flex items-center space-x-4">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center space-x-2 md:space-x-4">
+        <div className="flex items-center gap-1 md:gap-3">
+          <Link 
+            href="/" 
+            target="_blank"
+            className="relative p-2 text-foreground/70 hover:text-brand-accent hover:bg-brand-accent/10 rounded-full transition-colors flex items-center"
+            title="Ver sitio web"
+          >
+            <ExternalLink size={20} />
+          </Link>
+
           {(hasPermission('manage:all') || hasPermission('read:messages')) && (
             <Link 
               href="/dashboard/messages" 

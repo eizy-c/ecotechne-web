@@ -3,7 +3,15 @@ import {
   Package, 
   Wrench, 
   TrendingUp,
-  ArrowRight
+  ArrowRight,
+  Car,
+  Tag,
+  Box,
+  Image as ImageIcon,
+  Shield,
+  Layers,
+  Settings,
+  BarChart3
 } from 'lucide-react';
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
@@ -49,19 +57,53 @@ export default async function DashboardIndex() {
     prisma.visit.count()
   ]);
 
+  const mobileMenuItems = [
+    { name: 'Productos', path: '/dashboard/products', icon: Package },
+    { name: 'Categorías', path: '/dashboard/categories', icon: Tag },
+    { name: 'Servicios', path: '/dashboard/services', icon: Wrench },
+    { name: 'Directorio', path: '/dashboard/vehicles', icon: Car },
+    { name: 'Marcas', path: '/dashboard/brands', icon: Box },
+    { name: 'Modelos', path: '/dashboard/vehicle-models', icon: Layers },
+    { name: 'Analíticas', path: '/dashboard/analytics', icon: BarChart3 },
+    { name: 'Usuarios', path: '/dashboard/users', icon: Users },
+    { name: 'Roles', path: '/dashboard/roles', icon: Shield },
+    { name: 'Ajustes', path: '/dashboard/settings', icon: Settings },
+  ];
+
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">Resumen General</h1>
-        <p className="text-foreground/60 mt-1">Bienvenido al panel de control de Ecotechne.</p>
+      {/* MOBILE APP-LIKE MENU GRID */}
+      <div className="md:hidden">
+        <h2 className="text-lg font-bold mb-4 text-foreground tracking-tight">¿Qué deseas gestionar?</h2>
+        <div className="grid grid-cols-3 gap-3">
+          {mobileMenuItems.map((item) => (
+            <Link 
+              key={item.path} 
+              href={item.path}
+              className="bg-card border border-card-border p-4 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-brand-accent/5 hover:border-brand-accent/30 transition-all shadow-sm active:scale-95"
+            >
+              <div className="w-10 h-10 rounded-full bg-brand-accent/10 text-brand-accent flex items-center justify-center">
+                <item.icon size={22} />
+              </div>
+              <span className="text-[10px] font-bold text-foreground text-center truncate w-full">{item.name}</span>
+            </Link>
+          ))}
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard title="Total Usuarios" value={userCount.toString()} icon={Users} trend="Total" />
-        <StatCard title="Visitas Totales" value={totalVisits.toString()} icon={TrendingUp} trend="Global" />
-        <StatCard title="Productos Activos" value={productCount.toString()} icon={Package} trend="Total" />
-        <StatCard title="Servicios Activos" value={serviceCount.toString()} icon={Wrench} trend="Total" />
-      </div>
+      {/* DESKTOP SUMMARY */}
+      <div className="hidden md:block space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Resumen General</h1>
+          <p className="text-foreground/60 mt-1">Bienvenido al panel de control de Ecotechne.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <StatCard title="Total Usuarios" value={userCount.toString()} icon={Users} trend="Total" />
+          <StatCard title="Visitas Totales" value={totalVisits.toString()} icon={TrendingUp} trend="Global" />
+          <StatCard title="Productos Activos" value={productCount.toString()} icon={Package} trend="Total" />
+          <StatCard title="Servicios Activos" value={serviceCount.toString()} icon={Wrench} trend="Total" />
+        </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 glass-card rounded-2xl p-6">
@@ -121,6 +163,7 @@ export default async function DashboardIndex() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

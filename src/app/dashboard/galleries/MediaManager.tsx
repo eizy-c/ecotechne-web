@@ -63,7 +63,7 @@ export default function MediaManager({ initialAlbums, initialImages }: { initial
             className="bg-card border border-card-border text-foreground px-4 py-2.5 rounded-xl font-bold hover:bg-card-border transition-colors flex items-center gap-2"
           >
             <Folder size={20} />
-            <span>Nuevo Álbum</span>
+            <span>Añadir</span>
           </button>
           <button 
             onClick={() => handleUploadImages()}

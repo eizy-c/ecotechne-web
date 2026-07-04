@@ -7,6 +7,14 @@ const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-default-key-change-it
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
+  // Evitar que el usuario loggeado acceda a la página de login
+  if (pathname.startsWith('/login')) {
+    const token = request.cookies.get('auth_token')?.value;
+    if (token) {
+      return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
+  }
+
   // Rutas que requieren autenticación
   const protectedRoutes = ['/dashboard'];
   const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));

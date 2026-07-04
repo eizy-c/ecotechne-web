@@ -80,7 +80,7 @@ export default function ServicesList({ services }: { services: any[] }) {
           className="bg-brand-accent text-brand-dark px-6 py-2.5 rounded-xl font-bold hover:scale-105 transition-transform flex items-center gap-2 shadow-[0_0_15px_rgba(255,109,36,0.2)]"
         >
           <Plus size={20} />
-          <span>Nuevo Servicio</span>
+          <span>Añadir</span>
         </Link>
       </div>
       

@@ -14,7 +14,7 @@ export default function ProductsTable({ products }: { products: any[] }) {
       accessorKey: 'name',
       cell: (product) => (
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-lg overflow-hidden relative border border-card-border bg-background flex items-center justify-center text-foreground/20">
+          <div className="hidden md:flex w-12 h-12 rounded-lg overflow-hidden relative border border-card-border bg-background items-center justify-center text-foreground/20">
             {product.image_url ? (
               <Image 
                 src={product.image_url} 
@@ -84,19 +84,23 @@ export default function ProductsTable({ products }: { products: any[] }) {
       header: 'Acciones',
       sortable: false,
       cell: (product) => (
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex flex-col md:flex-row md:items-center justify-end gap-1 md:gap-2">
           <Link 
             href={`/dashboard/products/${product.product_id}`}
-            className="p-2 text-foreground/50 hover:text-brand-accent hover:bg-brand-accent/10 rounded-lg transition-colors"
+            className="flex items-center gap-3 p-2 px-3 md:px-2 md:p-2 text-foreground/70 hover:text-brand-accent hover:bg-brand-accent/10 rounded-lg transition-colors"
           >
             <Edit size={18} />
+            <span className="md:hidden text-sm font-medium">Editar Producto</span>
           </Link>
-          <DeleteButton 
-            onDelete={async () => {
-              await deleteProduct(product.product_id);
-            }}
-            itemName={`Producto: ${product.name}`}
-          />
+          <div className="flex items-center gap-3 px-1 md:px-0 hover:bg-red-500/10 rounded-lg pr-3 md:pr-0">
+            <DeleteButton 
+              onDelete={async () => {
+                await deleteProduct(product.product_id);
+              }}
+              itemName={`Producto: ${product.name}`}
+            />
+            <span className="md:hidden text-sm font-medium text-foreground/70 pointer-events-none">Eliminar Producto</span>
+          </div>
         </div>
       )
     }

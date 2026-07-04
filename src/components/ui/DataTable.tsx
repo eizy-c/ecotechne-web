@@ -12,7 +12,8 @@ import {
   ArrowDown,
   Download,
   FileSpreadsheet,
-  FileText
+  FileText,
+  MoreVertical
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
@@ -54,6 +55,7 @@ export default function DataTable<T>({
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' } | null>(null);
+  const [openMenuIdx, setOpenMenuIdx] = useState<number | null>(null);
 
   // 1. Filtrado (Búsqueda global)
   const filteredData = useMemo(() => {
@@ -208,8 +210,57 @@ export default function DataTable<T>({
         </div>
       </div>
 
-      {/* Tabla Responsiva */}
-      <div className="overflow-x-auto">
+      {/* Vista Móvil (Tarjetas) */}
+      <div className="md:hidden flex flex-col gap-3 p-4 bg-card/10" onClick={() => setOpenMenuIdx(null)}>
+        {currentData.length > 0 ? (
+          currentData.map((item, rowIdx) => {
+            const accionesCol = columns.find(c => c.header === 'Acciones');
+            const otherCols = columns.filter(c => c.header !== 'Acciones');
+
+            return (
+              <div 
+                key={rowIdx} 
+                className={`bg-background/80 border border-card-border rounded-xl p-4 shadow-sm flex flex-col gap-4 relative hover:border-brand-accent/30 transition-colors ${rowClassName ? rowClassName(item) : ''}`}
+              >
+                {/* Opciones de 3 puntos (Acciones) */}
+                {accionesCol && accionesCol.cell && (
+                  <div className="absolute top-3 right-3 z-10" onClick={e => e.stopPropagation()}>
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); setOpenMenuIdx(openMenuIdx === rowIdx ? null : rowIdx); }}
+                      className="p-1.5 text-foreground/50 hover:text-brand-accent rounded-lg bg-background border border-card-border"
+                    >
+                      <MoreVertical size={18} />
+                    </button>
+                    {openMenuIdx === rowIdx && (
+                      <div className="absolute right-0 top-10 bg-card border border-card-border p-2 rounded-xl shadow-xl z-20 flex flex-col gap-2 min-w-[120px] animate-fade-in-up">
+                        {accionesCol.cell(item)}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {otherCols.map((col, colIdx) => (
+                  <div key={colIdx} className="flex flex-col gap-1.5">
+                    <span className="text-[10px] font-bold text-foreground/50 uppercase tracking-wider pr-8">{col.header}</span>
+                    <div className="text-sm text-foreground w-full">
+                      {col.cell 
+                        ? col.cell(item) 
+                        : (col.accessorKey ? getNestedValue(item, col.accessorKey as string) : <span className="text-foreground/30">-</span>)}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            );
+          })
+        ) : (
+          <div className="p-8 text-center text-foreground/50 text-sm bg-background/50 rounded-xl border border-card-border">
+            {searchTerm ? 'No se encontraron coincidencias.' : 'No hay datos disponibles.'}
+          </div>
+        )}
+      </div>
+
+      {/* Tabla Responsiva (Escritorio) */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead className="bg-foreground/5 text-foreground/70 uppercase font-semibold text-xs tracking-wider">
             <tr>
