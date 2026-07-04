@@ -20,7 +20,8 @@ export default function ProductsTable({ products }: { products: any[] }) {
                 src={product.image_url} 
                 alt={product.name}
                 fill
-                className="object-cover"
+                unoptimized={true}
+                className="object-cover group-hover:scale-110 transition-transform duration-300"
               />
             ) : (
               <Box size={24} />

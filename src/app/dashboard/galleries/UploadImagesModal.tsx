@@ -105,7 +105,7 @@ export default function UploadImagesModal({
           <div className="grid grid-cols-4 gap-2 mt-4 max-h-48 overflow-y-auto pr-2">
             {previews.map((preview, i) => (
               <div key={i} className="relative aspect-square rounded-lg overflow-hidden border border-card-border">
-                <Image src={preview} alt="Preview" fill className="object-cover" />
+                <Image src={preview} alt="Preview" fill unoptimized={true} className="object-cover" />
                 <button 
                   type="button" 
                   onClick={() => removeFile(i)}

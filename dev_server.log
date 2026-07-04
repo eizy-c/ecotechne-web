@@ -1,0 +1,799 @@
+
+> ecotechne-app@0.1.0 dev
+> next dev -H 0.0.0.0 --webpack
+
+▲ Next.js 16.2.7 (webpack)
+- Local:         http://localhost:3000
+- Network:       http://0.0.0.0:3000
+- Environments: .env.local, .env
+✓ Ready in 733ms
+ ○ (pwa) PWA support is disabled.
+- Experiments (use with caution):
+  · serverActions
+
+○ Compiling /login ...
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 3.7s (next.js: 3.4s, proxy.ts: 9ms, application-code: 328ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 321ms (next.js: 6ms, proxy.ts: 9ms, application-code: 305ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 324ms (next.js: 5ms, proxy.ts: 8ms, application-code: 311ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 290ms (next.js: 6ms, proxy.ts: 9ms, application-code: 275ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 390ms (next.js: 7ms, proxy.ts: 23ms, application-code: 360ms)
+⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+▲ Next.js 16.2.7 (webpack)
+- Local:         http://localhost:3000
+- Network:       http://0.0.0.0:3000
+- Environments: .env.local, .env
+✓ Ready in 729ms
+ ○ (pwa) PWA support is disabled.
+- Experiments (use with caution):
+  · serverActions
+
+○ Compiling /login ...
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 12.3s (next.js: 11.9s, proxy.ts: 10ms, application-code: 397ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 332ms (next.js: 8ms, proxy.ts: 12ms, application-code: 313ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 324ms (next.js: 4ms, proxy.ts: 10ms, application-code: 310ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 308ms (next.js: 4ms, proxy.ts: 6ms, application-code: 298ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 294ms (next.js: 7ms, proxy.ts: 9ms, application-code: 278ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 321ms (next.js: 4ms, proxy.ts: 7ms, application-code: 310ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 288ms (next.js: 11ms, proxy.ts: 14ms, application-code: 263ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 391ms (next.js: 5ms, proxy.ts: 8ms, application-code: 378ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 262ms (next.js: 6ms, proxy.ts: 8ms, application-code: 247ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 389ms (next.js: 8ms, proxy.ts: 10ms, application-code: 371ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 276ms (next.js: 5ms, proxy.ts: 11ms, application-code: 260ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 325ms (next.js: 7ms, proxy.ts: 12ms, application-code: 306ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 3.7s (next.js: 2.7s, proxy.ts: 17ms, application-code: 975ms)
+[browser] Image with src "/uploads/gallery/b2b9cf56-e075-42a4-832a-403d54796c75.webp" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+ GET /manifest.webmanifest 200 in 1099ms (next.js: 1053ms, proxy.ts: 8ms, application-code: 38ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 472ms (next.js: 76ms, proxy.ts: 11ms, application-code: 385ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 422ms (next.js: 31ms, proxy.ts: 16ms, application-code: 374ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 226ms (next.js: 5ms, proxy.ts: 15ms, application-code: 206ms)
+⚠ Blocked cross-origin request to Next.js dev resource /_next/webpack-hmr from "192.168.5.45".
+Cross-origin access to Next.js dev resources is blocked by default for safety.
+
+To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+
+// next.config.js
+module.exports = {
+  allowedDevOrigins: ['192.168.5.45'],
+}
+
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+Error: Failed to find Server Action "00a1ef68e4ba7b346cbe86c73bc563138f07cb8aec". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 323ms (next.js: 5ms, proxy.ts: 11ms, application-code: 308ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 352ms (next.js: 9ms, proxy.ts: 11ms, application-code: 331ms)
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 769ms (next.js: 238ms, proxy.ts: 11ms, application-code: 520ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 815ms (next.js: 155ms, proxy.ts: 5ms, application-code: 655ms)
+Error: Failed to find Server Action "00a1ef68e4ba7b346cbe86c73bc563138f07cb8aec". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 467ms (next.js: 19ms, proxy.ts: 9ms, application-code: 439ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 233ms (next.js: 3ms, proxy.ts: 6ms, application-code: 224ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 457ms (next.js: 5ms, proxy.ts: 11ms, application-code: 441ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 255ms (next.js: 4ms, proxy.ts: 6ms, application-code: 245ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 550ms (next.js: 7ms, proxy.ts: 12ms, application-code: 531ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 232ms (next.js: 3ms, proxy.ts: 8ms, application-code: 221ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 234ms (next.js: 9ms, proxy.ts: 15ms, application-code: 210ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 237ms (next.js: 6ms, proxy.ts: 11ms, application-code: 220ms)
+Error: Failed to find Server Action "00a1ef68e4ba7b346cbe86c73bc563138f07cb8aec". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 365ms (next.js: 8ms, proxy.ts: 16ms, application-code: 341ms)
+ GET /productos/servicio-de-pintura-autonotriz-5589 200 in 2.5s (next.js: 2.4s, proxy.ts: 9ms, application-code: 98ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 268ms (next.js: 14ms, proxy.ts: 6ms, application-code: 248ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 650ms (next.js: 119ms, proxy.ts: 8ms, application-code: 523ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 367ms (next.js: 14ms, proxy.ts: 7ms, application-code: 346ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 202ms (next.js: 3ms, proxy.ts: 7ms, application-code: 191ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 254ms (next.js: 5ms, proxy.ts: 6ms, application-code: 244ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 202ms (next.js: 9ms, proxy.ts: 13ms, application-code: 179ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 229ms (next.js: 9ms, proxy.ts: 13ms, application-code: 207ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 253ms (next.js: 6ms, proxy.ts: 14ms, application-code: 233ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 844ms (next.js: 3ms, proxy.ts: 5ms, application-code: 836ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 216ms (next.js: 6ms, proxy.ts: 13ms, application-code: 197ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 219ms (next.js: 3ms, proxy.ts: 6ms, application-code: 210ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 325ms (next.js: 4ms, proxy.ts: 9ms, application-code: 312ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 210ms (next.js: 5ms, proxy.ts: 10ms, application-code: 195ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 264ms (next.js: 9ms, proxy.ts: 15ms, application-code: 240ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 225ms (next.js: 9ms, proxy.ts: 16ms, application-code: 200ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 201ms (next.js: 3ms, proxy.ts: 7ms, application-code: 192ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 225ms (next.js: 9ms, proxy.ts: 11ms, application-code: 206ms)
+Servicios desde Prisma: [
+  {
+    service_id: 1,
+    name: 'Servicio de pintura autonotriz',
+    slug: 'servicio-de-pintura-autonotriz-3038',
+    description: '',
+    icon: '',
+    image_url: '/uploads/gallery/f3d14c23-c0d9-453b-b7ab-95f332014bdc.webp',
+    active: true,
+    deleted_at: null,
+    images: []
+  },
+  {
+    service_id: 2,
+    name: 'Servicio de suspencion',
+    slug: 'servicio-de-suspencion-1950',
+    description: '',
+    icon: 'wrench',
+    image_url: '',
+    active: true,
+    deleted_at: null,
+    images: []
+  }
+]
+ GET / 200 in 222ms (next.js: 7ms, proxy.ts: 13ms, application-code: 202ms)
+Error: Failed to find Server Action "00b419590f3e3b4cc7d63b752019d13c29a2f32322". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+    at ignore-listed frames
+ POST /login 404 in 250ms (next.js: 4ms, proxy.ts: 6ms, application-code: 240ms)

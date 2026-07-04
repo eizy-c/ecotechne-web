@@ -43,7 +43,7 @@ export default function MediaPickerModal({
       >
         {selectedUrl ? (
           <>
-            <Image src={selectedUrl} alt="Selected media" fill className="object-cover" />
+            <Image src={selectedUrl} alt="Selected media" fill unoptimized={true} className="object-cover" />
             <div className="absolute inset-0 bg-background/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
               <span className="text-foreground font-semibold bg-background/80 px-4 py-2 rounded-full flex items-center gap-2">
                 <ImageIcon size={16} /> Cambiar Imagen
@@ -107,6 +107,7 @@ export default function MediaPickerModal({
                         src={img.image_url} 
                         alt={img.description || 'Imagen'} 
                         fill 
+                        unoptimized={true}
                         className="object-cover"
                       />
                       <div className={`absolute inset-0 transition-all duration-300 flex items-center justify-center ${

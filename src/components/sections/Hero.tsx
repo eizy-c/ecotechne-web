@@ -1,3 +1,5 @@
+import Particles from '@/components/ui/Particles';
+
 export default function Hero({ settings }: { settings?: Record<string, string> }) {
   return (
     <section id="inicio" className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden bg-brand-black">
@@ -12,6 +14,11 @@ export default function Hero({ settings }: { settings?: Record<string, string> }
         {/* Soft overlay to ensure text readability */}
         <div className={`absolute inset-0 z-10 ${settings?.['hero.background_enabled'] !== 'false' ? 'bg-gradient-to-r from-black/80 via-black/50 to-transparent' : ''}`} />
         <div className={`absolute inset-0 z-10 md:hidden ${settings?.['hero.background_enabled'] !== 'false' ? 'bg-black/40' : ''}`} /> {/* Extra darkening on mobile */}
+        
+        {/* Animated Particles (z-15 to be above background/overlay but below content z-20) */}
+        <div className="absolute inset-0 w-full h-full overflow-hidden z-[15] pointer-events-none">
+          <Particles particleCount={50} color="#FF6D24" />
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">

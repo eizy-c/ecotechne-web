@@ -5,6 +5,7 @@ import { GalleryImage } from '@/Models/GalleryImage';
 import { uploadImage } from '@/actions/upload';
 import { revalidatePath } from 'next/cache';
 import { requirePermission } from '@/lib/auth';
+import prisma from '@/lib/prisma';
 
 export async function getAlbums() {
   const albums = await Album.findAll();
@@ -44,6 +45,21 @@ export async function updateAlbum(id: number, formData: FormData) {
 
 export async function deleteAlbum(id: number) {
   await requirePermission('delete:gallery');
+  
+  // Verificar si alguna imagen del álbum está siendo usada
+  const albumImages = await prisma.galleryImage.findMany({ where: { album_id: id } });
+  
+  for (const img of albumImages) {
+    const isUsedInProduct = await prisma.imageProduct.findFirst({ where: { image_id: img.image_id } });
+    const isUsedInService = await prisma.imageService.findFirst({ where: { image_id: img.image_id } });
+    const isUsedAsMainProduct = await prisma.product.findFirst({ where: { image_url: img.image_url } });
+    const isUsedAsMainService = await prisma.service.findFirst({ where: { image_url: img.image_url } });
+
+    if (isUsedInProduct || isUsedInService || isUsedAsMainProduct || isUsedAsMainService) {
+      throw new Error('No se puede eliminar el álbum porque contiene imágenes que están siendo utilizadas por productos o servicios.');
+    }
+  }
+
   await Album.delete(id);
   revalidatePath('/dashboard/galleries');
 }
@@ -83,6 +99,19 @@ export async function uploadGalleryImages(formData: FormData) {
 
 export async function deleteGalleryImage(id: number) {
   await requirePermission('delete:gallery');
+  
+  const img = await prisma.galleryImage.findUnique({ where: { image_id: id } });
+  if (!img) throw new Error('Imagen no encontrada');
+
+  const isUsedInProduct = await prisma.imageProduct.findFirst({ where: { image_id: id } });
+  const isUsedInService = await prisma.imageService.findFirst({ where: { image_id: id } });
+  const isUsedAsMainProduct = await prisma.product.findFirst({ where: { image_url: img.image_url } });
+  const isUsedAsMainService = await prisma.service.findFirst({ where: { image_url: img.image_url } });
+
+  if (isUsedInProduct || isUsedInService || isUsedAsMainProduct || isUsedAsMainService) {
+    throw new Error('No se puede eliminar esta imagen porque está siendo utilizada por un producto o servicio.');
+  }
+
   await GalleryImage.delete(id);
   revalidatePath('/dashboard/galleries');
 }

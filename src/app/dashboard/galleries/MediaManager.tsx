@@ -160,6 +160,7 @@ export default function MediaManager({ initialAlbums, initialImages }: { initial
                                 src={img.image_url} 
                                 alt={img.description || 'Imagen del álbum'}
                                 fill
+                                unoptimized={true}
                                 className="object-cover group-hover:scale-105 transition-transform"
                               />
                               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-2 text-center">
@@ -210,6 +211,7 @@ export default function MediaManager({ initialAlbums, initialImages }: { initial
                   src={img.image_url} 
                   alt={img.description || 'Imagen sin descripción'}
                   fill
+                  unoptimized={true}
                   className="object-cover group-hover:scale-105 transition-transform"
                 />
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-2 text-center">
@@ -255,6 +257,7 @@ export default function MediaManager({ initialAlbums, initialImages }: { initial
               src={viewingImage} 
               alt="Vista en detalle"
               fill
+              unoptimized={true}
               className="object-contain"
             />
           </div>
